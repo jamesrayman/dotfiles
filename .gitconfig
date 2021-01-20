@@ -1,0 +1,7 @@
+[user]
+	email = rayman.james.e@gmail.com
+	name = James Rayman
+[credential]
+	helper = store
+[init]
+	defaultBranch = main

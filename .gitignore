@@ -1,0 +1,33 @@
+# Ignore everything
+/*
+
+# except these files:
+
+# for this git repo
+!.gitignore
+!README.md
+
+# git
+!.gitconfig
+
+# vim
+!.vimrc
+!.config/
+.config/*
+!.config/nvim/
+.config/nvim/*
+!.config/nvim/init.vim
+
+# bash
+!.bashrc
+!.bash_profile
+!.bash_logout
+!.bash_aliases
+
+# python
+!.pythonrc
+
+# powershell
+!Profile.ps1
+
+
