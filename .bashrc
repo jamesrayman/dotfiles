@@ -133,6 +133,3 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# fix this
-export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
-
