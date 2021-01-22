@@ -15,7 +15,7 @@ export PYTHONPATH="$PYTHONPATH:/home/jamesrayman/.local/lib/python3.6/sitepackag
 # tools
 export VISUAL="vim"
 export EDITOR="vim"
-export LESS="$LESS -Q"
+export LESS="$LESS -Q -R"
 
 # maven
 export JAVA_HOME="/usr/lib/jvm/java-15-oracle"
