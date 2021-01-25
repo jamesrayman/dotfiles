@@ -10,7 +10,10 @@ export PYTHONSTARTUP="$HOME/.pythonrc"
 export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
 
 # python path
-export PYTHONPATH="$PYTHONPATH:/home/jamesrayman/.local/lib/python3.6/sitepackages/"
+export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/sitepackages/"
+
+# path
+export PATH="$HOME/.local/bin:$PATH"
 
 # tools
 export VISUAL="vim"
@@ -23,3 +26,4 @@ export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 
 # safe paste
 bind 'set enable-bracketed-paste on'
+
