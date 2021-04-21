@@ -18,7 +18,6 @@ set expandtab
 set autoindent
 
 """ SEARCHING
-set showmatch
 set incsearch
 set hlsearch
 
@@ -41,3 +40,5 @@ tnoremap <Esc> <C-\><C-n>
 
 """ COLOR THEMEING
 colorscheme ron
+" hi! MatchParen cterm=NONE,bold gui=NONE,bold  guibg=#eee8d5 guifg=NONE
+
