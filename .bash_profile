@@ -6,13 +6,13 @@ fi
 # set pythonrc
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
-# make ls prettier
-export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
-
 # python path
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/sitepackages/"
 
-# path
+# make ls prettier
+export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
+
+# misc path
 export PATH="$HOME/.local/bin:$PATH"
 
 # tools
@@ -26,4 +26,22 @@ export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 
 # safe paste
 bind 'set enable-bracketed-paste on'
+
+# cd with $WINHOME
+cd_plus () {
+    args=()
+    for arg in "$@"
+    do
+        if [[ "${arg:0:1}" == "+"  ]]
+        then
+            args+=("$WINHOME${arg:1}")
+        else
+            args+=("$arg")
+        fi
+    done
+
+    cd "${args[@]}"
+}
+
+alias cd=cd_plus
 
