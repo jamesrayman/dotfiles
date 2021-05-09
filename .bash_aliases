@@ -10,5 +10,5 @@ alias pip="pip3"
 
 # other
 alias sudo='sudo env PATH="$PATH"'
-alias start="cmd.exe /C start"
 alias more="less"
+

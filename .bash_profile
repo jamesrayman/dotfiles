@@ -25,14 +25,14 @@ export JAVA_HOME="/usr/lib/jvm/java-15-oracle"
 export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 
 # safe paste
-bind 'set enable-bracketed-paste on'
+# bind 'set enable-bracketed-paste on'
 
 # cd with $WINHOME
 cd_plus () {
     args=()
     for arg in "$@"
     do
-        if [[ "${arg:0:1}" == "+"  ]]
+        if [[ "${arg:0:1}" == "+" ]]
         then
             args+=("$WINHOME${arg:1}")
         else
@@ -40,8 +40,26 @@ cd_plus () {
         fi
     done
 
-    cd "${args[@]}"
+    command cd "${args[@]}"
 }
-
 alias cd=cd_plus
+
+# start
+start () {
+    path="$(realpath "$1")"
+    path="${path//\//\\}"
+    if [[ "${path:0:5}" == '\mnt\' ]]
+    then
+        path="${path:5}"
+        if [[ "$path" == *'\'* ]]
+        then
+            path="$(echo "$path" | sed -r 's/\\/:\\/')"
+        else
+            path="$path:"
+        fi
+    else
+        path="\\\\wsl$\\Ubuntu$path"
+    fi
+    cmd.exe /C start "$path" 2> /dev/null
+}
 
