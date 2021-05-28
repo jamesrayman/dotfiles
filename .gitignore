@@ -7,6 +7,9 @@
 !.gitignore
 !README.md
 
+# installation
+!install
+
 # git
 !.gitconfig
 
@@ -29,5 +32,4 @@
 
 # powershell
 !Profile.ps1
-
 

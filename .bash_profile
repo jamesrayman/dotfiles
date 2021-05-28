@@ -62,4 +62,5 @@ start () {
     fi
     cmd.exe /C start "$path" 2> /dev/null
 }
+alias start=start
 
