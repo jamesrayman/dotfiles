@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 sudo add-apt-repository ppa:neovim-ppa/stable 
+sudo add-apt-repository ppa:git-core/ppa
 sudo apt-get update
 
 sudo apt-get install neovim
+sudo apt-get install git
 
 sudo apt autoremove
 
