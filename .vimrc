@@ -99,8 +99,8 @@ set shell=bash\ -l
 colorscheme gruvbox
 
 """ Undo file
-if !empty(glob('~/.vim/undo'))
-    silent execute '!mkdir ~/.vim/undo'
+if !empty(glob(data_dir . '/.vim/undo'))
+    silent execute '!mkdir ' . data_dir . '/.vim/undo'
 endif
 set undofile
 set undodir=~/.vim/undo
