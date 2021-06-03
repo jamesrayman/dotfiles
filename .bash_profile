@@ -1,6 +1,11 @@
+if [ -f "$HOME/.bash_extra" ]
+then
+    . "$HOME/.bash_extra"
+fi
+
 if [ -f "$HOME/.bashrc" ]
 then
-    . $HOME/.bashrc
+    . "$HOME/.bashrc"
 fi
 
 # set pythonrc
@@ -23,9 +28,6 @@ export LESS="$LESS -Q -R"
 # maven
 export JAVA_HOME="/usr/lib/jvm/java-15-oracle"
 export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
-
-# safe paste
-# bind 'set enable-bracketed-paste on'
 
 # cd with $WINHOME
 cd_plus () {

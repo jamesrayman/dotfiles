@@ -3,8 +3,9 @@
 " Spell check
 " Terminal
 " NERDTree shortcuts
-" Color theme
+" Airline?
 " Inline calculator
+" Windows and tabs
 
 
 """ Plugin setup
@@ -18,11 +19,9 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
-Plug 'morhetz/gruvbox'
+Plug 'sainnhe/sonokai'
 call plug#end()
 filetype plugin on
-
-" aasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetse tsetsetsetsetaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaa aasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetse tsetsetsetsetaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaa aasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetse tsetsetsetsetaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaa aasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetse ttsetsetsetaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaa aasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetse tsetsetsetsetaaaaaaaaaaaaaaaasetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetaaaaaaaaaaaaaaaa
 
 """ NERDTree
 " Quit Vim if NERDTree is the only window left
@@ -41,7 +40,8 @@ nmap <silent> <C-n> :NERDTree<CR>
 """ NERDCommenter
 vmap <C-_> <plug>NERDCommenterToggle
 nmap <C-_> <plug>NERDCommenterToggle
-let NERDSpaceDelims=1
+let g:NERDSpaceDelims=1
+let g:NERDCommentEmptyLines=1
 
 """ Misc settings
 syntax enable
@@ -96,7 +96,8 @@ inoremap <C-v> <C-r>+
 set shell=bash\ -l
 
 """ Color themeing
-colorscheme gruvbox
+set t_Co=256
+colorscheme sonokai
 
 """ Undo file
 if !empty(glob(data_dir . '/.vim/undo'))
@@ -104,4 +105,8 @@ if !empty(glob(data_dir . '/.vim/undo'))
 endif
 set undofile
 set undodir=~/.vim/undo
+
+
+
+let g:NERDCustomDelimiters = { 'json': { 'left': '//', 'right': '' }}
 
