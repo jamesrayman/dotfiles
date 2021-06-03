@@ -6,6 +6,7 @@
 " Airline?
 " Inline calculator
 " Windows and tabs
+" config files (e.g. comment styles, dictionaries, etc)
 
 
 """ Plugin setup
