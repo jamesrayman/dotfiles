@@ -6,7 +6,8 @@
 [init]
 	defaultBranch = main
 [pull]
-	rebase = false
+	rebase = true
 [core]
 	editor = vim
-    pager = less
+	pager = less
+
