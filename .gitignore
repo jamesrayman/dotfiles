@@ -33,3 +33,6 @@
 # powershell
 !Profile.ps1
 
+# Windows Terminal
+!settings.json
+

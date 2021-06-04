@@ -25,6 +25,9 @@ call plug#end()
 filetype plugin on
 
 """ NERDTree
+nnoremap <silent> <C-t> :NERDTreeToggle<CR>
+nnoremap <silent> <C-n> :NERDTreeFocus<CR>
+
 " Quit Vim if NERDTree is the only window left
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
@@ -33,10 +36,12 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | 
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer' . buf | endif
 
-" Use the same NERDTree on every tab
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+" Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * silent NERDTreeMirror
-nmap <silent> <C-t> :NERDTreeToggle<CR>
-nmap <silent> <C-n> :NERDTree<CR>
 
 """ NERDCommenter
 vmap <C-_> <plug>NERDCommenterToggle
@@ -58,8 +63,10 @@ set wrap linebreak nolist
 set colorcolumn=121
 
 """ Tabs and windows
-noremap <C-l> gt
-noremap <C-h> gT
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
 
 """ Indentation
 set tabstop=4
@@ -99,6 +106,7 @@ set shell=bash\ -l
 """ Color themeing
 set t_Co=256
 colorscheme sonokai
+highlight SpecialKey ctermfg=201
 
 """ Undo file
 if !empty(glob(data_dir . '/.vim/undo'))
@@ -108,6 +116,8 @@ set undofile
 set undodir=~/.vim/undo
 
 
+""" Primitive terminal command
+nnoremap <silent> <Esc> :sp<CR><C-w>j:resize 12<CR>:term<CR>
 
 let g:NERDCustomDelimiters = { 'json': { 'left': '//', 'right': '' }}
 
