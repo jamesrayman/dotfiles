@@ -12,4 +12,5 @@ alias pip="pip3"
 alias sudo='sudo env PATH="$PATH"'
 alias more="less"
 alias :q="exit"
+alias re="fc -s"
 
