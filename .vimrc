@@ -127,6 +127,7 @@ function! MakeTerminalWindow()
     sp
     wincmd j
     resize 15
+    set noequalalways
     term
     f terminal
 endfunction
