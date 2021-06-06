@@ -7,6 +7,8 @@
 " Inline calculator
 " Windows and tabs
 " config files (e.g. comment styles, dictionaries, etc)
+" Operator modes
+" Separate large features into plugins
 
 
 """ Plugin setup
@@ -25,12 +27,10 @@ call plug#end()
 filetype plugin on
 
 """ NERDTree
-nnoremap <silent> <C-t> :NERDTreeToggle<CR>
-nnoremap <silent> <C-n> :NERDTreeFocus<CR>
+nnoremap <expr> <silent> <C-n> bufname() =~ 'NERD_tree_\d\+' ? "\<C-w>p" : ":NERDTreeFocus\<CR>"
 
-" Quit Vim if NERDTree is the only window left
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
+" Close tab if NERDTree is the only window left
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | 
@@ -42,6 +42,7 @@ autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * silent NERDTreeMirror
+
 
 """ NERDCommenter
 vmap <C-_> <plug>NERDCommenterToggle
@@ -63,10 +64,11 @@ set wrap linebreak nolist
 set colorcolumn=121
 
 """ Tabs and windows
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 
 """ Indentation
 set tabstop=4
@@ -79,14 +81,14 @@ set autoindent
 """ Searching
 set incsearch
 set nohlsearch
+set ignorecase
+set smartcase
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
-" set hlsearch
-" nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 
 """ Line numbering
 set number
@@ -99,9 +101,14 @@ let mapleader=" "
 nnoremap Y y$
 tnoremap <Esc> <C-\><C-n>
 inoremap <C-v> <C-r>+
+nnoremap <C-s> :w<CR>
+
+""" Scrolling
+nnoremap <silent> <C-d> @='5gjzz'<CR>
+nnoremap <silent> <C-u> @='5gkzz'<CR>
 
 """ Shell
-set shell=bash\ -l
+set shell=/bin/bash\ -l
 
 """ Color themeing
 set t_Co=256
@@ -115,9 +122,8 @@ endif
 set undofile
 set undodir=~/.vim/undo
 
-
-""" Primitive terminal command
-nnoremap <silent> <Esc> :sp<CR><C-w>j:resize 12<CR>:term<CR>
+""" Terminal focus
+nnoremap <silent> <C-p> :sp<CR><C-w>j:resize 12<CR>:term<CR>
 
 let g:NERDCustomDelimiters = { 'json': { 'left': '//', 'right': '' }}
 

@@ -21,8 +21,8 @@ export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
 export PATH="$HOME/.local/bin:$PATH"
 
 # tools
-export VISUAL="vim"
-export EDITOR="vim"
+export VISUAL="/usr/bin/nvim"
+export EDITOR="/usr/bin/nvim"
 export LESS="$LESS -Q -R"
 
 # maven
