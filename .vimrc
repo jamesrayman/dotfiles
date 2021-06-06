@@ -27,13 +27,13 @@ call plug#end()
 filetype plugin on
 
 """ NERDTree
-nnoremap <expr> <silent> <C-n> bufname() =~ 'NERD_tree_\d\+' ? "\<C-w>p" : ":NERDTreeFocus\<CR>"
+nnoremap <expr> <silent> <C-n> bufname() =~# 'NERD_tree_\d\+' ? "\<C-w>p" : ":NERDTreeFocus\<CR>"
 
 " Close tab if NERDTree is the only window left
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | 
+autocmd BufEnter * if bufname('#') =~# 'NERD_tree_\d\+' && bufname('%') !~# 'NERD_tree_\d\+' && winnr('$') > 1 | 
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer' . buf | endif
 
 " Start NERDTree when Vim is started without file arguments.
@@ -152,6 +152,13 @@ tnoremap <silent> <M-;> <C-\><C-n>:ToggleTerminal<CR>
 inoremap <M-;> <Esc>:ToggleTerminal<CR>
 
 
+""" Language specific
 
 let g:NERDCustomDelimiters = { 'json': { 'left': '//', 'right': '' }}
+
+xnoremap i$ :<C-u> keepnormal normal! T$vt$<CR>
+onoremap i$ :normal vi$<CR>
+xnoremap a$ :<C-u> keepnormal normal! F$vf$<CR>
+onoremap a$ :normal va$<CR>
+
 
