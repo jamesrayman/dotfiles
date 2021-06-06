@@ -3,7 +3,6 @@
 " Spell check
 " Terminal
 " NERDTree shortcuts
-" Airline?
 " Inline calculator
 " Windows and tabs
 " config files (e.g. comment styles, dictionaries, etc)
@@ -23,6 +22,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'sainnhe/sonokai'
+Plug 'tpope/vim-surround'
 call plug#end()
 filetype plugin on
 
@@ -49,6 +49,7 @@ vmap <C-_> <plug>NERDCommenterToggle
 nmap <C-_> <plug>NERDCommenterToggle
 let g:NERDSpaceDelims=1
 let g:NERDCommentEmptyLines=1
+
 
 """ Misc settings
 syntax enable
@@ -99,7 +100,6 @@ let mapleader=" "
 
 """ Misc keymappings
 nnoremap Y y$
-tnoremap <Esc> <C-\><C-n>
 inoremap <C-v> <C-r>+
 nnoremap <C-s> :w<CR>
 
@@ -123,7 +123,35 @@ set undofile
 set undodir=~/.vim/undo
 
 """ Terminal focus
-nnoremap <silent> <C-p> :sp<CR><C-w>j:resize 12<CR>:term<CR>
+function! MakeTerminalWindow()
+    sp
+    wincmd j
+    resize 15
+    term
+    f terminal
+endfunction
+
+function! ToggleTerminal()
+    let index = bufwinnr('terminal')
+    if index == -1
+        call MakeTerminalWindow()
+        exec "normal i"
+    elseif bufname() == 'terminal'
+        wincmd p
+    else
+        exec index . "wincmd w"
+        exec "normal i"
+    endif
+endfunction
+
+command ToggleTerminal :call ToggleTerminal()
+
+tnoremap <Esc> <C-\><C-n>
+nnoremap <silent> <M-;> :ToggleTerminal<CR>
+tnoremap <silent> <M-;> <C-\><C-n>:ToggleTerminal<CR>
+inoremap <M-;> <Esc>:ToggleTerminal<CR>
+
+
 
 let g:NERDCustomDelimiters = { 'json': { 'left': '//', 'right': '' }}
 
