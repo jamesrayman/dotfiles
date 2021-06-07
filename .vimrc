@@ -8,6 +8,8 @@
 " config files (e.g. comment styles, dictionaries, etc)
 " Operator modes
 " Separate large features into plugins
+" ctrlp.vim
+" gitgutter
 
 
 """ Plugin setup
@@ -23,6 +25,8 @@ Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-surround'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
 call plug#end()
 filetype plugin on
 
@@ -162,4 +166,8 @@ onoremap i$ :normal vi$<CR>
 xnoremap a$ :<C-u> keepnormal normal! F$vf$<CR>
 onoremap a$ :normal va$<CR>
 
+set matchpairs+=<:>
+
+" g/ should search current selection/word under cursor without moving cursor
+" g? should act similarly
 
