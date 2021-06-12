@@ -8,6 +8,6 @@
 [pull]
 	rebase = true
 [core]
-	editor = vim
+	editor = nvim
 	pager = less
 
