@@ -23,7 +23,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # tools
 export VISUAL="/usr/bin/nvim"
 export EDITOR="/usr/bin/nvim"
-export LESS="$LESS -Q -R"
+export LESS="$LESS -F -i -J -W -Q -R -x4 -z-4 -X"
 
 # maven
 export JAVA_HOME="/usr/lib/jvm/java-15-oracle"

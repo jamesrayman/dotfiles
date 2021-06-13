@@ -9,7 +9,7 @@ alias pip2="command pip"
 alias pip="pip3"
 
 # other
-alias sudo='sudo env PATH="$PATH"'
+alias sudo='sudo -E'
 alias more="less"
 alias :q="exit"
 alias re="fc -s"
