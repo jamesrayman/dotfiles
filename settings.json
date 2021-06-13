@@ -37,6 +37,13 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001bk;"
+            },
+            "keys": "ctrl+;"
         }
     ],
     "copyFormatting": "none",

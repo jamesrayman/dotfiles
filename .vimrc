@@ -5,7 +5,6 @@
 " Inline calculator
 " config files (e.g. comment styles, dictionaries, etc)
 " Separate large features into plugins
-" ctrlp.vim
 " gitgutter: configure
 " vim in terminal
 
@@ -26,12 +25,12 @@ Plug 'tpope/vim-surround'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'airblade/vim-gitgutter'
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 filetype plugin on
 
 """ NERDTree
 nnoremap <expr> <silent> <C-n> bufname() =~# 'NERD_tree_\d\+' ? "\<C-w>p" : ":NERDTreeFocus\<CR>"
-
 
 " Close tab if NERDTree is the only window left
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
@@ -60,7 +59,7 @@ set nocompatible
 set encoding=utf-8
 set showcmd
 set wildmenu
-set wildmode=longest:full,full
+set wildmode=list:full,full
 set lazyredraw
 set ruler
 set title
@@ -123,7 +122,7 @@ set scrolloff=2
 set sidescrolloff=5
 
 """ Shell
-set shell=/bin/bash\ -l
+set shell=/usr/bin/env\ VIMSH=a\ bash\ -l
 
 """ Color themeing
 set t_Co=256
@@ -193,5 +192,7 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
+
+" :Diffr[egs] a b should do a diff check of registers a and b in a new tab
 
 

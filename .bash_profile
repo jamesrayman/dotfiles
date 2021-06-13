@@ -1,13 +1,3 @@
-if [ -f "$HOME/.bash_extra" ]
-then
-    . "$HOME/.bash_extra"
-fi
-
-if [ -f "$HOME/.bashrc" ]
-then
-    . "$HOME/.bashrc"
-fi
-
 # set pythonrc
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
@@ -65,4 +55,15 @@ start () {
     cmd.exe /C start "$path" 2> /dev/null
 }
 alias start=start
+
+
+if [ -f "$HOME/.bashrc" ]
+then
+    . "$HOME/.bashrc"
+fi
+
+if [ -f "$HOME/.bash_extra" ]
+then
+    . "$HOME/.bash_extra"
+fi
 
