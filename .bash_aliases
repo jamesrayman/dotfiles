@@ -1,8 +1,3 @@
-# Use $EDITOR for vi-inspired editors
-alias nvim="$EDITOR"
-alias vim="$EDITOR"
-alias vi="$EDITOR"
-
 # use Python 3 by default
 alias python2="command python"
 alias python="python3"

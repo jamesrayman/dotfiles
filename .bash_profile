@@ -1,3 +1,8 @@
+if [ -f "$HOME/.bashrc" ]
+then
+    . "$HOME/.bashrc"
+fi
+
 # set pythonrc
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
@@ -13,11 +18,24 @@ export PATH="$HOME/.local/bin:$PATH"
 # tools
 export VISUAL="/usr/bin/nvim"
 export EDITOR="/usr/bin/nvim"
-export LESS="$LESS -F -i -J -W -Q -R -x4 -z-4 -X"
+export LESS="$LESS -F -i -J -W -Q -R -x4 -z-4"
+
+if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
+then
+    export LESS="$LESS -X"
+fi
+
+# Use $EDITOR for vi-inspired editors
+alias nvim="$EDITOR"
+alias vim="$EDITOR"
+alias vi="$EDITOR"
 
 # maven
 export JAVA_HOME="/usr/lib/jvm/java-15-oracle"
 export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
+
+# shell options
+shopt -s direxpand
 
 # cd with $WINHOME
 cd_plus () {
@@ -55,12 +73,6 @@ start () {
     cmd.exe /C start "$path" 2> /dev/null
 }
 alias start=start
-
-
-if [ -f "$HOME/.bashrc" ]
-then
-    . "$HOME/.bashrc"
-fi
 
 if [ -f "$HOME/.bash_extra" ]
 then
