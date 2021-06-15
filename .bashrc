@@ -58,6 +58,7 @@ fi
 
 # set short path in prompt, using "+" to indicate Windows home
 export WINHOME="/mnt/c/Users/jamsr"
+export WH="$WINHOME"
 short_wd () {
     wd="$PWD"
     if [[ "$wd" =~ ^$HOME ]]

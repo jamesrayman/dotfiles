@@ -4,35 +4,38 @@
 # except these files:
 
 # for this git repo
-!.gitignore
-!README.md
+!/.gitignore
+!/README.md
 
 # installation
-!.install
+!/.install
 
 # git
-!.gitconfig
+!/.gitconfig
+
+# symlinks
+!/symlinks/
 
 # vim
-!.vimrc
-!.config/
-.config/*
-!.config/nvim/
-.config/nvim/*
-!.config/nvim/init.vim
+!/.vimrc
+!/.config/
+/.config/*
+!/.config/nvim/
+/.config/nvim/*
+!/.config/nvim/init.vim
 
 # bash
-!.bashrc
-!.bash_profile
-!.bash_logout
-!.bash_aliases
+!/.bashrc
+!/.bash_profile
+!/.bash_logout
+!/.bash_aliases
 
 # python
-!.pythonrc
+!/.pythonrc
 
 # powershell
-!Profile.ps1
+!/Profile.ps1
 
 # Windows Terminal
-!settings.json
+!/settings.json
 

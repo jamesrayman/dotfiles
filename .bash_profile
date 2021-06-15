@@ -15,6 +15,9 @@ export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
 # misc path
 export PATH="$HOME/.local/bin:$PATH"
 
+# cd path
+export CDPATH=".:$HOME/symlinks"
+
 # tools
 export VISUAL="/usr/bin/nvim"
 export EDITOR="/usr/bin/nvim"
@@ -35,24 +38,11 @@ export JAVA_HOME="/usr/lib/jvm/java-15-oracle"
 export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 
 # shell options
+
+# expand directories on <tab>
 shopt -s direxpand
-
-# cd with $WINHOME
-cd_plus () {
-    args=()
-    for arg in "$@"
-    do
-        if [[ "${arg:0:1}" == "+" ]]
-        then
-            args+=("$WINHOME${arg:1}")
-        else
-            args+=("$arg")
-        fi
-    done
-
-    command cd "${args[@]}"
-}
-alias cd=cd_plus
+# evaluate symlinks immediately
+set -P
 
 # start
 start () {

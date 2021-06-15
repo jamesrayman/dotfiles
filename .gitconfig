@@ -10,3 +10,5 @@
 [core]
 	pager = less
 
+[alias]
+	s = status --short
