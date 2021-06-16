@@ -172,8 +172,6 @@ set nofoldenable
 
 """ Language specific
 
-let g:NERDCustomDelimiters = { 'json': { 'left': '//', 'right': '' }}
-
 """ make a text-obj funciton. Search should be across multiple lines see above plugin
 for s:c in ['$', '%', '.', ':', ',', '-', '*', '+', '#', '/', ';']
     exec 'xnoremap i' . s:c . ' :<C-u> keeppattern normal! T' . s:c . 'vt' . s:c . '<CR>'
@@ -193,6 +191,6 @@ noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 
-" :Diffr[egs] a b should do a diff check of registers a and b in a new tab
+" :D[iff]r[egs] a b should do a diff check of registers a and b in a new tab
 
 
