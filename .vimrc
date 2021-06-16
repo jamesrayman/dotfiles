@@ -68,6 +68,7 @@ set confirm
 set nomodeline
 set display+=lastline
 set dir=~/.vim/swap
+set hidden
 
 
 """ Editor rule and line wrapping
@@ -170,6 +171,14 @@ set foldmethod=indent
 set nofoldenable
 
 
+""" Diff
+
+" Diff should inherit wrap
+autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+
+" :D[iff]r[egs] a b should do a diff check of registers a and b in a new tab
+
+
 """ Language specific
 
 """ make a text-obj funciton. Search should be across multiple lines see above plugin
@@ -190,7 +199,4 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
-
-" :D[iff]r[egs] a b should do a diff check of registers a and b in a new tab
-
 
