@@ -9,6 +9,7 @@
 	rebase = true
 [core]
 	pager = less
-
 [alias]
 	s = status --short
+	l = log --oneline
+	b = branch

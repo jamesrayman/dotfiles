@@ -39,8 +39,6 @@ export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 
 # shell options
 
-# expand directories on <tab>
-shopt -s direxpand
 # evaluate symlinks immediately
 set -P
 

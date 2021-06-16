@@ -70,17 +70,19 @@ set display+=lastline
 set dir=~/.vim/swap
 set hidden
 
+""" Formatting options
+set fo=jcrqln
 
 """ Editor rule and line wrapping
 set wrap linebreak nolist
 set colorcolumn=121
+set textwidth=72
 
 """ Tabs and windows
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
 
 """ Indentation
 set tabstop=4
@@ -90,7 +92,6 @@ set smarttab
 set expandtab
 set autoindent
 set shiftround
-
 
 """ Searching
 set incsearch
@@ -107,6 +108,7 @@ nnoremap g# g#zz
 """ Line numbering
 set number
 set relativenumber
+set signcolumn=yes
 
 """ Leader
 let mapleader=" "
@@ -123,9 +125,9 @@ set scrolloff=2
 set sidescrolloff=5
 
 """ Shell
-set shell=/usr/bin/env\ VIMSH=a\ bash\ -l
+set shell=/usr/bin/env\ VMUX=a\ bash\ -l
 
-""" Color themeing
+""" Color theming
 set t_Co=256
 colorscheme sonokai
 set cursorline
@@ -170,6 +172,11 @@ inoremap <M-k>; <Esc>:ToggleTerminal<CR>
 set foldmethod=indent
 set nofoldenable
 
+""" Spell check
+set spell
+set spelllang=en_us
+set spellfile=~/.vim/spell/en.utf-8.add
+
 
 """ Diff
 
@@ -181,7 +188,7 @@ autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 
 """ Language specific
 
-""" make a text-obj funciton. Search should be across multiple lines see above plugin
+""" make a text-obj function. Search should be across multiple lines see above plugin
 for s:c in ['$', '%', '.', ':', ',', '-', '*', '+', '#', '/', ';']
     exec 'xnoremap i' . s:c . ' :<C-u> keeppattern normal! T' . s:c . 'vt' . s:c . '<CR>'
     exec 'onoremap i' . s:c . ' :normal vi' . s:c . '<CR>'
