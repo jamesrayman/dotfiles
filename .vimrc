@@ -29,8 +29,12 @@ Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 filetype plugin on
 
+""" Leader
+let mapleader=" "
+
 """ NERDTree
 nnoremap <expr> <silent> <C-n> bufname() =~# 'NERD_tree_\d\+' ? "\<C-w>p" : ":NERDTreeFocus\<CR>"
+nnoremap <silent> <leader>r :NERDTreeRefreshRoot<CR>
 
 " Close tab if NERDTree is the only window left
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
@@ -39,12 +43,19 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 autocmd BufEnter * if bufname('#') =~# 'NERD_tree_\d\+' && bufname('%') !~# 'NERD_tree_\d\+' && winnr('$') > 1 | 
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer' . buf | endif
 
+" Don't put the signcolumn on NERDTree
+autocmd BufEnter * if bufname('#') =~# 'NERD_tree_\d\+' | setlocal signcolumn=no | endif
+
 " Start NERDTree when Vim is started without file arguments.
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | setlocal signcolumn=no | endif
 
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * silent NERDTreeMirror
+
+" UI Changes
+let g:NERDTreeMinimalUI=1
+let g:NERDTreeDirArrows=1
 
 """ NERDCommenter
 vnoremap <C-_> <plug>NERDCommenterToggle
@@ -110,9 +121,6 @@ set number
 set relativenumber
 set signcolumn=yes
 
-""" Leader
-let mapleader=" "
-
 """ Misc keymappings
 nnoremap Y y$
 inoremap <C-v> <C-r>+
@@ -147,6 +155,8 @@ function! MakeTerminalWindow()
     resize 15
     set noequalalways
     term
+    setlocal signcolumn=no
+    setlocal wrap
     f terminal
 endfunction
 
