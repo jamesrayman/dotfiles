@@ -42,8 +42,32 @@ export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 # evaluate symlinks immediately
 set -P
 
+# x is cd but search recursively
+x () {
+    if [[ -z "$1" ]]
+    then
+        printf "x: missing argument\n"
+        return
+    fi
+
+    dirs=$(find . -type d -name "$1")
+    dir_count="$(printf "$dirs\n" | wc -l)"
+    
+    if [[ "$dir_count" == 1 ]]
+    then
+        cd "$dirs"
+    else
+        printf "$dirs\n"
+    fi
+}
+
 # start
 start () {
+    if [[ -z "$1" ]]
+    then
+        printf "start: missing argument\n"
+        return
+    fi
     path="$(realpath "$1")"
     path="${path//\//\\}"
     if [[ "${path:0:5}" == '\mnt\' ]]
