@@ -6,7 +6,7 @@
 " config files (e.g. comment styles, dictionaries, etc)
 " Separate large features into plugins
 " gitgutter: configure
-" vim in terminal
+" Vim in terminal
 
 
 """ Plugin setup
@@ -58,8 +58,8 @@ let g:NERDTreeMinimalUI=1
 let g:NERDTreeDirArrows=1
 
 """ NERDCommenter
-vnoremap <C-_> <plug>NERDCommenterToggle
-nnoremap <C-_> <plug>NERDCommenterToggle
+vmap <C-_> <plug>NERDCommenterToggle
+nmap <C-_> <plug>NERDCommenterToggle
 let g:NERDSpaceDelims=1
 let g:NERDCommentEmptyLines=1
 
@@ -140,6 +140,7 @@ set t_Co=256
 colorscheme sonokai
 set cursorline
 highlight SpecialKey ctermfg=201
+highlight NonText ctermfg=201
 
 """ Undo file
 if !empty(glob(data_dir . '/.vim/undo'))
