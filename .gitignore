@@ -29,6 +29,7 @@
 !/.bash_profile
 !/.bash_logout
 !/.bash_aliases
+!/.inputrc
 
 # python
 !/.pythonrc

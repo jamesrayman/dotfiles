@@ -1,0 +1,15 @@
+$include /etc/inputrc
+
+set colored-stats on
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+"\C-h": backward-char
+"\C-l": forward-char
+"\C-j": next-history
+"\C-k": previous-history
+
+"\C-K": kill-line
+
+"\C-@": magic-space
+
