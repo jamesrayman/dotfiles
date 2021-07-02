@@ -31,6 +31,8 @@
 !/.bash_aliases
 !/.inputrc
 
+!/bin/
+
 # python
 !/.pythonrc
 

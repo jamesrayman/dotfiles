@@ -14,3 +14,4 @@
 	l = log --oneline -10
 	b = branch
 	ll = log --oneline
+	ch = checkout
