@@ -42,6 +42,8 @@ export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 # evaluate symlinks immediately
 set -P
 
+# set enable-bracketed-paste off
+
 # x is cd but search recursively
 x () {
     if [[ -z "$1" ]]

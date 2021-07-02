@@ -62,6 +62,8 @@ vmap <C-_> <plug>NERDCommenterToggle
 nmap <C-_> <plug>NERDCommenterToggle
 let g:NERDSpaceDelims=1
 let g:NERDCommentEmptyLines=1
+let g:NERDCreateDefaultMappings=0
+lef g:NERDCustomDelimiters={'python': {'left': '#', 'right': ''}}
 
 
 """ Misc settings
@@ -80,6 +82,7 @@ set nomodeline
 set display+=lastline
 set dir=~/.vim/swap
 set hidden
+set updatetime=1000
 
 """ Formatting options
 set fo=jcrqln
@@ -124,13 +127,20 @@ set signcolumn=yes
 """ Misc keymappings
 nnoremap Y y$
 inoremap <C-v> <C-r>+
-nnoremap <C-s> :w<CR>
+
 
 """ Scrolling
-nnoremap <silent> <C-d> @='5gjzz'<CR>
 nnoremap <silent> <C-u> @='5gkzz'<CR>
+nnoremap <silent> <C-d> @='5gjzz'<CR>
 set scrolloff=2
 set sidescrolloff=5
+
+" Arrow keys should scroll
+noremap <silent> <Up> @='5gkzz'<CR>
+noremap <silent> <Down> @='5gjzz'<CR>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
 
 """ Shell
 set shell=/usr/bin/env\ VMUX=a\ bash\ -l
@@ -158,6 +168,7 @@ function! MakeTerminalWindow()
     term
     setlocal signcolumn=no
     setlocal wrap
+    setlocal nospell
     f terminal
 endfunction
 
@@ -211,10 +222,4 @@ set matchpairs+=<:>
 
 " g/ should search current selection/word under cursor without moving cursor
 " g? should act similarly
-
-" Training wheels
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
 

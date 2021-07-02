@@ -8,5 +8,4 @@ alias pip="pip3"
 alias sudo='sudo -E'
 alias more="less"
 alias :q="exit"
-alias re="fc -s"
-
+alias re='f_re() { fc -s "$*" ; unset -f f_re; }; f_re'

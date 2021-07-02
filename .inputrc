@@ -9,7 +9,6 @@ set show-all-if-unmodified on
 "\C-j": next-history
 "\C-k": previous-history
 
-"\C-K": kill-line
-
 "\C-@": magic-space
+"\C-e": edit-and-execute-command
 

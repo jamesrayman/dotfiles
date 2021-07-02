@@ -11,5 +11,6 @@
 	pager = less
 [alias]
 	s = status --short
-	l = log --oneline
+	l = log --oneline -10
 	b = branch
+	ll = log --oneline
