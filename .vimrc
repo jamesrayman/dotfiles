@@ -25,7 +25,6 @@ Plug 'tpope/vim-surround'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'airblade/vim-gitgutter'
-Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 filetype plugin on
 
@@ -35,6 +34,7 @@ let mapleader=" "
 """ NERDTree
 nnoremap <expr> <silent> <C-n> bufname() =~# 'NERD_tree_\d\+' ? "\<C-w>p" : ":NERDTreeFocus\<CR>"
 nnoremap <silent> <leader>r :NERDTreeRefreshRoot<CR>
+nnoremap <silent> <leader>n :NERDTreeFind<CR>
 
 " Close tab if NERDTree is the only window left
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
@@ -126,16 +126,22 @@ set number
 set relativenumber
 set signcolumn=yes
 
-""" Misc keymappings
+" More intuitive Y
 nnoremap Y y$
+
+" Insert mode paste shortcut
 inoremap <C-v> <C-r>+
 
+" Move lines with visual
+vnoremap <C-j> dp'[V']
+vnoremap <C-k> dkP'[V']
 
-""" Scrolling
-nnoremap <silent> <C-u> @='5gkzz'<CR>
-nnoremap <silent> <C-d> @='5gjzz'<CR>
-set scrolloff=2
-set sidescrolloff=5
+" Other shortcuts
+nnoremap gl $
+nnoremap gL ^
+
+" Backspace switches to the alternate file
+nnoremap <BS> <C-^>
 
 " Up and down arrow keys scroll
 noremap <silent> <Up> @='5gkzz'<CR>
@@ -152,6 +158,13 @@ noremap <Left><Up> gg
 noremap <Left><Down> G
 noremap <Left><Left> gT
 noremap <Left><Right> gt
+
+
+""" Scrolling
+nnoremap <silent> <C-u> @='5gkzz'<CR>
+nnoremap <silent> <C-d> @='5gjzz'<CR>
+set scrolloff=2
+set sidescrolloff=5
 
 
 """ Shell
@@ -212,7 +225,6 @@ set spell
 set spelllang=en_us
 set spellfile=~/.vim/spell/en.utf-8.add
 
-
 """ Diff
 
 " Diff should inherit wrap
@@ -220,15 +232,20 @@ autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 
 " :D[iff]r[egs] a b should do a diff check of registers a and b in a new tab
 
+" Modified text operators
+xnoremap <silent> im :<C-u> normal! `[v`]<CR>
+onoremap <silent> im : normal vim<CR>
+xnoremap <silent> am :<C-u> normal! `[v`]<CR>
+onoremap <silent> am : normal vam<CR>
 
 """ Language specific
 
 """ make a text-obj function. Search should be across multiple lines see above plugin
 for s:c in ['$', '%', '.', ':', ',', '-', '*', '+', '#', '/', ';']
-    exec 'xnoremap i' . s:c . ' :<C-u> keeppattern normal! T' . s:c . 'vt' . s:c . '<CR>'
-    exec 'onoremap i' . s:c . ' :normal vi' . s:c . '<CR>'
-    exec 'xnoremap a' . s:c . ' :<C-u> keeppattern normal! F' . s:c . 'vf' . s:c . '<CR>'
-    exec 'onoremap a' . s:c . ' :normal va' . s:c . '<CR>'
+    exec 'xnoremap <silent> i' . s:c . ' :<C-u> keeppattern normal! T' . s:c . 'vt' . s:c . '<CR>'
+    exec 'onoremap <silent> i' . s:c . ' :normal vi' . s:c . '<CR>'
+    exec 'xnoremap <silent> a' . s:c . ' :<C-u> keeppattern normal! F' . s:c . 'vf' . s:c . '<CR>'
+    exec 'onoremap <silent> a' . s:c . ' :normal va' . s:c . '<CR>'
 endfor
 
 set matchpairs+=<:>
