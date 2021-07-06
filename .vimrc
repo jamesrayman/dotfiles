@@ -93,6 +93,8 @@ set colorcolumn=121
 set textwidth=72
 
 """ Tabs and windows
+set winminheight=0
+set winminwidth=0
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -135,11 +137,21 @@ nnoremap <silent> <C-d> @='5gjzz'<CR>
 set scrolloff=2
 set sidescrolloff=5
 
-" Arrow keys should scroll
+" Up and down arrow keys scroll
 noremap <silent> <Up> @='5gkzz'<CR>
 noremap <silent> <Down> @='5gjzz'<CR>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+
+" Right arrow key changes windows
+noremap <Right><Up> <C-w>k
+noremap <Right><Down> <C-w>j
+noremap <Right><Left> <C-w>h
+noremap <Right><Right> <C-w>l
+
+" Left arrow key for tabs and page top/bottom
+noremap <Left><Up> gg
+noremap <Left><Down> G
+noremap <Left><Left> gT
+noremap <Left><Right> gt
 
 
 """ Shell
@@ -164,11 +176,13 @@ function! MakeTerminalWindow()
     sp
     wincmd j
     resize 15
-    set noequalalways
     term
     setlocal signcolumn=no
     setlocal wrap
     setlocal nospell
+    setlocal nonumber
+    setlocal norelativenumber
+    setlocal winfixheight
     f terminal
 endfunction
 
@@ -185,9 +199,8 @@ endfunction
 
 command ToggleTerminal call ToggleTerminal()
 
-tnoremap <Esc> <C-\><C-n>
 nnoremap <silent> <M-k>; :ToggleTerminal<CR>
-tnoremap <silent> <M-k>; <C-\><C-n>:ToggleTerminal<CR>
+tnoremap <silent> <M-k>; <C-\><C-n>
 inoremap <M-k>; <Esc>:ToggleTerminal<CR>
 
 """ Folding
