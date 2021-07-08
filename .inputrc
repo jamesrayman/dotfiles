@@ -6,9 +6,12 @@ set show-all-if-unmodified on
 
 "\C-h": backward-char
 "\C-l": forward-char
-"\C-j": next-history
-"\C-k": previous-history
+"\C-j": end-of-line
 
-"\C-@": magic-space
+"\C-f": forward-word
+"\C-b": backward-word
+"\C-q": quoted-insert
+
+"\C-x ": magic-space
 "\C-e": edit-and-execute-command
 

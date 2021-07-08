@@ -70,7 +70,7 @@ short_wd () {
     then
 		wd="+${wd#"$WINHOME"}"
 	fi
-	echo -n "$wd"
+	printf "%s" "$wd"
 }
 
 # set prompt colors
