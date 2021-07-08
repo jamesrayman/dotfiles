@@ -139,6 +139,7 @@ vnoremap <C-k> dkP'[V']
 " Other shortcuts
 nnoremap gl $
 nnoremap gL ^
+nnoremap Z= 1z=
 
 " Backspace switches to the alternate file
 nnoremap <BS> <C-^>
@@ -158,6 +159,10 @@ noremap <Left><Up> gg
 noremap <Left><Down> G
 noremap <Left><Left> gT
 noremap <Left><Right> gt
+
+
+" Zen mode
+nnoremap <leader>z :tab sp<CR>
 
 
 """ Scrolling
