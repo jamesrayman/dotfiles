@@ -4,14 +4,17 @@ set colored-stats on
 set show-all-if-ambiguous on
 set show-all-if-unmodified on
 
-"\C-h": backward-char
 "\C-l": forward-char
-"\C-j": end-of-line
+"\C-h": backward-char
+"\e`l": forward-word
+"\e`h": backward-word
 
-"\C-f": forward-word
-"\C-b": backward-word
+"\C-j": end-of-line
+"\C-d": backward-delete-char
 "\C-q": quoted-insert
 
 "\C-x ": magic-space
-"\C-e": edit-and-execute-command
+"\C-f": edit-and-execute-command
+"\C-v": "\C-av \C-m"
 
+"\e`.": yank-last-arg

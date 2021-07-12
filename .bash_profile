@@ -18,6 +18,9 @@ export PATH="$HOME/.local/bin:$PATH"
 # cd path
 export CDPATH="$HOME/symlinks"
 
+# history time stamp
+export HISTTIMEFORMAT="%F %T     "
+
 # tools
 export VISUAL="/usr/bin/nvim"
 export EDITOR="/usr/bin/nvim"
@@ -42,7 +45,7 @@ export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 # evaluate symlinks immediately
 set -P
 
-# set enable-bracketed-paste off
+set enable-bracketed-paste on
 
 # x is cd but search recursively
 x () {
@@ -92,4 +95,3 @@ if [ -f "$HOME/.bash_extra" ]
 then
     . "$HOME/.bash_extra"
 fi
-

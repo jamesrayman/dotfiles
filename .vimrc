@@ -217,9 +217,9 @@ endfunction
 
 command ToggleTerminal call ToggleTerminal()
 
-nnoremap <silent> <M-k>; :ToggleTerminal<CR>
-tnoremap <silent> <M-k>; <C-\><C-n>
-inoremap <M-k>; <Esc>:ToggleTerminal<CR>
+nnoremap <silent> <M-`>; :ToggleTerminal<CR>
+tnoremap <silent> <M-`>; <C-\><C-n>
+inoremap <M-`>; <Esc>:ToggleTerminal<CR>
 
 """ Folding
 set foldmethod=indent

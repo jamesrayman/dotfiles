@@ -15,24 +15,44 @@
             "keys": "ctrl+shift+v"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b`h"
+            },
+            "keys": "ctrl+shift+h"
         },
         {
             "command": 
             {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
+                "action": "sendInput",
+                "input": "\u001b`l"
             },
-            "keys": "alt+shift+d"
+            "keys": "ctrl+shift+l"
         },
         {
-            "command": {
+            "command": 
+            {
                 "action": "sendInput",
-                "input": "\u001bk;"
+                "input": "\u001b`;"
             },
             "keys": "ctrl+;"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b`."
+            },
+            "keys": "ctrl+."
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+,"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+,"
         }
     ],
     "copyFormatting": "none",
@@ -45,7 +65,7 @@
         [
             {
                 "bellStyle": "visual",
-                "colorScheme": "One Half Dark",
+                "colorScheme": "July 11th",
                 "commandline": "powershell.exe",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
@@ -56,7 +76,7 @@
             },
             {
                 "bellStyle": "visual",
-                "colorScheme": "One Half Dark",
+                "colorScheme": "July 11th",
                 "commandline": "cmd.exe",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
@@ -67,7 +87,7 @@
             },
             {
                 "bellStyle": "visual",
-                "colorScheme": "One Half Dark",
+                "colorScheme": "July 11th",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
                 "fontSize": 11,
@@ -78,7 +98,7 @@
             },
             {
                 "bellStyle": "visual",
-                "colorScheme": "One Half Dark",
+                "colorScheme": "July 11th",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
                 "fontSize": 11,
@@ -89,7 +109,7 @@
             },
             {
                 "bellStyle": "visual",
-                "colorScheme": "One Half Dark",
+                "colorScheme": "July 11th",
                 "commandline": "wsl.exe",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
@@ -103,7 +123,7 @@
             },
             {
                 "bellStyle": "visual",
-                "colorScheme": "One Half Dark",
+                "colorScheme": "July 11th",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
                 "fontSize": 11,
@@ -163,10 +183,10 @@
             "yellow": "#C19C00"
         },
         {
-            "background": "#282C34",
-            "black": "#282C34",
+            "background": "#262626",
+            "black": "#262626",
             "blue": "#61AFEF",
-            "brightBlack": "#5A6374",
+            "brightBlack": "#262626",
             "brightBlue": "#61AFEF",
             "brightCyan": "#56B6C2",
             "brightGreen": "#98C379",
@@ -174,14 +194,37 @@
             "brightRed": "#E06C75",
             "brightWhite": "#DCDFE4",
             "brightYellow": "#E5C07B",
-            "cursorColor": "#96A5C2",
+            "cursorColor": "#646464",
+            "cyan": "#56B6C2",
+            "foreground": "#DCDFE4",
+            "green": "#98C379",
+            "name": "July 11th",
+            "purple": "#C678DD",
+            "red": "#E06C75",
+            "selectionBackground": "#3D474D",
+            "white": "#DCDFE4",
+            "yellow": "#E5C07B"
+        },
+        {
+            "background": "#282C34",
+            "black": "#282C34",
+            "blue": "#61AFEF",
+            "brightBlack": "#282C34",
+            "brightBlue": "#61AFEF",
+            "brightCyan": "#56B6C2",
+            "brightGreen": "#98C379",
+            "brightPurple": "#C678DD",
+            "brightRed": "#E06C75",
+            "brightWhite": "#DCDFE4",
+            "brightYellow": "#E5C07B",
+            "cursorColor": "#FFFFFF",
             "cyan": "#56B6C2",
             "foreground": "#DCDFE4",
             "green": "#98C379",
             "name": "One Half Dark",
             "purple": "#C678DD",
             "red": "#E06C75",
-            "selectionBackground": "#4D5563",
+            "selectionBackground": "#FFFFFF",
             "white": "#DCDFE4",
             "yellow": "#E5C07B"
         },
@@ -323,5 +366,6 @@
             "white": "#C0C0C0",
             "yellow": "#808000"
         }
-    ]
+    ],
+    "tabSwitcherMode": "mru"
 }
