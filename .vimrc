@@ -164,6 +164,9 @@ noremap <Left><Right> gt
 " Zen mode
 nnoremap <leader>z :tab sp<CR>
 
+" Wrap a paragraph
+nnoremap <leader>w gwap
+
 
 """ Scrolling
 nnoremap <silent> <C-u> @='5gkzz'<CR>
