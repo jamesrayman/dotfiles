@@ -13,7 +13,7 @@ export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/sitepackages/"
 export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
 
 # misc path
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
 # cd path
 export CDPATH="$HOME/symlinks"
@@ -23,7 +23,7 @@ export HISTTIMEFORMAT="%F %T     "
 
 # tools
 export VISUAL="/usr/bin/nvim"
-export EDITOR="/usr/bin/nvim"
+export EDITOR="$VISUAL"
 export LESS="$LESS -F -i -J -W -Q -R -x4 -z-4"
 
 if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
@@ -31,10 +31,14 @@ then
     export LESS="$LESS -X"
 fi
 
-# Use $EDITOR for vi-inspired editors
-alias nvim="$EDITOR"
-alias vim="$EDITOR"
-alias vi="$EDITOR"
+# Use $VISUAL for vi-inspired editors
+alias nvim="$VISUAL"
+alias vim="$VISUAL"
+alias vi="$VISUAL"
+alias ex="$VISUAL -e"
+alias view="$VISUAL -R"
+alias rvim="$VISUAL -Z"
+alias rview="$VISUAL -R -Z"
 
 # maven
 export JAVA_HOME="/usr/lib/jvm/java-15-oracle"
@@ -66,30 +70,6 @@ x () {
     fi
 }
 
-# start
-start () {
-    if [[ -z "$1" ]]
-    then
-        printf "start: missing argument\n"
-        return
-    fi
-    path="$(realpath "$1")"
-    path="${path//\//\\}"
-    if [[ "${path:0:5}" == '\mnt\' ]]
-    then
-        path="${path:5}"
-        if [[ "$path" == *'\'* ]]
-        then
-            path="$(echo "$path" | sed -r 's/\\/:\\/')"
-        else
-            path="$path:"
-        fi
-    else
-        path="\\\\wsl$\\Ubuntu$path"
-    fi
-    cmd.exe /C start "$path" 2> /dev/null
-}
-alias start=start
 
 if [ -f "$HOME/.bash_extra" ]
 then
