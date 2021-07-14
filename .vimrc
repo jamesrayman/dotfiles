@@ -83,6 +83,7 @@ set display+=lastline
 set dir=~/.vim/swap
 set hidden
 set updatetime=1000
+set nojoinspaces
 
 """ Formatting options
 set fo=jcrqln
