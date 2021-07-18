@@ -133,10 +133,6 @@ nnoremap Y y$
 " Insert mode paste shortcut
 inoremap <C-v> <C-r>+
 
-" Move lines with visual
-vnoremap <C-j> dp'[V']
-vnoremap <C-k> dkP'[V']
-
 " Other shortcuts
 nnoremap gl $
 nnoremap gL ^
@@ -261,4 +257,4 @@ set matchpairs+=<:>
 
 " g/ should search current selection/word under cursor without moving cursor
 " g? should act similarly
-
+" <BS> should do nothing on terminal windows

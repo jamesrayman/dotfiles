@@ -21,15 +21,22 @@ export CDPATH="$HOME/symlinks"
 # history time stamp
 export HISTTIMEFORMAT="%F %T     "
 
-# tools
+# visual and editor
 export VISUAL="/usr/bin/nvim"
 export EDITOR="$VISUAL"
-export LESS="$LESS -F -i -J -W -Q -R -x4 -z-4"
+
+# less
+export PAGER="less"
+export LESS="-F -i -J -W -Q -R -x4 -z-4"
+export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
 
 if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
 then
     export LESS="$LESS -X"
 fi
+
+# man
+export MANWIDTH=78
 
 # Use $VISUAL for vi-inspired editors
 alias nvim="$VISUAL"
@@ -50,25 +57,6 @@ export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 set -P
 
 set enable-bracketed-paste on
-
-# x is cd but search recursively
-x () {
-    if [[ -z "$1" ]]
-    then
-        printf "x: missing argument\n"
-        return
-    fi
-
-    dirs=$(find . -type d -name "$1")
-    dir_count="$(printf "$dirs\n" | wc -l)"
-    
-    if [[ "$dir_count" == 1 ]]
-    then
-        cd "$dirs"
-    else
-        printf "$dirs\n"
-    fi
-}
 
 
 if [ -f "$HOME/.bash_extra" ]
