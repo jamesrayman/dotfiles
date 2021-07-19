@@ -16,6 +16,13 @@ v() {
     printf "%s\n" "$*"
 }
 
+rs() {
+    local prev="$(fc -ln -1)"
+    prev="${prev#"${prev%%[![:space:]]*}"}"
+    v "sudo $prev"
+    sudo $prev
+}
+
 # Alias for history. Prints 10 entries by default
 h() {
     history "${1-10}"
