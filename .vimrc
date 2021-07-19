@@ -142,8 +142,8 @@ nnoremap Z= 1z=
 nnoremap <BS> <C-^>
 
 " Up and down arrow keys scroll
-noremap <silent> <Up> @='5gkzz'<CR>
-noremap <silent> <Down> @='5gjzz'<CR>
+noremap <silent> <Up> @='5gk5<C-y>'<CR>
+noremap <silent> <Down> @='5gj5<C-e>'<CR>
 
 " Right arrow key changes windows
 noremap <Right><Up> <C-w>k
@@ -166,8 +166,8 @@ nnoremap <leader>w gwap
 
 
 """ Scrolling
-nnoremap <silent> <C-u> @='5gkzz'<CR>
-nnoremap <silent> <C-d> @='5gjzz'<CR>
+nnoremap <silent> <C-u> @="5gk5\<lt>C-y>"<CR>
+nnoremap <silent> <C-d> @="5gj5\<lt>C-e>"<CR>
 set scrolloff=2
 set sidescrolloff=5
 
@@ -184,35 +184,35 @@ highlight NonText ctermfg=201
 
 """ Undo file
 if !empty(glob(data_dir . '/.vim/undo'))
-    silent execute '!mkdir ' . data_dir . '/.vim/undo'
+silent execute '!mkdir ' . data_dir . '/.vim/undo'
 endif
 set undofile
 set undodir=~/.vim/undo
 
 """ Terminal focus
 function! MakeTerminalWindow()
-    sp
-    wincmd j
-    resize 15
-    term
-    setlocal signcolumn=no
-    setlocal wrap
-    setlocal nospell
-    setlocal nonumber
-    setlocal norelativenumber
-    setlocal winfixheight
-    f terminal
+sp
+wincmd j
+resize 15
+term
+setlocal signcolumn=no
+setlocal wrap
+setlocal nospell
+setlocal nonumber
+setlocal norelativenumber
+setlocal winfixheight
+f terminal
 endfunction
 
 function! ToggleTerminal()
-    let index = bufwinnr('terminal')
-    if index == -1
-        call MakeTerminalWindow()
-    elseif bufname() == 'terminal'
-        wincmd p
-    else
-        exec index . "wincmd w"
-    endif
+let index = bufwinnr('terminal')
+if index == -1
+    call MakeTerminalWindow()
+elseif bufname() == 'terminal'
+    wincmd p
+else
+    exec index . "wincmd w"
+endif
 endfunction
 
 command ToggleTerminal call ToggleTerminal()
@@ -247,10 +247,10 @@ onoremap <silent> am : normal vam<CR>
 
 """ make a text-obj function. Search should be across multiple lines see above plugin
 for s:c in ['$', '%', '.', ':', ',', '-', '*', '+', '#', '/', ';']
-    exec 'xnoremap <silent> i' . s:c . ' :<C-u> keeppattern normal! T' . s:c . 'vt' . s:c . '<CR>'
-    exec 'onoremap <silent> i' . s:c . ' :normal vi' . s:c . '<CR>'
-    exec 'xnoremap <silent> a' . s:c . ' :<C-u> keeppattern normal! F' . s:c . 'vf' . s:c . '<CR>'
-    exec 'onoremap <silent> a' . s:c . ' :normal va' . s:c . '<CR>'
+exec 'xnoremap <silent> i' . s:c . ' :<C-u> keeppattern normal! T' . s:c . 'vt' . s:c . '<CR>'
+exec 'onoremap <silent> i' . s:c . ' :normal vi' . s:c . '<CR>'
+exec 'xnoremap <silent> a' . s:c . ' :<C-u> keeppattern normal! F' . s:c . 'vf' . s:c . '<CR>'
+exec 'onoremap <silent> a' . s:c . ' :normal va' . s:c . '<CR>'
 endfor
 
 set matchpairs+=<:>

@@ -18,3 +18,12 @@ set show-all-if-unmodified on
 "\C-v": "\C-av \C-m"
 
 "\e`.": yank-last-arg
+
+"\eOA": ""
+"\eOB": ""
+"\eOC": ""
+"\eOD": ""
+"\e[A": ""
+"\e[B": ""
+"\e[C": ""
+"\e[D": ""
