@@ -16,6 +16,7 @@ v() {
     printf "%s\n" "$*"
 }
 
+# Redo the last command with sudo and put it in the history as such
 rs() {
     local prev="$(fc -ln -1)"
     prev="${prev#"${prev%%[![:space:]]*}"}"

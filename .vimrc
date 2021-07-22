@@ -164,6 +164,10 @@ nnoremap <leader>z :tab sp<CR>
 " Wrap a paragraph
 nnoremap <leader>w gwap
 
+" Substitute
+nnoremap <leader>/ :%s/
+vnoremap <leader>/ :s/
+
 
 """ Scrolling
 nnoremap <silent> <C-u> @="5gk5\<lt>C-y>"<CR>

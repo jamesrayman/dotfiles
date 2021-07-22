@@ -19,6 +19,9 @@ set show-all-if-unmodified on
 
 "\e`.": yank-last-arg
 
+"\C-xl": clear-screen
+"\C-x\C-l": clear-screen
+
 "\eOA": ""
 "\eOB": ""
 "\eOC": ""
