@@ -134,3 +134,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if [[ -t 0 ]]
+then
+    stty -ixon
+fi

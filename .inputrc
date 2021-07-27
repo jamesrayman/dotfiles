@@ -15,12 +15,15 @@ set show-all-if-unmodified on
 
 "\C-x ": magic-space
 "\C-f": edit-and-execute-command
+
 "\C-v": "\C-av \C-m"
+"\C-xv": "\C-e\C-uv \"$(cat <<'END_HEREDOC'\C-m\C-y\C-mEND_HEREDOC\C-m)\"\C-m"
+"\C-x\C-v": "\C-xv"
 
 "\e`.": yank-last-arg
 
 "\C-xl": clear-screen
-"\C-x\C-l": clear-screen
+"\C-x\C-l": "\C-xl"
 
 "\eOA": ""
 "\eOB": ""
