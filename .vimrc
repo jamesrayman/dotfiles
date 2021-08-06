@@ -239,6 +239,8 @@ set spellfile=~/.vim/spell/en.utf-8.add
 " Diff should inherit wrap
 autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 
+set diffopt=internal,filler,algorithm:patience,indent-heuristic,vertical
+
 " :D[iff]r[egs] a b should do a diff check of registers a and b in a new tab
 
 " Modified text operators

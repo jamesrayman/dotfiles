@@ -1,14 +1,10 @@
 [user]
 	email = rayman.james.e@gmail.com
 	name = James Rayman
-[credential]
-	helper = store
 [init]
 	defaultBranch = main
 [pull]
 	rebase = true
-[core]
-	pager = less
 [alias]
 	s = status --short
 	l = log --oneline -10

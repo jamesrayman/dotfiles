@@ -9,7 +9,6 @@ set show-all-if-unmodified on
 "\e`l": forward-word
 "\e`h": backward-word
 
-"\C-j": end-of-line
 "\C-d": backward-delete-char
 "\C-q": quoted-insert
 
