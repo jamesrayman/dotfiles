@@ -195,28 +195,34 @@ set undodir=~/.vim/undo
 
 """ Terminal focus
 function! MakeTerminalWindow()
-sp
-wincmd j
-resize 15
-term
-setlocal signcolumn=no
-setlocal wrap
-setlocal nospell
-setlocal nonumber
-setlocal norelativenumber
-setlocal winfixheight
-f terminal
+    sp
+    wincmd j
+    resize 15
+    term
+    setlocal signcolumn=no
+    setlocal wrap
+    setlocal nospell
+    setlocal nonumber
+    setlocal norelativenumber
+    setlocal winfixheight
+    f terminal
 endfunction
 
 function! ToggleTerminal()
-let index = bufwinnr('terminal')
-if index == -1
-    call MakeTerminalWindow()
-elseif bufname() == 'terminal'
-    wincmd p
-else
-    exec index . "wincmd w"
-endif
+    let index = bufwinnr('terminal')
+    if index == -1
+        let index = bufnr('terminal')
+        if index == -1
+            call MakeTerminalWindow()
+        else
+            below sb terminal
+            resize 15
+        endif
+    elseif bufname() == 'terminal'
+        q
+    else
+        exec index . "wincmd w"
+    endif
 endfunction
 
 command ToggleTerminal call ToggleTerminal()
