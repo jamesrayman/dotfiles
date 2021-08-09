@@ -142,8 +142,8 @@ nnoremap Z= 1z=
 nnoremap <BS> <C-^>
 
 " Up and down arrow keys scroll
-noremap <silent> <Up> @='5gk5<C-y>'<CR>
-noremap <silent> <Down> @='5gj5<C-e>'<CR>
+noremap <silent> <Up> @="10gk10\<lt>C-y>"<CR>
+noremap <silent> <Down> @="10gj10\<lt>C-e>"<CR>
 
 " Right arrow key changes windows
 noremap <Right><Up> <C-w>k
@@ -170,8 +170,8 @@ vnoremap <leader>/ :s/
 
 
 """ Scrolling
-nnoremap <silent> <C-u> @="5gk5\<lt>C-y>"<CR>
-nnoremap <silent> <C-d> @="5gj5\<lt>C-e>"<CR>
+nnoremap <silent> <C-u> @="10gk10\<lt>C-y>"<CR>
+nnoremap <silent> <C-d> @="10gj10\<lt>C-e>"<CR>
 set scrolloff=2
 set sidescrolloff=5
 
@@ -188,7 +188,7 @@ highlight NonText ctermfg=201
 
 """ Undo file
 if !empty(glob(data_dir . '/.vim/undo'))
-silent execute '!mkdir ' . data_dir . '/.vim/undo'
+    silent execute '!mkdir ' . data_dir . '/.vim/undo'
 endif
 set undofile
 set undodir=~/.vim/undo
@@ -218,10 +218,12 @@ function! ToggleTerminal()
             below sb terminal
             resize 15
         endif
+        norm i
     elseif bufname() == 'terminal'
         q
     else
         exec index . "wincmd w"
+        norm i
     endif
 endfunction
 
