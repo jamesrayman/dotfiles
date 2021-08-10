@@ -16,10 +16,11 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
-Plug 'preservim/nerdcommenter'
 Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-commentary'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-lastpat'
@@ -48,24 +49,10 @@ autocmd BufEnter * if bufname('#') =~# 'NERD_tree_\d\+' && bufname('%') !~# 'NER
 " Don't put the signcolumn on NERDTree
 autocmd BufEnter * if bufname('#') =~# 'NERD_tree_\d\+' | setlocal signcolumn=no | endif
 
-" Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | setlocal signcolumn=no | endif
-
-" Open the existing NERDTree on each new tab.
-autocmd BufWinEnter * silent NERDTreeMirror
 
 " UI Changes
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeDirArrows=1
-
-""" NERDCommenter
-vmap <C-_> <plug>NERDCommenterToggle
-nmap <C-_> <plug>NERDCommenterToggle
-let g:NERDSpaceDelims=1
-let g:NERDCommentEmptyLines=1
-let g:NERDCreateDefaultMappings=0
-lef g:NERDCustomDelimiters={'python': {'left': '#', 'right': ''}}
 
 
 """ Misc settings
