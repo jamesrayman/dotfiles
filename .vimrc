@@ -1,11 +1,8 @@
 " TODO:
 " Language features
 " Spell check
-" Terminal
-" Inline calculator
 " config files (e.g. comment styles, dictionaries, etc)
 " Separate large features into plugins
-" gitgutter: configure
 " Vim in terminal
 
 
@@ -22,8 +19,13 @@ Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-lastpat'
+Plug 'sgur/vim-textobj-parameter'
+Plug 'thinca/vim-textobj-between'
+Plug 'Julian/vim-textobj-variable-segment'
 Plug 'airblade/vim-gitgutter'
 call plug#end()
 filetype plugin on
@@ -131,7 +133,7 @@ set signcolumn=yes
 nnoremap Y y$
 
 " Insert mode paste shortcut
-inoremap <C-v> <C-r>+
+inoremap <C-y> <C-r>+
 
 " Other shortcuts
 nnoremap gl $
@@ -139,7 +141,7 @@ nnoremap gL ^
 nnoremap Z= 1z=
 
 " Backspace switches to the alternate file
-nnoremap <BS> <C-^>
+nnoremap <expr> <silent> <BS> bufname() == "terminal" ? "" : "\<C-^>"
 
 " Up and down arrow keys scroll
 noremap <silent> <Up> @="10gk10\<lt>C-y>"<CR>
@@ -259,16 +261,46 @@ onoremap <silent> am : normal vam<CR>
 
 """ Language specific
 
-""" make a text-obj function. Search should be across multiple lines see above plugin
-for s:c in ['$', '%', '.', ':', ',', '-', '*', '+', '#', '/', ';']
-exec 'xnoremap <silent> i' . s:c . ' :<C-u> keeppattern normal! T' . s:c . 'vt' . s:c . '<CR>'
-exec 'onoremap <silent> i' . s:c . ' :normal vi' . s:c . '<CR>'
-exec 'xnoremap <silent> a' . s:c . ' :<C-u> keeppattern normal! F' . s:c . 'vf' . s:c . '<CR>'
-exec 'onoremap <silent> a' . s:c . ' :normal va' . s:c . '<CR>'
-endfor
-
 set matchpairs+=<:>
+set indentkeys-=:
+
+call textobj#user#plugin('latex', {
+\   'environment': {
+\     '*pattern*': ['\\begin{[^}]\+}.*\n\s*', '\n^\s*\\end{[^}]\+}.*$'],
+\     'select-a': 'aE',
+\     'select-i': 'iE',
+\   },
+\  'bracket-math': {
+\     '*pattern*': ['\\\[', '\\\]'],
+\     'select-a': 'a\b',
+\     'select-i': 'i\[',
+\   },
+\  'paren-math': {
+\     '*pattern*': ['\\(', '\\)'],
+\     'select-a': 'a\(',
+\     'select-i': 'i\(',
+\   },
+\  'dollar-math-a': {
+\     '*pattern*': '[$][^$]*[$]',
+\     'select': 'a$',
+\   },
+\  'dollar-math-i': {
+\     '*pattern*': '[$]\zs[^$]*\ze[$]',
+\     'select': 'i$',
+\   },
+\  'quote': {
+\     '*pattern*': ['`', "'"],
+\     'select-a': 'aq',
+\     'select-i': 'iq',
+\   },
+\  'double-quote': {
+\     '*pattern*': ['``', "''"],
+\     'select-a': 'aQ',
+\     'select-i': 'iQ',
+\   },
+\ })
+
+
 
 " g/ should search current selection/word under cursor without moving cursor
 " g? should act similarly
-" <BS> should do nothing on terminal windows
