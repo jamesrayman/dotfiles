@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ -v "$WSL" ]]
+if [[ ! -v WSL ]]
 then
     xdg-open "$@"
 else 
@@ -10,20 +10,25 @@ else
         exit 1
     fi
 
-    path="$(realpath "$1")"
-    path="${path//\//\\}"
-
-    if [[ "${path:0:5}" == '\mnt\' ]]
+    if [[ "$1" == http://* || "$1" == https://* ]]
     then
-        path="${path:5}"
-        if [[ "$path" == *'\'* ]]
-        then
-            path="$(echo "$path" | sed -r 's/\\/:\\/')"
-        else
-            path="$path:"
-        fi
+        path="$1"
     else
-        path="\\\\wsl$\\Ubuntu$path"
+        path="$(realpath "$1")"
+        path="${path//\//\\}"
+
+        if [[ "${path:0:5}" == '\mnt\' ]]
+        then
+            path="${path:5}"
+            if [[ "$path" == *'\'* ]]
+            then
+                path="$(echo "$path" | sed -r 's/\\/:\\/')"
+            else
+                path="$path:"
+            fi
+        else
+            path="\\\\wsl$\\Ubuntu$path"
+        fi
     fi
 
     cmd.exe /C start "$path" 2> /dev/null

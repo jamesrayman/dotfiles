@@ -27,6 +27,8 @@ Plug 'sgur/vim-textobj-parameter'
 Plug 'thinca/vim-textobj-between'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 filetype plugin on
 
@@ -107,6 +109,10 @@ set number
 set relativenumber
 set signcolumn=yes
 
+""" FZF
+nnoremap <C-n> :Files<CR>
+nnoremap <leader>b :Buffers<CR>
+
 " More intuitive Y
 nnoremap Y y$
 
@@ -119,6 +125,7 @@ nnoremap gL ^
 nnoremap Z= 1z=
 
 " Backspace switches to the alternate file
+" Free <C-^> for tmux leader
 nnoremap <expr> <silent> <BS> bufname() == "terminal" ? "" : "\<C-^>"
 
 " Up and down arrow keys scroll
@@ -144,9 +151,8 @@ nnoremap <leader>z :tab sp<CR>
 " Wrap a paragraph
 nnoremap <leader>w gwap
 
-" Substitute
-nnoremap <leader>/ :%s/
-vnoremap <leader>/ :s/
+" Global search
+nnoremap <leader>/ :Rg<CR>
 
 
 """ Scrolling
@@ -157,7 +163,7 @@ set sidescrolloff=5
 
 
 """ Shell
-set shell=/usr/bin/env\ VMUX=a\ bash\ -l
+set shell=/usr/bin/env\ VMUX=y\ bash\ -l
 
 """ Color theming
 set t_Co=256
@@ -207,7 +213,7 @@ endfunction
 command ToggleTerminal call ToggleTerminal()
 
 nnoremap <silent> <M-`>; :ToggleTerminal<CR>
-tnoremap <silent> <M-`>; <C-\><C-n>
+tnoremap <silent> <expr> <M-`>; &ft == 'fzf' ? "\<C-[>" : "\<C-\>\<C-n>"
 inoremap <M-`>; <Esc>:ToggleTerminal<CR>
 
 """ Folding

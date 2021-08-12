@@ -6,6 +6,11 @@ alias pip="pip3"
 alias -- -='cd -'
 alias ..='cd ..'
 
+# ls
+alias ll='ls -alhF'
+alias la='ls -A'
+alias l='ls -CF'
+
 # other
 alias sudo='sudo -E'
 alias more="less"
