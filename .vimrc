@@ -15,7 +15,6 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'preservim/nerdtree'
 Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -33,26 +32,6 @@ filetype plugin on
 
 """ Leader
 let mapleader=" "
-
-""" NERDTree
-nnoremap <expr> <silent> <C-n> bufname() =~# 'NERD_tree_\d\+' ? "\<C-w>p" : ":NERDTreeFocus\<CR>"
-nnoremap <silent> <leader>r :NERDTreeRefreshRoot<CR>
-nnoremap <silent> <leader>n :NERDTreeFind<CR>
-
-" Close tab if NERDTree is the only window left
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~# 'NERD_tree_\d\+' && bufname('%') !~# 'NERD_tree_\d\+' && winnr('$') > 1 | 
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer' . buf | endif
-
-" Don't put the signcolumn on NERDTree
-autocmd BufEnter * if bufname('#') =~# 'NERD_tree_\d\+' | setlocal signcolumn=no | endif
-
-
-" UI Changes
-let g:NERDTreeMinimalUI=1
-let g:NERDTreeDirArrows=1
 
 
 """ Misc settings
@@ -73,6 +52,9 @@ set dir=~/.vim/swap
 set hidden
 set updatetime=1000
 set nojoinspaces
+
+""" No intro screen
+set shortmess+=I
 
 """ Formatting options
 set fo=jcrqln

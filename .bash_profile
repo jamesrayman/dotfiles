@@ -1,6 +1,6 @@
 if [ -f "$HOME/.bashrc" ]
 then
-    . "$HOME/.bashrc"
+    source "$HOME/.bashrc"
 fi
 
 # set pythonrc
@@ -28,7 +28,13 @@ export EDITOR="$VISUAL"
 # less
 export PAGER="less"
 export LESS="-F -i -J -W -Q -R -x4 -z-4"
-export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+export LESS_TERMCAP_mb=$'\E[1;31m'
+export LESS_TERMCAP_md=$'\E[1;36m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;33m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[1;32m'
+export LESS_TERMCAP_ue=$'\E[0m'
 
 if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
 then
@@ -46,10 +52,11 @@ alias ex="$VISUAL -e"
 alias view="$VISUAL -R"
 alias rvim="$VISUAL -Z"
 alias rview="$VISUAL -R -Z"
+alias vimdiff="$VISUAL -d"
 
-# maven
-export JAVA_HOME="/usr/lib/jvm/java-15-oracle"
-export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
+# fasd
+source .fasdrc
+
 
 # shell options
 
@@ -57,9 +64,12 @@ export PATH="$PATH:/mnt/c/tools/apache-maven-3.6.3/bin"
 set -P
 
 set enable-bracketed-paste on
+shopt -s globstar
+shopt -s nullglob
+shopt -s autocd
 
 
 if [ -f "$HOME/.bash_extra" ]
 then
-    . "$HOME/.bash_extra"
+    source "$HOME/.bash_extra"
 fi

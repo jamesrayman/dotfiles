@@ -8,4 +8,3 @@ function prompt {
 
 Set-PSReadlineOption -BellStyle None
 Set-PSReadlineKeyHandler -Key Tab -Function Complete
-

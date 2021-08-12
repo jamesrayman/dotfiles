@@ -3,32 +3,28 @@
     "actions": 
     [
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "ctrl+c"
+            "command": "unbound",
+            "keys": "ctrl+shift+,"
         },
         {
-            "command": "paste",
+            "command": "unbound",
             "keys": "ctrl+shift+v"
         },
         {
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b`h"
+                "input": "\u001b`."
             },
-            "keys": "ctrl+shift+h"
+            "keys": "ctrl+."
         },
         {
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b`l"
+                "input": "\u001e"
             },
-            "keys": "ctrl+shift+l"
+            "keys": "ctrl+,"
         },
         {
             "command": 
@@ -42,21 +38,45 @@
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b`."
+                "input": "\u001b`'"
             },
-            "keys": "ctrl+."
+            "keys": "ctrl+'"
         },
         {
-            "command": "unbound",
-            "keys": "ctrl+,"
+            "command": "paste",
+            "keys": "ctrl+shift+y"
         },
         {
-            "command": "unbound",
-            "keys": "ctrl+shift+,"
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "command": "scrollUp",
+            "keys": "ctrl+shift+u"
+        },
+        {
+            "command": "scrollDown",
+            "keys": "ctrl+shift+d"
+        },
+        {
+            "command": "scrollUpPage",
+            "keys": "ctrl+shift+b"
+        },
+        {
+            "command": "scrollDownPage",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+s"
         }
     ],
     "copyFormatting": "none",
-    "copyOnSelect": false,
+    "copyOnSelect": true,
     "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
     "profiles": 
     {
@@ -64,7 +84,8 @@
         "list": 
         [
             {
-                "bellStyle": "visual",
+                "antialiasingMode": "cleartype",
+                "bellStyle": "taskbar",
                 "colorScheme": "July 11th",
                 "commandline": "powershell.exe",
                 "cursorShape": "filledBox",
@@ -75,7 +96,8 @@
                 "name": "Windows PowerShell"
             },
             {
-                "bellStyle": "visual",
+                "antialiasingMode": "cleartype",
+                "bellStyle": "taskbar",
                 "colorScheme": "July 11th",
                 "commandline": "cmd.exe",
                 "cursorShape": "filledBox",
@@ -86,7 +108,8 @@
                 "name": "Command Prompt"
             },
             {
-                "bellStyle": "visual",
+                "antialiasingMode": "cleartype",
+                "bellStyle": "taskbar",
                 "colorScheme": "July 11th",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
@@ -97,7 +120,8 @@
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
-                "bellStyle": "visual",
+                "antialiasingMode": "cleartype",
+                "bellStyle": "taskbar",
                 "colorScheme": "July 11th",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
@@ -108,10 +132,12 @@
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
-                "bellStyle": "visual",
+                "antialiasingMode": "cleartype",
+                "bellStyle": "taskbar",
                 "colorScheme": "July 11th",
-                "commandline": "wsl.exe",
+                "commandline": "wsl.exe  -- printf '\\x1b[?12l' && bash -l",
                 "cursorShape": "filledBox",
+                "experimental.retroTerminalEffect": false,
                 "fontFace": "Consolas",
                 "fontSize": 11,
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
@@ -122,7 +148,8 @@
                 "useAcrylic": false
             },
             {
-                "bellStyle": "visual",
+                "antialiasingMode": "cleartype",
+                "bellStyle": "taskbar",
                 "colorScheme": "July 11th",
                 "cursorShape": "filledBox",
                 "fontFace": "Consolas",
@@ -209,7 +236,7 @@
             "background": "#282C34",
             "black": "#282C34",
             "blue": "#61AFEF",
-            "brightBlack": "#282C34",
+            "brightBlack": "#5A6374",
             "brightBlue": "#61AFEF",
             "brightCyan": "#56B6C2",
             "brightGreen": "#98C379",

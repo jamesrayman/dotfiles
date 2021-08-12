@@ -31,14 +31,25 @@
 !/.bash_aliases
 !/.inputrc
 
+# scripts
 !/bin/
 
 # python
 !/.pythonrc
 
-# powershell
-!/Profile.ps1
+# Windows
+!/win/
 
-# Windows Terminal
-!/settings.json
+# Mutt
+!/.mutt/
+/.mutt/*
+!/.mutt/muttrc
 
+# fasd
+!/.fasdrc
+
+# Lynx
+!/.lynxrc
+
+# tmux
+!/.tmux.conf

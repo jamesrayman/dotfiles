@@ -24,6 +24,9 @@ set show-all-if-unmodified on
 "\C-xl": clear-screen
 "\C-x\C-l": "\C-xl"
 
+"\C-xj": end-of-history
+"\C-x\C-j": "\C-xj"
+
 "\eOA": ""
 "\eOB": ""
 "\eOC": ""
