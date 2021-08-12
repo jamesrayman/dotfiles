@@ -7,7 +7,7 @@
 
 
 """ Plugin setup
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
     silent execute '!curl -fLo ' . data_dir . 
         \ '/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -29,6 +29,15 @@ Plug 'Julian/vim-textobj-variable-segment'
 Plug 'airblade/vim-gitgutter'
 call plug#end()
 filetype plugin on
+
+
+""" Make directories
+for s:dir in ['/undo', '/spell', '/swap']
+    if empty(glob(data_dir . s:dir))
+        silent execute '!mkdir ' . data_dir . s:dir
+    endif
+endfor
+
 
 """ Leader
 let mapleader=" "
@@ -158,9 +167,6 @@ highlight SpecialKey ctermfg=201
 highlight NonText ctermfg=201
 
 """ Undo file
-if !empty(glob(data_dir . '/.vim/undo'))
-    silent execute '!mkdir ' . data_dir . '/.vim/undo'
-endif
 set undofile
 set undodir=~/.vim/undo
 
@@ -212,6 +218,10 @@ set nofoldenable
 set spell
 set spelllang=en_us
 set spellfile=~/.vim/spell/en.utf-8.add
+
+""" grep
+set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow
+
 
 """ Diff
 
@@ -268,7 +278,6 @@ call textobj#user#plugin('latex', {
 \     'select-i': 'iQ',
 \   },
 \ })
-
 
 
 " g/ should search current selection/word under cursor without moving cursor

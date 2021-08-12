@@ -42,13 +42,13 @@ export EDITOR="$VISUAL"
 # less
 export PAGER="less"
 export LESS="-F -i -J -W -Q -R -x4 -z-4"
-export LESS_TERMCAP_mb=$'\E[1;31m'
-export LESS_TERMCAP_md=$'\E[1;36m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;33m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[1;32m'
-export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_mb=$'\e[1;31m'
+export LESS_TERMCAP_md=$'\e[1;36m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;32m'
+export LESS_TERMCAP_ue=$'\e[0m'
 
 if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
 then
@@ -68,9 +68,9 @@ alias rvim="$VISUAL -Z"
 alias rview="$VISUAL -R -Z"
 alias vimdiff="$VISUAL -d"
 
-# fasd
-source .fasdrc
-
+# fzf
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border"
 
 # shell options
 

@@ -1,8 +1,10 @@
-# use Python 3 by default
-alias python2="command python"
+# alias python3
 alias python="python3"
-alias pip2="command pip"
 alias pip="pip3"
+
+# consistent with autocd
+alias -- -='cd -'
+alias ..='cd ..'
 
 # other
 alias sudo='sudo -E'

@@ -45,9 +45,6 @@
 /.mutt/*
 !/.mutt/muttrc
 
-# fasd
-!/.fasdrc
-
 # Lynx
 !/.lynxrc
 
