@@ -15,6 +15,20 @@ export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
 # misc path
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
+if [[ -v WSL ]]
+then
+    for bin_dir in "$WH"/Projects/*/bin/
+    do
+        PATH="$PATH:$bin_dir"
+    done
+else
+    for bin_dir in "$HOME"/Projects/*/bin/
+    do
+        PATH="$PATH:$bin_dir"
+    done
+fi
+
+
 # cd path
 export CDPATH="$HOME/symlinks"
 
