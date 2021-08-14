@@ -20,6 +20,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-eunuch'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-lastpat'
@@ -36,10 +38,9 @@ filetype plugin on
 """ Make directories
 for s:dir in ['/undo', '/spell', '/swap']
     if empty(glob(data_dir . s:dir))
-        silent execute '!mkdir ' . data_dir . s:dir
+        silent execute '!mkdir -p ' . data_dir . s:dir
     endif
 endfor
-
 
 """ Leader
 let mapleader=" "
@@ -61,11 +62,12 @@ set nomodeline
 set display+=lastline
 set dir=~/.vim/swap
 set hidden
-set updatetime=1000
+set updatetime=300
 set nojoinspaces
+set cmdheight=2
 
-""" No intro screen
-set shortmess+=I
+""" No intro screen, no completion messages
+set shortmess+=Ic
 
 """ Formatting options
 set fo=jcrqln
@@ -97,12 +99,12 @@ set incsearch
 set nohlsearch
 set ignorecase
 set smartcase
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
+nnoremap n nzz<BS>n
+nnoremap N Nzz<Space>N
+nnoremap * *zz<BS>n
+nnoremap # #zz<Space>n
+nnoremap g* g*zz<BS>n
+nnoremap g# g#zz<Space>n
 
 """ Line numbering
 set number
@@ -122,15 +124,17 @@ inoremap <C-y> <C-r>+
 " Other shortcuts
 nnoremap gl $
 nnoremap gL ^
-nnoremap Z= 1z=
+nnoremap <expr> gz "1z="
 
 " Backspace switches to the alternate file
-" Free <C-^> for tmux leader
 nnoremap <expr> <silent> <BS> bufname() == "terminal" ? "" : "\<C-^>"
 
 " Up and down arrow keys scroll
-noremap <silent> <Up> @="10gk10\<lt>C-y>"<CR>
-noremap <silent> <Down> @="10gj10\<lt>C-e>"<CR>
+" noremap <silent> <expr> <Up> "10gk10\<lt>C-y>"
+" noremap <silent> <expr> <Down> "10gj10\<lt>C-e>"
+noremap <silent> <expr> <Up> v:count == 0 ? "10\<C-u>" : "\<C-u>"
+noremap <silent> <expr> <Down> v:count == 0 ? "10\<C-d>" : "\<C-d>"
+
 
 " Right arrow key changes windows
 noremap <Right><Up> <C-w>k
@@ -156,8 +160,8 @@ nnoremap <leader>/ :Rg<CR>
 
 
 """ Scrolling
-nnoremap <silent> <C-u> @="10gk10\<lt>C-y>"<CR>
-nnoremap <silent> <C-d> @="10gj10\<lt>C-e>"<CR>
+noremap <silent> <expr> <C-u> v:count == 0 ? "10\<C-u>" : "\<C-u>"
+noremap <silent> <expr> <C-d> v:count == 0 ? "10\<C-d>" : "\<C-d>"
 set scrolloff=2
 set sidescrolloff=5
 
@@ -224,6 +228,12 @@ set nofoldenable
 set spell
 set spelllang=en_us
 set spellfile=~/.vim/spell/en.utf-8.add
+if !empty(glob('.gitignore'))
+    if empty(glob('.vimproj/spell'))
+        silent execute '!mkdir -p .vimproj/spell'
+    endif
+    set spellfile=.vimproj/spell/en.utf-8.add,~/.vim/spell/en.utf-8.add
+endif
 
 """ grep
 set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow
@@ -288,3 +298,5 @@ call textobj#user#plugin('latex', {
 
 " g/ should search current selection/word under cursor without moving cursor
 " g? should act similarly
+
+redraw!

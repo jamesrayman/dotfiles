@@ -71,7 +71,7 @@ alias vimdiff="$VISUAL -d"
 # fzf
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border"
-source .fzfrc
+source "$HOME/.fzfrc"
 
 # shell options
 
