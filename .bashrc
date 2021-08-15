@@ -147,3 +147,6 @@ fi
 
 # Disable ^S and ^Q flow control
 stty -ixon
+
+# GPG
+export GPG_TTY="$(tty)"

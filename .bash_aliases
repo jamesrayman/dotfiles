@@ -1,5 +1,7 @@
 # alias python3
-alias python="python3"
+hash python3.9 &>/dev/null && alias python="python3.9"
+hash python3.8 &>/dev/null && alias python="python3.8"
+hash python3 &>/dev/null && alias python="python3"
 alias pip="pip3"
 
 # consistent with autocd
@@ -15,6 +17,7 @@ alias l='ls -CF'
 alias sudo='sudo -E'
 alias more="less"
 alias :q="exit"
+alias mutt="neomutt"
 
 # Evaluate args, print them, and add them to history, but don't execute
 # them
