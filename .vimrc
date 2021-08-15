@@ -58,7 +58,6 @@ set ruler
 set title
 set complete-=i
 set confirm
-set nomodeline
 set display+=lastline
 set dir=~/.vim/swap
 set hidden
@@ -86,8 +85,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 """ Indentation
-set tabstop=4
-set softtabstop=4
+set softtabstop=-1
 set shiftwidth=4
 set smarttab
 set expandtab
@@ -112,7 +110,7 @@ set relativenumber
 set signcolumn=yes
 
 """ FZF
-nnoremap <C-n> :Files<CR>
+nnoremap <leader>f :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 
 " More intuitive Y
@@ -124,7 +122,7 @@ inoremap <C-y> <C-r>+
 " Other shortcuts
 nnoremap gl $
 nnoremap gL ^
-nnoremap <expr> gz "1z="
+nnoremap gz 1z=
 
 " Backspace switches to the alternate file
 nnoremap <expr> <silent> <BS> bufname() == "terminal" ? "" : "\<C-^>"
@@ -157,6 +155,9 @@ nnoremap <leader>w gwap
 
 " Global search
 nnoremap <leader>/ :Rg<CR>
+
+" Set search register
+noremap g/ *N
 
 
 """ Scrolling
@@ -295,8 +296,6 @@ call textobj#user#plugin('latex', {
 \   },
 \ })
 
-
-" g/ should search current selection/word under cursor without moving cursor
-" g? should act similarly
+autocmd BufReadPre,FileReadPre *.asy set ft=cpp
 
 redraw!

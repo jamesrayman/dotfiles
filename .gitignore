@@ -50,3 +50,6 @@
 
 # tmux
 !/.tmux.conf
+
+# Don't print the login message
+!/.hushlogin

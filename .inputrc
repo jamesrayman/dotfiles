@@ -6,14 +6,16 @@ set show-all-if-unmodified on
 
 "\C-l": forward-char
 "\C-h": backward-char
-"\e`l": forward-word
-"\e`h": backward-word
+"\C-f": forward-word
+"\C-b": backward-word
 
-"\C-d": backward-delete-char
+"\C-w": backward-kill-word
+
+"\C-d": delete-char
 "\C-q": quoted-insert
 
 "\C-x ": magic-space
-"\C-f": edit-and-execute-command
+"\C-o": edit-and-execute-command
 
 "\C-v": "\C-av \C-m"
 "\C-xv": "\C-e\C-uv \"$(cat <<'END_HEREDOC'\C-m\C-y\C-mEND_HEREDOC\C-m)\"\C-m"
