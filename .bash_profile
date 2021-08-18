@@ -7,7 +7,9 @@ fi
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
 # python path
-export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/sitepackages/"
+export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/site-packages/"
+export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.8/site-packages/"
+export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.9/site-packages/"
 
 # make ls prettier
 export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
@@ -39,6 +41,16 @@ export HISTTIMEFORMAT="%F %T     "
 export VISUAL="/usr/bin/nvim"
 export EDITOR="$VISUAL"
 
+# Use $VISUAL for vi-inspired editors
+alias nvim="$VISUAL"
+alias vim="$VISUAL"
+alias vi="$VISUAL"
+alias ex="$VISUAL -e"
+alias view="$VISUAL -R"
+alias rvim="$VISUAL -Z"
+alias rview="$VISUAL -R -Z"
+alias vimdiff="$VISUAL -d"
+
 # less
 export PAGER="less"
 export LESS="-F -i -J -W -Q -R -x4 -z-4"
@@ -50,23 +62,8 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
 
-if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
-then
-    export LESS="$LESS -X"
-fi
-
 # man
 export MANWIDTH=78
-
-# Use $VISUAL for vi-inspired editors
-alias nvim="$VISUAL"
-alias vim="$VISUAL"
-alias vi="$VISUAL"
-alias ex="$VISUAL -e"
-alias view="$VISUAL -R"
-alias rvim="$VISUAL -Z"
-alias rview="$VISUAL -R -Z"
-alias vimdiff="$VISUAL -d"
 
 # fzf
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"

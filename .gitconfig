@@ -11,3 +11,4 @@
 	b = branch
 	ll = log --oneline
 	ch = checkout
+	graph = log --all --graph --decorate --oneline

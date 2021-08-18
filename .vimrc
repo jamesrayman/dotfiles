@@ -104,9 +104,7 @@ nnoremap # #zz<Space>n
 nnoremap g* g*zz<BS>n
 nnoremap g# g#zz<Space>n
 
-""" Line numbering
-set number
-set relativenumber
+""" Always include the gutter
 set signcolumn=yes
 
 """ FZF
@@ -168,7 +166,7 @@ set sidescrolloff=5
 
 
 """ Shell
-set shell=/usr/bin/env\ VMUX=y\ bash\ -l
+set shell=bash\ -l
 
 """ Color theming
 set t_Co=256
