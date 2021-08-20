@@ -64,6 +64,7 @@ set hidden
 set updatetime=300
 set nojoinspaces
 set cmdheight=2
+set ttimeoutlen=10
 
 """ No intro screen, no completion messages
 set shortmess+=Ic
@@ -79,10 +80,6 @@ set textwidth=72
 """ Tabs and windows
 set winminheight=0
 set winminwidth=0
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
 
 """ Indentation
 set softtabstop=-1
@@ -217,7 +214,6 @@ command ToggleTerminal call ToggleTerminal()
 
 nnoremap <silent> <M-`>; :ToggleTerminal<CR>
 tnoremap <silent> <expr> <M-`>; &ft == 'fzf' ? "\<C-[>" : "\<C-\>\<C-n>"
-inoremap <M-`>; <Esc>:ToggleTerminal<CR>
 
 """ Folding
 set foldmethod=indent
@@ -228,10 +224,10 @@ set spell
 set spelllang=en_us
 set spellfile=~/.vim/spell/en.utf-8.add
 if !empty(glob('.gitignore'))
-    if empty(glob('.vimproj/spell'))
-        silent execute '!mkdir -p .vimproj/spell'
+    if empty(glob('.vim/spell'))
+        silent execute '!mkdir -p .vim/spell'
     endif
-    set spellfile=.vimproj/spell/en.utf-8.add,~/.vim/spell/en.utf-8.add
+    set spellfile=.vim/spell/en.utf-8.add,~/.vim/spell/en.utf-8.add
 endif
 
 """ grep
