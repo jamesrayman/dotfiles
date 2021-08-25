@@ -62,6 +62,11 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
 
+if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
+then
+    export LESS="$LESS -X"
+fi
+
 # man
 export MANWIDTH=78
 
