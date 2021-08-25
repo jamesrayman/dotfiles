@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
+
 if [[ ! -v WSL ]]
 then
-    xdg-open "$@"
+    xdg-open "$@" 2> /dev/null
 else 
     if [[ -z "$1" ]]
     then

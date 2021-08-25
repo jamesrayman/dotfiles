@@ -1,3 +1,5 @@
+export PROFILE_LOADED="y"
+
 if [ -f "$HOME/.bashrc" ]
 then
     source "$HOME/.bashrc"
@@ -73,6 +75,8 @@ export MANWIDTH=78
 # fzf
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border"
+PATH="$PATH:~/.fzf/bin"
+# TODO: .fzfrc
 source "$HOME/.fzfrc"
 
 # shell options

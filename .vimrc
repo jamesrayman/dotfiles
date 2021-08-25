@@ -29,7 +29,7 @@ Plug 'sgur/vim-textobj-parameter'
 Plug 'thinca/vim-textobj-between'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 call plug#end()
 filetype plugin on
