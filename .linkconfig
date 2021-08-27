@@ -1,6 +1,0 @@
-/bin link
-/symlinks link
-/.config link-recursive
-/.mutt link-recursive
-/.* /.linkconfig /.gitignore file link
-/vim /.vim rename link-recursive

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+link.py bin/
+link.py --recursive .config/
+link.py --recursive .mutt/
+link.py --file .* excluding .gitignore
+link.py --recursive vim/ --as ~/.vim/
