@@ -122,8 +122,11 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# Disable ^S and ^Q flow control
-stty -ixon
+# STTY
+stty erase '^?'
+stty werase ''  # Allow .inputrc to bind ^W
+stty -ixon      # Disable ^S and ^Q flow control
+
 
 # GPG
 export GPG_TTY="$(tty)"
