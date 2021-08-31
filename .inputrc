@@ -11,7 +11,7 @@ set show-all-if-unmodified on
 
 "\C-w": backward-kill-word
 
-"\C-d": delete-char
+"\C-d": forward-backward-delete-char
 "\C-q": quoted-insert
 
 "\C-x ": magic-space

@@ -135,9 +135,9 @@ export GPG_TTY="$(tty)"
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
 # python path
-export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/site-packages/"
-export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.8/site-packages/"
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.9/site-packages/"
+export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.8/site-packages/"
+export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/site-packages/"
 
 # make ls prettier
 export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"

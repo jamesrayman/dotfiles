@@ -163,7 +163,7 @@ set sidescrolloff=5
 
 
 """ Shell
-set shell=bash\ -l
+set shell=bash
 
 """ Color theming
 set t_Co=256
