@@ -90,7 +90,10 @@ fi
 
 # ALT-C - cd into the selected directory
 bind -m emacs-standard '"\C-xd": " \C-b\C-k \C-u`__fzf_cd__`\e\C-e\er\C-m\C-y\C-h\e \C-y\ey\C-x\C-x\C-d"'
+bind -m emacs-standard '"\C-x\C-d": "\C-xd"'
 bind -m vi-command '"\C-xd": "\C-z\C-xd\C-z"'
+bind -m vi-command '"\C-x\C-d": "\C-z\C-xd\C-z"'
 bind -m vi-insert '"\C-xd": "\C-z\C-xd\C-z"'
+bind -m vi-insert '"\C-x\C-d": "\C-z\C-xd\C-z"'
 
 fi

@@ -3,5 +3,5 @@
 saw bin/
 saw --recursive .config/
 saw --recursive .mutt/
-saw --files-only .* --excluding .gitignore
+saw --files-only .* --exclude .gitignore
 saw --recursive vim/ --target ~/.vim/

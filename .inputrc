@@ -1,8 +1,11 @@
 $include /etc/inputrc
 
 set colored-stats on
+set visible-stats on
 set show-all-if-ambiguous on
 set show-all-if-unmodified on
+set mark-symlinked-directories on
+
 
 "\C-l": forward-char
 "\C-h": backward-char
@@ -20,8 +23,6 @@ set show-all-if-unmodified on
 "\C-v": "\C-av \C-m"
 "\C-xv": "\C-e\C-uv \"$(cat <<'END_HEREDOC'\C-m\C-y\C-mEND_HEREDOC\C-m)\"\C-m"
 "\C-x\C-v": "\C-xv"
-
-"\e`.": yank-last-arg
 
 "\C-xl": clear-screen
 "\C-x\C-l": "\C-xl"

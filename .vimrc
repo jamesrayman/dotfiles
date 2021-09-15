@@ -120,7 +120,7 @@ nnoremap gL ^
 nnoremap gz 1z=
 
 " Backspace switches to the alternate file
-nnoremap <expr> <silent> <BS> bufname() == "terminal" ? "" : "\<C-^>"
+nnoremap <BS> <C-^>
 
 " Up and down arrow keys scroll
 " noremap <silent> <expr> <Up> "10gk10\<lt>C-y>"
@@ -176,45 +176,6 @@ highlight NonText ctermfg=201
 set undofile
 set undodir=~/.vim/undo
 
-""" Terminal focus
-function! MakeTerminalWindow()
-    sp
-    wincmd j
-    resize 15
-    term
-    setlocal signcolumn=no
-    setlocal wrap
-    setlocal nospell
-    setlocal nonumber
-    setlocal norelativenumber
-    setlocal winfixheight
-    f terminal
-endfunction
-
-function! ToggleTerminal()
-    let index = bufwinnr('terminal')
-    if index == -1
-        let index = bufnr('terminal')
-        if index == -1
-            call MakeTerminalWindow()
-        else
-            below sb terminal
-            resize 15
-        endif
-        norm i
-    elseif bufname() == 'terminal'
-        q
-    else
-        exec index . "wincmd w"
-        norm i
-    endif
-endfunction
-
-command ToggleTerminal call ToggleTerminal()
-
-nnoremap <silent> <M-`>; :ToggleTerminal<CR>
-tnoremap <silent> <expr> <M-`>; &ft == 'fzf' ? "\<C-[>" : "\<C-\>\<C-n>"
-
 """ Folding
 set foldmethod=indent
 set nofoldenable
@@ -223,7 +184,7 @@ set nofoldenable
 set spell
 set spelllang=en_us
 set spellfile=~/.vim/spell/en.utf-8.add
-if !empty(glob('.gitignore'))
+if !empty(glob('.git'))
     if empty(glob('.vim/spell'))
         silent execute '!mkdir -p .vim/spell'
     endif
@@ -291,5 +252,8 @@ call textobj#user#plugin('latex', {
 \ })
 
 autocmd BufReadPre,FileReadPre *.asy set ft=cpp
+autocmd FileType plaintex set fo+=t
+autocmd FileType tex set fo+=t
+autocmd FileType text set fo+=t
 
 redraw!
