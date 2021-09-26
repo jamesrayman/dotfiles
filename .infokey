@@ -1,6 +1,3 @@
-# TODO: customize
-# Why does Stallman like meta keybindings so much?
-
 #info
 g       first-node
 G       last-node
@@ -11,7 +8,6 @@ k       prev-line
 
 f       scroll-forward-page-only
 ^f      scroll-forward-page-only
-\m\     scroll-forward-page-only
 z       scroll-forward-page-only-set-window
 
 b       scroll-backward-page-only
@@ -31,40 +27,46 @@ d       scroll-half-screen-down
 u       scroll-half-screen-up
 ^u      scroll-half-screen-up
 
-^xn     next-node
-^xp     prev-node
-^xu     up-node
-'       last-node
-\mt     top-node
-\md     dir-node
+^n      next-node
+^p      prev-node
+t       up-node
+T       top-node
+^t      dir-node
 
-^xg     goto-node
+g       goto-node
 I       goto-invocation-node
 
 n       search-next
 N       search-previous
 
-\mf     xref-item
-^xr     xref-item
+o       select-reference-this-line
+l       select-reference-this-line
 
-\mg     select-reference-this-line
-^x^j    select-reference-this-line
-^x^m    select-reference-this-line
+^i      move-to-next-xref
+^o      move-to-prev-xref
 
 ^c      abort-key
 
-\mh     get-info-help-node
+^h      get-info-help-node
+:       execute-command
 
-:q      quit
-ZZ      quit
+q       quit
 
 #echo-area
-\mh     echo-area-backward
-\ml     echo-area-forward
-\m0     echo-area-beg-of-line
-\m$     echo-area-end-of-line
-\mw     echo-area-forward-word
-\mx     echo-area-delete
-\mu     echo-area-abort
+^h      echo-area-backward
+^l      echo-area-forward
+^a      echo-area-beg-of-line
+^e      echo-area-end-of-line
+^f      echo-area-forward-word
+^b      echo-area-backward-word
+^d      echo-area-delete
+^g      echo-area-abort
 ^v      echo-area-quoted-insert
-\mX     echo-area-kill-word
+^q      echo-area-quoted-insert
+^w      echo-area-backward-kill-word
+^k      echo-area-kill-line
+^u      echo-area-backward-kill-line
+^y      echo-area-yank
+
+#var
+scroll-behavior=Page Only
