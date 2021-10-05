@@ -181,7 +181,7 @@ alias vimdiff="$VISUAL -d"
 
 # less
 export PAGER="less"
-export LESS="-F -i -J -W -Q -R -x4 -z-4"
+export LESS="-F -i -J -W -Q -R -z-4"
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -200,12 +200,19 @@ export MANWIDTH=78
 
 
 # fzf
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border"
-export FZF_CTRL_T_OPTS="--preview '(batcat --color=always --style=numbers --line-range=:200 {} || tree -C {}) 2>/dev/null' | head 200"
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head 200'"
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --preview '(bat --color=always --style=numbers --line-range=:200 {} || tree -C {}) 2>/dev/null | head -n 200'"
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
+_fzf_compgen_path() {
+    echo "$1"
+    $FZF_DEFAULT_COMMAND "$1"
+}
+_fzf_compgen_dir() {
+    $FZF_ALT_C_COMMAND "$1"
+}
 export FZF_COMPLETION_TRIGGER=","
-PATH="$PATH:/home/jamesrayman/.fzf/bin"
+PATH="$PATH:$HOME/.fzf/bin"
 source "$HOME/.fzfrc"
 
 
