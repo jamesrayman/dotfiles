@@ -18,6 +18,7 @@ alias sudo='sudo -E'
 alias more="less"
 alias :q="exit"
 alias mutt="neomutt"
+alias bat="batcat"
 
 # Evaluate args, print them, and add them to history, but don't execute
 # them

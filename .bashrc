@@ -198,11 +198,16 @@ fi
 # man
 export MANWIDTH=78
 
+
 # fzf
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border"
+export FZF_CTRL_T_OPTS="--preview '(batcat --color=always --style=numbers --line-range=:200 {} || tree -C {}) 2>/dev/null' | head 200"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head 200'"
+export FZF_COMPLETION_TRIGGER=","
 PATH="$PATH:/home/jamesrayman/.fzf/bin"
 source "$HOME/.fzfrc"
+
 
 # Ruby
 export GEM_HOME="$HOME/.gems"
