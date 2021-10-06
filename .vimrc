@@ -104,6 +104,16 @@ nnoremap g# g#zz<Space>n
 """ Always include the gutter
 set signcolumn=yes
 
+" Man
+let g:man_hardwrap="78"
+
+" Open help and man in vertical split
+autocmd FileType help,* wincmd L
+autocmd FileType man,* wincmd L
+
+" Don't spell check man pages
+autocmd FileType man,* setl nospell
+
 """ FZF
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>b :Buffers<CR>
@@ -123,8 +133,6 @@ nnoremap gz 1z=
 nnoremap <BS> <C-^>
 
 " Up and down arrow keys scroll
-" noremap <silent> <expr> <Up> "10gk10\<lt>C-y>"
-" noremap <silent> <expr> <Down> "10gj10\<lt>C-e>"
 noremap <silent> <expr> <Up> v:count == 0 ? "10\<C-u>" : "\<C-u>"
 noremap <silent> <expr> <Down> v:count == 0 ? "10\<C-d>" : "\<C-d>"
 
@@ -140,6 +148,10 @@ noremap <Left><Up> gg
 noremap <Left><Down> G
 noremap <Left><Left> gT
 noremap <Left><Right> gt
+
+" Fast movement
+noremap <C-j> 5j
+noremap <C-k> 5k
 
 
 " Zen mode

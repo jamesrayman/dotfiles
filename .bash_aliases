@@ -9,9 +9,9 @@ alias -- -='cd -'
 alias ..='cd ..'
 
 # ls
-alias ll='ls -alhF'
-alias la='ls -A'
-alias l='ls -CF'
+alias la='command ls -laGhv --group-directories-first --color=auto'
+alias l='command ls -v --group-directories-first --color=auto'
+alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # other
 alias sudo='sudo -E'

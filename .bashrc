@@ -92,9 +92,8 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls -lAGh1vX --group-directories-first --color=auto'
-    alias dir='dir -lAGh1vX --group-directories-first --color=auto'
-    alias vdir='vdir -lAGh1vX --group-directories-first --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -200,7 +199,7 @@ export MANWIDTH=78
 
 
 # fzf
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --preview '(bat --color=always --style=numbers --line-range=:200 {} || tree -C {}) 2>/dev/null | head -n 200'"
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --preview '(bat --color=always --style=numbers --line-range=:200 {} || tree -C {} || file -bL {}) 2>/dev/null | head -n 200'"
 export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"

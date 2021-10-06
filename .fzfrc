@@ -1,4 +1,4 @@
-# TODO: examine key bindings
+# e and j should modify history
 
 #     ____      ____
 #    / __/___  / __/
@@ -34,7 +34,8 @@ __fzfcmd() {
 }
 
 fzf-file-widget() {
-  local selected="$(__fzf_select__) "
+  local selected="$(__fzf_select__)"
+  [[ -n "$selected" ]] && selected="$selected "
   READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$selected${READLINE_LINE:$READLINE_POINT}"
   READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
 }
@@ -70,7 +71,7 @@ bind -m emacs-standard '"\C-z": vi-editing-mode'
 
 if (( BASH_VERSINFO[0] < 4 )); then
   # CTRL-T - Paste the selected file path into the command line
-  bind -m emacs-standard '"\C-t": " \C-b\C-k \C-u`__fzf_select__` \e\C-e\er\C-a\C-y\C-h\C-e\e \C-y\ey\C-x\C-x\C-f"'
+  bind -m emacs-standard '"\C-t": " \C-l\C-k \C-u`__fzf_select__`\e\C-e\er\C-a\C-y\C-?\C-e\e \C-y\ey\C-x\C-x\C-l"'
   bind -m vi-command '"\C-t": "\C-z\C-t\C-z"'
   bind -m vi-insert '"\C-t": "\C-z\C-t\C-z"'
 
@@ -91,7 +92,7 @@ else
 fi
 
 # CTRL-X CTRL-D - cd into the selected directory
-bind -m emacs-standard '"\C-xd": " \C-h\C-k \C-u`__fzf_cd__`\e\C-e\er\C-m\C-y\C-d\e \C-y\ey\C-x\C-x\C-d"'
+bind -m emacs-standard '"\C-xd": " \C-h\C-k \C-u`__fzf_cd__`\e\C-e\er\C-m\C-y\C-?\e \C-y\ey\C-x\C-x\C-d"'
 bind -m emacs-standard '"\C-x\C-d": "\C-xd"'
 bind -m vi-command '"\C-xd": "\C-z\C-xd\C-z"'
 bind -m vi-command '"\C-x\C-d": "\C-z\C-xd\C-z"'
