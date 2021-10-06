@@ -9,7 +9,7 @@ then
 else 
     if [[ -z "$1" ]]
     then
-        printf "start: missing argument\n"
+        printf "start: missing argument\n" >&2
         exit 1
     fi
 

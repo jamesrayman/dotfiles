@@ -199,10 +199,12 @@ export MANWIDTH=78
 
 
 # fzf
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --preview '(bat --color=always --style=numbers --line-range=:200 {} || tree -C {} || file -bL {}) 2>/dev/null | head -n 200'"
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border"
 export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
+export FZF_CTRL_T_OPTS="--preview='preview {}'"
+export FZF_ALT_C_OPTS="--preview='preview {}'"
 _fzf_compgen_path() {
     echo "$1"
     $FZF_DEFAULT_COMMAND "$1"

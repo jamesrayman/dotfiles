@@ -2,5 +2,6 @@
 --pager="less -F -i -J -W -Q -R -z-4"
 --tabs="0"
 --paging="always"
---style="changes,numbers,snip"
+--color="always"
+--style="changes,numbers"
 --theme="base16"

@@ -108,8 +108,8 @@ set signcolumn=yes
 let g:man_hardwrap="78"
 
 " Open help and man in vertical split
-autocmd FileType help,* wincmd L
-autocmd FileType man,* wincmd L
+" autocmd FileType help,* wincmd L
+" autocmd FileType man,* wincmd L
 
 " Don't spell check man pages
 autocmd FileType man,* setl nospell
