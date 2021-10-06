@@ -1,3 +1,5 @@
+# TODO: examine key bindings
+
 #     ____      ____
 #    / __/___  / __/
 #   / /_/_  / / /_
@@ -19,7 +21,7 @@ __fzf_select__() {
     -o -type d -print \
     -o -type l -print 2> /dev/null | cut -b3-"}"
   eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) -m "$@" | while read -r item; do
-    printf '%q ' "$item"
+    printf '%q' "$item"
   done
   echo
 }
@@ -32,7 +34,7 @@ __fzfcmd() {
 }
 
 fzf-file-widget() {
-  local selected="$(__fzf_select__)"
+  local selected="$(__fzf_select__) "
   READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$selected${READLINE_LINE:$READLINE_POINT}"
   READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
 }
@@ -41,7 +43,7 @@ __fzf_cd__() {
   local cmd dir
   cmd="${FZF_ALT_C_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
     -o -type d -print 2> /dev/null | cut -b3-"}"
-  dir=$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS --query '$1'" $(__fzfcmd) +m) && printf 'cd %q' "$dir"
+  dir=$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS" $(__fzfcmd) +m "$@") && printf 'cd %q' "$dir"
 }
 
 __fzf_history__() {
@@ -68,7 +70,7 @@ bind -m emacs-standard '"\C-z": vi-editing-mode'
 
 if (( BASH_VERSINFO[0] < 4 )); then
   # CTRL-T - Paste the selected file path into the command line
-  bind -m emacs-standard '"\C-t": " \C-b\C-k \C-u`__fzf_select__`\e\C-e\er\C-a\C-y\C-h\C-e\e \C-y\ey\C-x\C-x\C-f"'
+  bind -m emacs-standard '"\C-t": " \C-b\C-k \C-u`__fzf_select__` \e\C-e\er\C-a\C-y\C-h\C-e\e \C-y\ey\C-x\C-x\C-f"'
   bind -m vi-command '"\C-t": "\C-z\C-t\C-z"'
   bind -m vi-insert '"\C-t": "\C-z\C-t\C-z"'
 
@@ -89,7 +91,7 @@ else
 fi
 
 # CTRL-X CTRL-D - cd into the selected directory
-bind -m emacs-standard '"\C-xd": " \C-b\C-k \C-u`__fzf_cd__`\e\C-e\er\C-m\C-y\C-h\e \C-y\ey\C-x\C-x\C-d"'
+bind -m emacs-standard '"\C-xd": " \C-h\C-k \C-u`__fzf_cd__`\e\C-e\er\C-m\C-y\C-d\e \C-y\ey\C-x\C-x\C-d"'
 bind -m emacs-standard '"\C-x\C-d": "\C-xd"'
 bind -m vi-command '"\C-xd": "\C-z\C-xd\C-z"'
 bind -m vi-command '"\C-x\C-d": "\C-z\C-xd\C-z"'
@@ -99,7 +101,13 @@ bind -m vi-insert '"\C-x\C-d": "\C-z\C-xd\C-z"'
 fi
 
 j() {
-  $(__fzf_cd__ "$@")
+  $(__fzf_cd__ --query "$1")
+}
+
+e() {
+  local file
+  file="$(__fzf_select__ --query "$1")"
+  [[ -n "$file" ]] && "$EDITOR" "$file"
 }
 
 
