@@ -1,9 +1,7 @@
 " TODO:
 " Language features
-" Spell check
 " config files (e.g. comment styles, dictionaries, etc)
 " Separate large features into plugins
-" Vim in terminal
 
 
 """ Plugin setup
@@ -52,7 +50,7 @@ set nocompatible
 set encoding=utf-8
 set showcmd
 set wildmenu
-set wildmode=list:full,full
+set wildmode=list:full
 set lazyredraw
 set ruler
 set title
@@ -66,16 +64,21 @@ set nojoinspaces
 set cmdheight=2
 set ttimeoutlen=10
 
+" set list
+set list
+
+
 """ No intro screen, no completion messages
 set shortmess+=Ic
 
 """ Formatting options
-set fo=jcrqln
+set fo=jcrql2
 
 """ Editor rule and line wrapping
-set wrap linebreak nolist
+set wrap linebreak
 set colorcolumn=121
 set textwidth=72
+
 
 """ Tabs and windows
 set winminheight=0
@@ -108,8 +111,8 @@ set signcolumn=yes
 let g:man_hardwrap="78"
 
 " Open help and man in vertical split
-" autocmd FileType help,* wincmd L
-" autocmd FileType man,* wincmd L
+autocmd FileType help wincmd L
+autocmd FileType man wincmd L
 
 " Don't spell check man pages
 autocmd FileType man,* setl nospell
@@ -150,8 +153,8 @@ noremap <Left><Left> gT
 noremap <Left><Right> gt
 
 " Fast movement
-noremap <C-j> 5j
-noremap <C-k> 5k
+noremap <silent> <expr> <C-j> v:count == 0 ? "5gj" : "gj"
+noremap <silent> <expr> <C-k> v:count == 0 ? "5gk" : "gk"
 
 
 " Zen mode
@@ -183,6 +186,10 @@ colorscheme sonokai
 set cursorline
 highlight SpecialKey ctermfg=201
 highlight NonText ctermfg=201
+highlight Whitespace ctermfg=201
+highlight LineNr ctermfg=242
+highlight EndOfBuffer cterm=bold ctermfg=90
+
 
 """ Undo file
 set undofile
@@ -263,9 +270,9 @@ call textobj#user#plugin('latex', {
 \   },
 \ })
 
-autocmd BufReadPre,FileReadPre *.asy set ft=cpp
-autocmd FileType plaintex set fo+=t
-autocmd FileType tex set fo+=t
-autocmd FileType text set fo+=t
+autocmd BufReadPre,FileReadPre *.asy setl ft=cpp
+autocmd FileType plaintex setl fo+=t
+autocmd FileType tex setl fo+=t
+autocmd FileType text setl fo+=t
 
 redraw!
