@@ -1,3 +1,5 @@
+# https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -28,7 +30,8 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
+then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
@@ -37,7 +40,8 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null
+then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
     # a case would tend to support setf rather than setaf.)
@@ -63,19 +67,30 @@ short_wd () {
     printf "%s" "$wd"
 }
 
-# set prompt colors
+
+if [[ -f '/usr/share/git/completion/git-prompt.sh' ]]
+then
+    source '/usr/share/git/completion/git-prompt.sh'
+fi
+GIT_PS1_SHOWDIRTYSTATE=y
+GIT_PS1_SHOWUNTRACKEDFILES=y
+GIT_PS1_SHOWUPSTREAM=auto
+
+
 if [[ -v WSL ]]
 then
-    if [ "$color_prompt" = yes ]; then
-        PS1="\e[0;36m[\t]\e[0m ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\$(short_wd)\[\033[00m\]\$ "
+    if [ "$color_prompt" = yes ]
+    then
+        PS1="\e[0;36m[\t]\e[0m ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\$(short_wd)\[\033[00m\]\$(__git_ps1 ' (%s)')\$ "
     else
-        PS1="[\t] ${debian_chroot:+($debian_chroot)}\u@\h:$(short_wd)\$ "
+        PS1="[\t] ${debian_chroot:+($debian_chroot)}\u@\h:\$(short_wd)\$(__git_ps1 ' (%s)')\$ "
     fi
 else
-    if [ "$color_prompt" = yes ]; then
-        PS1='\e[0;36m[\t]\e[0m ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    if [ "$color_prompt" = yes ]
+    then
+        PS1='\e[0;36m[\t]\e[0m ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)")\$ '
     else
-        PS1='[\t] ${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+        PS1='[\t] ${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 " (%s)")\$ '
     fi
 fi
 
@@ -90,7 +105,8 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if [ -x /usr/bin/dircolors ]
+then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
@@ -108,15 +124,19 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
-if [ -f ~/.bash_aliases ]; then
+if [ -f ~/.bash_aliases ]
+then
     . ~/.bash_aliases
 fi
 
 # enable programmable completion features 
-if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
+if ! shopt -oq posix
+then
+    if [ -f /usr/share/bash-completion/bash_completion ]
+    then
         . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
+    elif [ -f /etc/bash_completion ]
+    then
         . /etc/bash_completion
     fi
 fi
