@@ -14,7 +14,6 @@ alias l='command ls -v --group-directories-first --color=auto'
 alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # other
-alias sudo='sudo -E'
 alias more="less"
 alias :q="exit"
 alias mutt="neomutt"
@@ -26,22 +25,30 @@ v() {
     printf "%s\n" "$*"
 }
 
-# Redo the last command with sudo and put it in the history as such
-rs() {
+# Always pass the -E flag to sudo. Also, if no arguments are given, use
+# the last command
+_sudo() {
     local prev="$(fc -ln -1)"
     prev="${prev#"${prev%%[![:space:]]*}"}"
-    v "sudo $prev"
-    sudo $prev
+    if (( $# == 0 ))
+    then
+        v "sudo $prev"
+        command sudo -E $prev
+    else
+        command sudo -E "$@"
+    fi
 }
+alias sudo="_sudo"
 
 # Alias for history. Prints 10 entries by default
 h() {
     history "${1-10}"
 }
 
+
 f_re_i() {
     local i=1
-    
+
     local arg
     for arg in "$@"
     do
@@ -52,7 +59,7 @@ f_re_i() {
         fi
         (( i++ ))
     done
-    
+
     printf "$i"
 }
 
@@ -64,7 +71,7 @@ re() {
     local i="$(f_re_i "$@")"
 
     if [[ $i == 1 ]]
-    then 
+    then
         fc -s "$*";
     else
         fc -s "${@:1:$(( i-1 ))}" "${*:$i}"
@@ -102,4 +109,14 @@ vre() {
     done
 
     printf "vre: no command found\n"
+}
+
+# git alias. git s is used if arguments are given
+g() {
+    if (( $# == 0 ))
+    then
+        git s
+    else
+        git "$@"
+    fi
 }
