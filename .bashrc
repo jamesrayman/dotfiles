@@ -1,5 +1,3 @@
-# https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -75,24 +73,16 @@ fi
 GIT_PS1_SHOWDIRTYSTATE=y
 GIT_PS1_SHOWUNTRACKEDFILES=y
 GIT_PS1_SHOWUPSTREAM=auto
+PS1=''
 
-
-if [[ -v WSL ]]
+if [[ "$color_prompt" = yes ]]
 then
-    if [ "$color_prompt" = yes ]
-    then
-        PS1="\e[0;36m[\t]\e[0m ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\$(short_wd)\[\033[00m\]\$(__git_ps1 ' (%s)')\$ "
-    else
-        PS1="[\t] ${debian_chroot:+($debian_chroot)}\u@\h:\$(short_wd)\$(__git_ps1 ' (%s)')\$ "
-    fi
+    GIT_PS1_SHOWCOLORHINTS=y
+    PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] ${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m$(short_wd)\e[0m\]" "\$ "'
 else
-    if [ "$color_prompt" = yes ]
-    then
-        PS1='\e[0;36m[\t]\e[0m ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)")\$ '
-    else
-        PS1='[\t] ${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 " (%s)")\$ '
-    fi
+    PROMPT_COMMAND='__git_ps1 "[\t] ${debian_chroot:+($debian_chroot)}\u@\h:$(short_wd)" "\$ "'
 fi
+
 
 
 # If this is an xterm set the title to user@host:dir
@@ -219,8 +209,8 @@ export MANWIDTH=78
 
 
 # fzf
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border"
-export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --select-1 --exit-0"
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
 export FZF_CTRL_T_OPTS="--preview='preview {}'"

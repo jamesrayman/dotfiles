@@ -119,6 +119,17 @@ e() {
   fi
 }
 
+s() {
+  local comm file
+  file="$(__fzf_select__ --query "$1")"
+  if [[ -n "$file" ]]
+  then
+    comm="$(printf '%q %q' "start" "$file")"
+    history -s $comm
+    $comm
+  fi
+}
+
 
 #     ____      ____
 #    / __/___  / __/
