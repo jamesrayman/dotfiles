@@ -15,7 +15,7 @@ alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # other
 alias more="less"
-alias :q="exit"
+alias q="exit"
 alias mutt="neomutt"
 
 # Evaluate args, print them, and add them to history, but don't execute

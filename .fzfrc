@@ -23,7 +23,6 @@ __fzf_select__() {
   eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) -m "$@" | while read -r item; do
     printf '%q' "$item"
   done
-  echo
 }
 
 if [[ $- =~ i ]]; then
@@ -99,36 +98,36 @@ bind -m vi-command '"\C-x\C-d": "\C-z\C-xd\C-z"'
 bind -m vi-insert '"\C-xd": "\C-z\C-xd\C-z"'
 bind -m vi-insert '"\C-x\C-d": "\C-z\C-xd\C-z"'
 
-fi
-
 j() {
   local comm
-  comm="$(__fzf_cd__ --query "$1")"
-  history -s $comm
-  $comm
+  comm="$(__fzf_cd__ --query "$*")"
+  history -s "$comm"
+  eval "$comm"
 }
 
 e() {
   local comm file
-  file="$(__fzf_select__ --query "$1")"
+  file="$(__fzf_select__ --query "$*")"
   if [[ -n "$file" ]]
   then
-    comm="$(printf '%q %q' "vim" "$file")"
-    history -s $comm
-    $comm
+    comm="$(printf '%s %s' "vim" "$file")"
+    history -s "$comm"
+    eval "$comm"
   fi
 }
 
 s() {
   local comm file
-  file="$(__fzf_select__ --query "$1")"
+  file="$(__fzf_select__ --query "$*")"
   if [[ -n "$file" ]]
   then
-    comm="$(printf '%q %q' "start" "$file")"
-    history -s $comm
-    $comm
+    comm="$(printf '%s %s' "start" "$file")"
+    history -s "$comm"
+    eval "$comm"
   fi
 }
+
+fi
 
 
 #     ____      ____

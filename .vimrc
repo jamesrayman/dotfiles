@@ -107,6 +107,9 @@ nnoremap g# g#zz<Space>n
 """ Always include the gutter
 set signcolumn=yes
 
+" No tab line
+set showtabline=0
+
 " Man
 let g:man_hardwrap="78"
 
@@ -123,6 +126,10 @@ nnoremap <leader>b :Buffers<CR>
 
 " More intuitive Y
 nnoremap Y y$
+
+" Switch ; and :
+noremap : ;
+noremap ; :
 
 " Insert mode paste shortcut
 inoremap <C-y> <C-r>+
@@ -181,7 +188,7 @@ set sidescrolloff=5
 set shell=bash
 
 """ Color theming
-set t_Co=256
+let t_Co=256 " ??
 colorscheme sonokai
 set cursorline
 highlight SpecialKey ctermfg=201

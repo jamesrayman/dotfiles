@@ -247,3 +247,5 @@ if [ -f "$HOME/.bash_extra" ]
 then
     source "$HOME/.bash_extra"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
