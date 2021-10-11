@@ -169,7 +169,7 @@ fi
 
 
 # quick links with cd
-export CDPATH="$HOME/symlinks"
+CDPATH="$HOME/symlinks"
 
 # history time stamp
 export HISTTIMEFORMAT="%F %T     "

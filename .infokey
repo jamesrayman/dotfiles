@@ -48,7 +48,7 @@ l       select-reference-this-line
 ^c      abort-key
 
 ^h      get-info-help-node
-:       execute-command
+;       execute-command
 
 q       quit
 
