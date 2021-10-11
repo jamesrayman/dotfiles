@@ -1,3 +1,5 @@
+# TODO: reorganize
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -172,7 +174,7 @@ fi
 CDPATH="$HOME/symlinks"
 
 # history time stamp
-export HISTTIMEFORMAT="%F %T     "
+HISTTIMEFORMAT="%F %T     "
 
 # visual and editor
 export VISUAL="/usr/bin/nvim"
@@ -247,5 +249,3 @@ if [ -f "$HOME/.bash_extra" ]
 then
     source "$HOME/.bash_extra"
 fi
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash

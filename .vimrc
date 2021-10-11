@@ -2,6 +2,7 @@
 " Language features
 " config files (e.g. comment styles, dictionaries, etc)
 " Separate large features into plugins
+" Snippets
 
 
 """ Plugin setup
@@ -118,7 +119,7 @@ autocmd FileType help wincmd L
 autocmd FileType man wincmd L
 
 " Don't spell check man pages
-autocmd FileType man,* setl nospell
+autocmd FileType man setl nospell
 
 """ FZF
 nnoremap <leader>f :Files<CR>
