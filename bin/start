@@ -1,31 +1,28 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
+#!/usr/bin/env sh
 
 
-if [[ ! -v WSL ]]
+if [ -z "$WSL" ]
 then
     xdg-open "$@" 1> /dev/null
 else 
-    if [[ -z "$1" ]]
+    if [ "$#" -eq "0" ]
     then
         printf "start: missing argument\n" >&2
         exit 1
     fi
 
-    if [[ "$1" == http://* || "$1" == https://* ]]
+    if case "$path" in 'http://'*) true;; 'https://'*) true;; *) false;; esac;
     then
         path="$1"
     else
-        path="$(realpath "$1")"
-        path="${path//\//\\}"
+        path="$(realpath "$1" | sed -r 's/\//\\/g')"
 
-        if [[ "${path:0:5}" == '\mnt\' ]]
+        if case "$path" in '\mnt'*) true;; *) false;; esac;
         then
             path="${path:5}"
-            if [[ "$path" == *'\'* ]]
+            if case "$path" in *'\'*) true;; *) false;; esac
             then
-                path="$(echo "$path" | sed -r 's/\\/:\\/')"
+                path="$(printf "$path" | sed -r 's/\\/:\\/')"
             else
                 path="$path:"
             fi

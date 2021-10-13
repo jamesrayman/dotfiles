@@ -8,6 +8,11 @@ alias pip="pip3"
 alias -- -='cd -'
 alias ..='cd ..'
 
+# safety
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
 # ls
 alias la='command ls -laGhv --group-directories-first --color=auto'
 alias l='command ls -v --group-directories-first --color=auto'
