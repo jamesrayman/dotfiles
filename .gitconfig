@@ -9,6 +9,10 @@
 	s = status --short
 	l = log --oneline -10
 	b = branch
+	c = commit
+	a = add
+	p = push
+	d = diff
 	ll = log --oneline
 	ch = checkout
 	graph = log --all --graph --decorate --oneline

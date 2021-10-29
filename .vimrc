@@ -126,7 +126,7 @@ nnoremap <leader>f :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 
 " More intuitive Y
-nnoremap Y y$
+nnoremap Y yg_
 
 " Switch ; and :
 noremap : ;

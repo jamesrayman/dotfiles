@@ -211,7 +211,7 @@ export MANWIDTH=78
 
 
 # fzf
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --select-1 --exit-0"
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --select-1 --exit-0 --no-mouse"
 export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
