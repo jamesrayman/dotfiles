@@ -3,6 +3,8 @@
 " config files (e.g. comment styles, dictionaries, etc)
 " Separate large features into plugins
 " Snippets
+" Only vsp help and man if columns > 165
+" Annotate everything
 
 
 """ Plugin setup
@@ -28,8 +30,11 @@ Plug 'sgur/vim-textobj-parameter'
 Plug 'thinca/vim-textobj-between'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'moll/vim-bbye'
+Plug 'aymericbeaumet/vim-symlink'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 filetype plugin on
 

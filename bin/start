@@ -3,7 +3,7 @@
 
 if [ -z "$WSL" ]
 then
-    xdg-open "$@" 1> /dev/null
+    xdg-open "$@" 1> /dev/null &
 else 
     if [ "$#" -eq "0" ]
     then
