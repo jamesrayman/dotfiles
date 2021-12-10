@@ -121,7 +121,7 @@ then
     . ~/.bash_aliases
 fi
 
-# enable programmable completion features 
+# enable programmable completion features
 if ! shopt -oq posix
 then
     if [ -f /usr/share/bash-completion/bash_completion ]
@@ -192,7 +192,7 @@ alias vimdiff="$VISUAL -d"
 
 # less
 export PAGER="less"
-export LESS="-F -i -J -W -Q -R -z-4"
+export LESS="-F -i -Q -R -z-4"
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -241,7 +241,6 @@ set -P
 set enable-bracketed-paste on
 shopt -s globstar
 shopt -s nullglob
-shopt -s autocd
 
 
 # any extra machine-dependent stuff

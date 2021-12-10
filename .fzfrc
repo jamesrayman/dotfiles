@@ -118,6 +118,7 @@ e() {
   fi
 }
 
+# s should not look at dotfiles
 s() {
   local comm file
   file="$(__fzf_select__ --query "$*")"

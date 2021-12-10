@@ -5,12 +5,14 @@
 " Snippets
 " Only vsp help and man if columns > 165
 " Annotate everything
+" Column selection
+" Git column off by default
 
 
 """ Plugin setup
 let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
-    silent execute '!curl -fLo ' . data_dir . 
+    silent execute '!curl -fLo ' . data_dir .
         \ '/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -60,7 +62,6 @@ set wildmode=list:full
 set lazyredraw
 set ruler
 set title
-set complete-=i
 set confirm
 set display+=lastline
 set dir=~/.vim/swap
@@ -144,6 +145,8 @@ inoremap <C-y> <C-r>+
 nnoremap gl $
 nnoremap gL ^
 nnoremap gz 1z=
+
+inoremap <C-l> <C-x><C-l>
 
 " Backspace switches to the alternate file
 nnoremap <BS> <C-^>

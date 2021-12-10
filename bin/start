@@ -19,10 +19,10 @@ else
 
         if case "$path" in '\mnt'*) true;; *) false;; esac;
         then
-            path="${path:5}"
-            if case "$path" in *'\'*) true;; *) false;; esac
+            path="$(printf '%s' "$path" | cut -c 5-)"
+            if case "$path" in *\\*) true;; *) false;; esac
             then
-                path="$(printf "$path" | sed -r 's/\\/:\\/')"
+                path="$(printf '%s' "$path" | sed -r 's/\\/:\\/')"
             else
                 path="$path:"
             fi
