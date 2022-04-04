@@ -99,8 +99,7 @@ bind -m vi-insert '"\C-xd": "\C-z\C-xd\C-z"'
 bind -m vi-insert '"\C-x\C-d": "\C-z\C-xd\C-z"'
 
 # Move to bin?
-# k f and t?
-j() {
+t() {
   local comm
   comm="$(__fzf_cd__ --query "$*")"
   history -s "$comm"

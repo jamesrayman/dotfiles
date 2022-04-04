@@ -30,20 +30,6 @@ v() {
     printf "%s\n" "$*"
 }
 
-# Always pass the -E flag to sudo. Also, if no arguments are given, use
-# the last command
-_sudo() {
-    local prev="$(fc -ln -1)"
-    prev="${prev#"${prev%%[![:space:]]*}"}"
-    if (( $# == 0 ))
-    then
-        v "sudo $prev"
-        command sudo -E $prev
-    else
-        command sudo -E "$@"
-    fi
-}
-alias sudo="_sudo"
 
 # Alias for history. Prints 10 entries by default
 h() {

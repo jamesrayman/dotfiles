@@ -49,7 +49,7 @@ for s:dir in ['/undo', '/spell', '/swap']
 endfor
 
 """ Leader
-let mapleader=" "
+let mapleader="l"
 
 
 """ Misc settings
@@ -104,6 +104,7 @@ set incsearch
 set nohlsearch
 set ignorecase
 set smartcase
+set nowrapscan
 nnoremap n nzz<BS>n
 nnoremap N Nzz<Space>N
 nnoremap * *zz<BS>n
@@ -134,43 +135,26 @@ nnoremap <leader>b :Buffers<CR>
 " More intuitive Y
 nnoremap Y yg_
 
-" Switch ; and :
-noremap : ;
-noremap ; :
-
 " Insert mode paste shortcut
 inoremap <C-y> <C-r>+
 
 " Other shortcuts
-nnoremap gl $
-nnoremap gL ^
-nnoremap gz 1z=
-
+noremap , :
+noremap : ,
+noremap gz 1z=
+noremap j gj
+noremap k gk
+noremap <Space> l
+noremap <CR> k
+noremap <BS> j
+noremap \ <C-^>
+noremap Q :q<CR>
+noremap t f
+noremap T F
+noremap f t
+noremap F T
+nnoremap S i<CR><ESC>
 inoremap <C-l> <C-x><C-l>
-
-" Backspace switches to the alternate file
-nnoremap <BS> <C-^>
-
-" Up and down arrow keys scroll
-noremap <silent> <expr> <Up> v:count == 0 ? "10\<C-u>" : "\<C-u>"
-noremap <silent> <expr> <Down> v:count == 0 ? "10\<C-d>" : "\<C-d>"
-
-
-" Right arrow key changes windows
-noremap <Right><Up> <C-w>k
-noremap <Right><Down> <C-w>j
-noremap <Right><Left> <C-w>h
-noremap <Right><Right> <C-w>l
-
-" Left arrow key for tabs and page top/bottom
-noremap <Left><Up> gg
-noremap <Left><Down> G
-noremap <Left><Left> gT
-noremap <Left><Right> gt
-
-" Fast movement
-noremap <silent> <expr> <C-j> v:count == 0 ? "5gj" : "gj"
-noremap <silent> <expr> <C-k> v:count == 0 ? "5gk" : "gk"
 
 
 " Zen mode
@@ -197,7 +181,6 @@ set sidescrolloff=5
 set shell=bash
 
 """ Color theming
-let t_Co=256 " ??
 colorscheme sonokai
 set cursorline
 highlight SpecialKey ctermfg=201
