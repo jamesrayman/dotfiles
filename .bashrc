@@ -163,7 +163,7 @@ then
         PATH="$PATH:$bin_dir"
     done
 else
-    for bin_dir in "$HOME"/Projects/*/bin/
+    for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
     do
         PATH="$PATH:$bin_dir"
     done
