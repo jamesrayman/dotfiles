@@ -132,9 +132,6 @@ autocmd FileType man setl nospell
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 
-" More intuitive Y
-nnoremap Y yg_
-
 " Insert mode paste shortcut
 inoremap <C-y> <C-r>+
 
@@ -157,7 +154,12 @@ noremap Q :q<CR>
 noremap y m
 noremap m y
 noremap Y M
-noremap M Y
+" More intuitive Y
+noremap M yg_
+noremap f /
+noremap F ?
+noremap / f
+noremap ? F
 nnoremap S i<CR><ESC>
 inoremap <C-l> <C-x><C-l>
 
