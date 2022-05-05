@@ -146,13 +146,18 @@ noremap j gj
 noremap k gk
 noremap <Space> l
 noremap <CR> k
-noremap <BS> j
+noremap <BS> e
+noremap e j
+noremap t k
+noremap T t
+noremap <C-n> <ESC>
+noremap <C-p> <ESC>
 noremap \ <C-^>
 noremap Q :q<CR>
-noremap t f
-noremap T F
-noremap f t
-noremap F T
+noremap y m
+noremap m y
+noremap Y M
+noremap M Y
 nnoremap S i<CR><ESC>
 inoremap <C-l> <C-x><C-l>
 
