@@ -7,6 +7,7 @@
 " Annotate everything
 " Column selection
 " Git column off by default
+" Unicode.vim
 
 
 """ Plugin setup
@@ -73,7 +74,8 @@ set ttimeoutlen=10
 
 " set list
 set list
-
+set listchars=trail:•,tab:│\ ,nbsp:␣,extends:›,precedes:‹
+set showbreak=↪\ 
 
 """ No intro screen, no completion messages
 set shortmess+=Ic
@@ -146,6 +148,7 @@ noremap <CR> k
 noremap <BS> e
 noremap e j
 noremap t k
+onoremap t t
 noremap T t
 noremap <C-n> <ESC>
 noremap <C-p> <ESC>
