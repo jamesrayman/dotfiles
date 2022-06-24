@@ -75,7 +75,8 @@ set ttimeoutlen=10
 " set list
 set list
 set listchars=trail:•,tab:│\ ,nbsp:␣,extends:›,precedes:‹
-set showbreak=↪\ 
+set breakindent
+set showbreak=\ ↪\ 
 
 """ No intro screen, no completion messages
 set shortmess+=Ic

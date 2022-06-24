@@ -37,7 +37,7 @@ h() {
 }
 
 
-f_re_i() {
+f_r_i() {
     local i=1
 
     local arg
@@ -56,10 +56,10 @@ f_re_i() {
 
 # Like fc -s, but all non-substitution arguments are combined
 # For example, the following two commands are equivalent
-# re git pull
+# r git pull
 # fc -s 'git pull'
-re() {
-    local i="$(f_re_i "$@")"
+r() {
+    local i="$(f_r_i "$@")"
 
     if [[ $i == 1 ]]
     then
@@ -69,9 +69,9 @@ re() {
     fi
 }
 
-# Like re, but doesn't execute the command
-vre() {
-    local sub_end="$(f_re_i "$@")"
+# Like r, but doesn't execute the command
+vr() {
+    local sub_end="$(f_r_i "$@")"
     local query="${*:$sub_end}"
     local n="$(history | wc -l)"
 
@@ -99,7 +99,7 @@ vre() {
         fi
     done
 
-    printf "vre: no command found\n"
+    printf "vr: no command found\n"
 }
 
 # git alias. git s is used if arguments are given

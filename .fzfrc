@@ -120,7 +120,7 @@ e() {
 # s should not look at dotfiles
 s() {
   local comm file
-  file="$(__fzf_select__ --query "$*")"
+  file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --no-ignore-vcs" __fzf_select__ --query "$*")"
   if [[ -n "$file" ]]
   then
     comm="$(printf '%s %s' "start" "$file")"
