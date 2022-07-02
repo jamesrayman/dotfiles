@@ -74,7 +74,7 @@ set ttimeoutlen=10
 
 " set list
 set list
-set listchars=trail:•,tab:│\ ,nbsp:␣,extends:›,precedes:‹
+set listchars=trail:•,tab:┃\ ,nbsp:␣,extends:›,precedes:‹
 set breakindent
 set showbreak=\ ↪\ 
 
@@ -115,9 +115,6 @@ nnoremap # #zz<Space>n
 nnoremap g* g*zz<BS>n
 nnoremap g# g#zz<Space>n
 
-""" Always include the gutter
-set signcolumn=yes
-
 " No tab line
 set showtabline=0
 
@@ -136,7 +133,7 @@ nnoremap <leader>f :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 
 " Insert mode paste shortcut
-inoremap <C-y> <C-r>+
+inoremap <C-y> <C-r>"
 
 " Other shortcuts
 noremap , :
@@ -145,7 +142,6 @@ noremap gz 1z=
 noremap j gj
 noremap k gk
 noremap <Space> l
-noremap <CR> k
 noremap <BS> e
 noremap e j
 noremap t k
@@ -196,10 +192,9 @@ colorscheme sonokai
 set cursorline
 highlight SpecialKey ctermfg=201
 highlight NonText ctermfg=201
-highlight Whitespace ctermfg=201
+highlight Whitespace cterm=bold ctermfg=242
 highlight LineNr ctermfg=242
 highlight EndOfBuffer cterm=bold ctermfg=90
-
 
 """ Undo file
 set undofile
@@ -213,12 +208,6 @@ set nofoldenable
 set spell
 set spelllang=en_us
 set spellfile=~/.vim/spell/en.utf-8.add
-if !empty(glob('.git'))
-    if empty(glob('.vim/spell'))
-        silent execute '!mkdir -p .vim/spell'
-    endif
-    set spellfile=.vim/spell/en.utf-8.add,~/.vim/spell/en.utf-8.add
-endif
 
 """ grep
 set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow
