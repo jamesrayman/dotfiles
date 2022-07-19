@@ -3,11 +3,13 @@
 " config files (e.g. comment styles, dictionaries, etc)
 " Separate large features into plugins
 " Snippets
-" Only vsp help and man if columns > 165
+" Only vsp help and man if columns > 165, shrink to 80 cols
 " Annotate everything
 " Column selection
 " Git column off by default
 " Unicode.vim
+" open link
+" Redo in Lua?
 
 
 """ Plugin setup
