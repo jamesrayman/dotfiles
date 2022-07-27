@@ -10,6 +10,10 @@
 " Unicode.vim
 " open link
 " Redo in Lua?
+" lp should paste line <count> times and g<C-a> selection starting at cursor
+" lT and lE should go up or down until line has fewer characters
+" lc should select a column with lT and lE
+" swap i and a?
 
 
 """ Plugin setup
