@@ -20,8 +20,13 @@ alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # other
 alias more="less"
-alias q="exit"
 alias mutt="neomutt"
+
+# color diff by default
+alias diff='diff --color'
+
+# weather
+alias weather='curl -sSL https://wttr.in | head -n -2'
 
 # Evaluate args, print them, and add them to history, but don't execute
 # them
