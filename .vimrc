@@ -47,6 +47,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'moll/vim-bbye'
 Plug 'aymericbeaumet/vim-symlink'
 Plug 'tpope/vim-fugitive'
+Plug 'whonore/Coqtail'
 call plug#end()
 filetype plugin on
 
@@ -61,6 +62,9 @@ endfor
 """ Leader
 let mapleader="l"
 
+""" Coq
+let g:coqtail_noimap="1"
+let g:coqtail_coq_proq="coqidetop.opt"
 
 """ Misc settings
 syntax enable
