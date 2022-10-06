@@ -6,7 +6,7 @@ then
     exit 1
 fi
 
-if [ ! -e "$1" ]
+if case "$1" in 'http://'*) false;; 'https://'*) false;; *) [ ! -e "$1" ] ;; esac;
 then
     printf "start: file \`%s' does not exist\n" "$1" >&2
     exit 1
@@ -15,9 +15,8 @@ fi
 if [ -z "$WSL" ]
 then
     xdg-open "$1" 1> /dev/null &
-else 
-
-    if case "$path" in 'http://'*) true;; 'https://'*) true;; *) false;; esac;
+else
+    if case "$1" in 'http://'*) true;; 'https://'*) true;; *) false;; esac;
     then
         path="$1"
     else
