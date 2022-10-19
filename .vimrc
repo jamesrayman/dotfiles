@@ -13,7 +13,6 @@
 " lp should paste line <count> times and g<C-a> selection starting at cursor
 " lT and lE should go up or down until line has fewer characters
 " lc should select a column with lT and lE
-" swap i and a
 " targets.nvim
 " marks.nvim
 " netrw
@@ -150,49 +149,61 @@ inoremap <C-y> <C-r>"
 
 " Other shortcuts
 noremap , :
-noremap : ,
-noremap gz 1z=
-noremap j gj
-noremap k gk
-noremap <Space> l
-noremap <BS> e
-noremap e j
-noremap t k
-onoremap t t
-noremap T t
-noremap <C-n> <ESC>
-noremap <C-p> <ESC>
+noremap a i
+noremap A I
+noremap i a
+noremap I A
+noremap <C-a> ^
+noremap <C-i> $
+noremap h k
+noremap H K
+noremap <Space> j
+noremap t b
+noremap T B
+noremap <C-t> h
+noremap e w
+noremap E W
+noremap <C-e> l
+noremap <silent> <expr> S v:count == 0 ? "10\<C-u>" : "\<C-u>"
+noremap <C-s> (
+noremap <silent> <expr> O v:count == 0 ? "10\<C-d>" : "\<C-d>"
+noremap <C-o> )
+noremap go O
+
+noremap <C-n> :bnext<CR>
+noremap <C-p> :bprev<CR>
 noremap \ <C-^>
-noremap Q :q<CR>
 noremap y m
 noremap m y
 noremap Y M
-" More intuitive Y
 noremap M yg_
 noremap f /
 noremap F ?
-noremap / f
-noremap ? F
-nnoremap S i<CR><ESC>
+noremap w f
+noremap W F
+noremap y t
+noremap Y T
+noremap j J
+noremap J gJ
 inoremap <C-l> <C-x><C-l>
+noremap <BS> %
+noremap <C-d> <C-o>
+noremap <C-u> <C-i>
+noremap <C-g> g<C-g>
 
+nnoremap b i<CR><ESC>
+nnoremap B a<CR><ESC>
+noremap gz 1z=
 
-" Zen mode
-nnoremap <leader>z :tab sp<CR>
 
 " Wrap a paragraph
 nnoremap <leader>w gwap
 
 " Global search
-nnoremap <leader>/ :Rg<CR>
-
-" Set search register
-noremap g/ *N
+nnoremap <leader>f :Rg<CR>
 
 
 """ Scrolling
-noremap <silent> <expr> <C-u> v:count == 0 ? "10\<C-u>" : "\<C-u>"
-noremap <silent> <expr> <C-d> v:count == 0 ? "10\<C-d>" : "\<C-d>"
 set scrolloff=2
 set sidescrolloff=5
 
