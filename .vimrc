@@ -154,7 +154,7 @@ noremap A I
 noremap i a
 noremap I A
 noremap <C-a> ^
-noremap <C-i> $
+noremap <TAB> $
 noremap h k
 noremap H K
 noremap <Space> j
@@ -185,6 +185,9 @@ noremap y t
 noremap Y T
 noremap j J
 noremap J gJ
+noremap ZZ <ESC>
+noremap ZA :q<CR>
+noremap ZS ZZ
 inoremap <C-l> <C-x><C-l>
 noremap <BS> %
 noremap <C-d> <C-o>
@@ -200,6 +203,7 @@ noremap gz 1z=
 nnoremap <leader>w gwap
 
 " Global search
+nnoremap <leader>e :Files<CR>
 nnoremap <leader>f :Rg<CR>
 
 
