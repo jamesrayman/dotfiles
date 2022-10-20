@@ -17,7 +17,6 @@
 " marks.nvim
 " netrw
 
-
 """ Plugin setup
 let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -157,16 +156,18 @@ noremap <C-a> ^
 noremap <TAB> $
 noremap h k
 noremap H K
+noremap <silent> <expr> <C-h> v:count == 0 ? "10\<C-u>" : "\<C-u>"
 noremap <Space> j
+noremap <silent> <expr> <C-Space> v:count == 0 ? "10\<C-d>" : "\<C-d>"
 noremap t b
 noremap T B
 noremap <C-t> h
 noremap e w
 noremap E W
 noremap <C-e> l
-noremap <silent> <expr> S v:count == 0 ? "10\<C-u>" : "\<C-u>"
+noremap S {
 noremap <C-s> (
-noremap <silent> <expr> O v:count == 0 ? "10\<C-d>" : "\<C-d>"
+noremap O }
 noremap <C-o> )
 noremap go O
 
