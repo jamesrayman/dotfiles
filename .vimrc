@@ -16,6 +16,7 @@
 " targets.nvim
 " marks.nvim
 " netrw
+" i% and a%
 
 """ Plugin setup
 let data_dir = '~/.vim'
@@ -27,7 +28,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'sainnhe/sonokai'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
@@ -174,9 +174,7 @@ noremap go O
 noremap <C-n> :bnext<CR>
 noremap <C-p> :bprev<CR>
 noremap \ <C-^>
-noremap y m
 noremap m y
-noremap Y M
 noremap M yg_
 noremap f /
 noremap F ?
@@ -194,6 +192,12 @@ noremap <BS> %
 noremap <C-d> <C-o>
 noremap <C-u> <C-i>
 noremap <C-g> g<C-g>
+noremap n c
+noremap N C
+noremap nn cc
+noremap c n
+noremap C N
+noremap <C-c> <C-a>
 
 nnoremap b i<CR><ESC>
 nnoremap B a<CR><ESC>
