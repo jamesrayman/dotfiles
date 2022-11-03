@@ -165,12 +165,13 @@ noremap <C-t> h
 noremap e w
 noremap E W
 noremap <C-e> l
+noremap s c
+noremap ss cc
 noremap S {
 noremap <C-s> (
+noremap o <Esc>
 noremap O }
 noremap <C-o> )
-noremap go O
-
 noremap <C-n> :bnext<CR>
 noremap <C-p> :bprev<CR>
 noremap \ <C-^>
@@ -184,19 +185,14 @@ noremap y t
 noremap Y T
 noremap j J
 noremap J gJ
-noremap ZZ <ESC>
 noremap ZA :q<CR>
-noremap ZS ZZ
 inoremap <C-l> <C-x><C-l>
 noremap <BS> %
 noremap <C-d> <C-o>
 noremap <C-u> <C-i>
 noremap <C-g> g<C-g>
-noremap n c
-noremap N C
-noremap nn cc
-noremap c n
-noremap C N
+noremap c o
+noremap C O
 noremap <C-c> <C-a>
 
 nnoremap b i<CR><ESC>
