@@ -167,10 +167,12 @@ noremap E W
 noremap <C-e> l
 noremap s c
 noremap ss cc
-noremap S {
+noremap S C
 noremap <C-s> (
-noremap o <Esc>
-noremap O }
+noremap o e
+noremap O E
+noremap go ge
+noremap gO gE
 noremap <C-o> )
 noremap <C-n> :bnext<CR>
 noremap <C-p> :bprev<CR>
