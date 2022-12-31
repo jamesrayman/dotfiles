@@ -242,6 +242,9 @@ set enable-bracketed-paste on
 shopt -s globstar
 shopt -s nullglob
 
+# makefile
+export CPPFLAGS="-Wall -std=c++17"
+export JAVAC="javac"
 
 # any extra machine-dependent stuff
 if [ -f "$HOME/.bash_extra" ]

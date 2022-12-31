@@ -116,3 +116,8 @@ g() {
         git "$@"
     fi
 }
+
+# make with custom defaults
+m() {
+    MAKEFILES="$HOME/.makefile" make all "$@"
+}
