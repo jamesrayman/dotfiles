@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+
+import os
+
+n = os.get_terminal_size().columns
+s = []
+
+d = list('1234567890')
+
+k = 1
+while k <= n:
+    l = ''
+    r = ('0' * (k-1)) + ('0' * (k-1)).join(d)
+    while len(l) < n:
+        l += r
+    l = list(l[:n])
+    j = 0
+    for i in range(n):
+        if i % k != k-1:
+            l[i] = ' '
+    s.append(''.join(l))
+    k *= 10
+
+
+for l in s[::-1]:
+    print(l)
