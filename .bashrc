@@ -6,12 +6,6 @@ case $- in
     *) return;;
 esac
 
-# Check for WSL
-if [[ -v WSL_DISTRO_NAME ]]
-then
-    export WSL="y"
-fi
-
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 
@@ -50,23 +44,6 @@ else
     color_prompt=
 fi
 
-# set short path in prompt, using "+" to indicate Windows home
-export WINHOME="/mnt/c/Users/jamsr"
-export WH="$WINHOME"
-short_wd () {
-    wd="$PWD"
-    if [[ "$wd" =~ ^$HOME ]]
-    then
-        wd="~${wd#"$HOME"}"
-    fi
-
-    if [[ "$wd" =~ ^$WINHOME ]]
-    then
-        wd="+${wd#"$WINHOME"}"
-    fi
-    printf "%s" "$wd"
-}
-
 
 if [[ -f '/usr/share/git/completion/git-prompt.sh' ]]
 then
@@ -80,9 +57,9 @@ PS1=''
 if [[ "$color_prompt" = yes ]]
 then
     GIT_PS1_SHOWCOLORHINTS=y
-    PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] ${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m$(short_wd)\e[0m\]" "\$ "'
+    PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] ${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\w\e[0m\]" "\$ "'
 else
-    PROMPT_COMMAND='__git_ps1 "[\t] ${debian_chroot:+($debian_chroot)}\u@\h:$(short_wd)" "\$ "'
+    PROMPT_COMMAND='__git_ps1 "[\t] ${debian_chroot:+($debian_chroot)}\u@\h:\w" "\$ "'
 fi
 
 
@@ -156,18 +133,10 @@ export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
 # misc path
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH:$HOME/.cargo/bin"
 
-if [[ -v WSL ]]
-then
-    for bin_dir in "$WH"/Projects/*/bin/
-    do
-        PATH="$PATH:$bin_dir"
-    done
-else
-    for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
-    do
-        PATH="$PATH:$bin_dir"
-    done
-fi
+for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
+do
+    PATH="$PATH:$bin_dir"
+done
 
 
 # quick links with cd

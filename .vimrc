@@ -196,6 +196,7 @@ noremap <C-g> g<C-g>
 noremap c o
 noremap C O
 noremap <C-c> <C-a>
+noremap gww gww
 
 nnoremap b i<CR><ESC>
 nnoremap B a<CR><ESC>
