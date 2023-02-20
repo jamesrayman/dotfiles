@@ -92,12 +92,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias definitions.
-if [ -f ~/.bash_aliases ]
-then
-    . ~/.bash_aliases
-fi
-
 # enable programmable completion features
 if ! shopt -oq posix
 then
@@ -110,28 +104,42 @@ then
     fi
 fi
 
+# XDG
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
+
 # STTY
 stty erase '^?'
 stty werase ''  # Allow .inputrc to bind ^W
 stty -ixon      # Disable ^S and ^Q flow control
 
+# inputrc
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 
 # GPG
 export GPG_TTY="$(tty)"
 
 # set pythonrc
-export PYTHONSTARTUP="$HOME/.pythonrc"
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
-# python path
+# Python path
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.9/site-packages/"
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.8/site-packages/"
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/site-packages/"
+
+# Rust
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+
+# Bash
+export HISTFILE="$XDG_STATE_HOME/bash/history"
 
 # make ls prettier
 export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
 
 # misc path
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH:$HOME/.cargo/bin"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH:$CARGO_HOME/bin"
 
 for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
 do
@@ -169,6 +177,7 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
+export LESSHISTHILE="$XDG_STATE_HOME/less/history"
 
 if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
 then
@@ -194,13 +203,35 @@ _fzf_compgen_dir() {
     $FZF_ALT_C_COMMAND "$1"
 }
 export FZF_COMPLETION_TRIGGER=","
-PATH="$PATH:$HOME/.fzf/bin"
-source "$HOME/.fzfrc"
-
+PATH="$PATH:$HOME/src/fzf/bin"
+source "$XDG_CONFIG_HOME/fzf/fzfrc"
 
 # Ruby
-export GEM_HOME="$HOME/.gems"
-export PATH="$HOME/.gems/bin:$PATH"
+export GEM_HOME="$XDG_DATA_HOME/gem"
+export PATH="$GEM_HOME/bin:$PATH"
+
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
+export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
+
+# node
+export NODE_REPL_HISTORY="$XDG_STATE_HOME/node/history"
+
+# ICE
+export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
+
+# Sage
+export DOT_SAGE="$XDG_CONFIG_HOME/sage"
+
+# Asymptote
+export ASYMPTOTE_HOME="$XDG_CONFIG_HOME/asy"
+
+# Jupyter
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+
+# Opam
+export OPAMROOT="$XDG_DATA_HOME/opam"
+test -r "$OPAMROOT/opam-init/init.sh" && . "$OPAMROOT/opam-init/init.sh" &> /dev/null || true
 
 # shell options
 
@@ -215,8 +246,138 @@ shopt -s nullglob
 export CPPFLAGS="-Wall -std=c++17"
 export JAVAC="javac"
 
+# make with custom defaults
+m() {
+    MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make all "$@"
+}
+
+# alias python3
+hash python3.9 &>/dev/null && alias python="python3.9"
+hash python3.8 &>/dev/null && alias python="python3.8"
+hash python3 &>/dev/null && alias python="python3"
+alias pip="pip3"
+
+# consistent with autocd
+alias -- -='cd -'
+alias ..='cd ..'
+
+# safety
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+# ls
+alias la='command ls -laGhv --group-directories-first --color=auto'
+alias l='command ls -v --group-directories-first --color=auto'
+alias ls='ls -lGhv --group-directories-first --color=auto'
+
+# other
+alias more="less"
+alias mutt="neomutt"
+
+# color diff by default
+alias diff='diff --color'
+
+# weather
+alias weather='curl -sSL https://wttr.in | head -n -2'
+
+# aliases to force XDG compliance
+alias units='units --history "$XDG_STATE_HOME/units/history"'
+alias wget='wget --hsts-file "$XDG_STATE_HOME/wget/hsts"'
+
+# Evaluate args, print them, and add them to history, but don't execute
+# them
+v() {
+    history -s "$@"
+    printf "%s\n" "$*"
+}
+
+
+# Alias for history. Prints 10 entries by default
+h() {
+    history "${1-10}"
+}
+
+
+f_r_i() {
+    local i=1
+
+    local arg
+    for arg in "$@"
+    do
+        if [[ ! "$arg" =~ = ]]
+        then
+            printf "$i"
+            return
+        fi
+        (( i++ ))
+    done
+
+    printf "$i"
+}
+
+# Like fc -s, but all non-substitution arguments are combined
+# For example, the following two commands are equivalent
+# r git pull
+# fc -s 'git pull'
+r() {
+    local i="$(f_r_i "$@")"
+
+    if [[ $i == 1 ]]
+    then
+        fc -s "$*";
+    else
+        fc -s "${@:1:$(( i-1 ))}" "${*:$i}"
+    fi
+}
+
+# Like r, but doesn't execute the command
+vr() {
+    local sub_end="$(f_r_i "$@")"
+    local query="${*:$sub_end}"
+    local n="$(history | wc -l)"
+
+    local i
+    for (( i=1; i <= n; i++ ))
+    do
+        local com="$(fc -ln "-$i" "-$i")"
+        com="${com#"${com%%[![:space:]]*}"}"
+
+        if [[ "$com" == "$query"* ]]
+        then
+            if [[ $sub_end != 1 ]]
+            then
+                local sub
+                for sub in "${@:1:$(( sub_end-1 ))}"
+                do
+                    local pre="${sub%%=*}"
+                    local post="${sub#*=}"
+                    com=${com//"$pre"/"$post"}
+                done
+            fi
+
+            v "$com"
+            return
+        fi
+    done
+
+    printf "vr: no command found\n"
+}
+
+# git alias. git s is used if arguments are given
+g() {
+    if (( $# == 0 ))
+    then
+        git s
+    else
+        git "$@"
+    fi
+}
+
+
 # any extra machine-dependent stuff
 if [ -f "$HOME/.bash_extra" ]
 then
     source "$HOME/.bash_extra"
 fi
+
