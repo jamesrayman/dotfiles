@@ -210,6 +210,7 @@ noremap c o
 noremap C O
 noremap <C-c> <C-a>
 noremap gww gww
+nnoremap gy "+y<Plug>(textobj-entire-a)
 
 nnoremap b i<CR><ESC>
 nnoremap B a<CR><ESC>
