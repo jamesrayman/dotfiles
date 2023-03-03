@@ -178,7 +178,7 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
-export LESSHISTHILE="$XDG_STATE_HOME/less/history"
+export LESSHISTFILE="$XDG_STATE_HOME/less/history"
 
 if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
 then

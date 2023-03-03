@@ -35,3 +35,4 @@ alias.,b=burndown.daily
 alias.,mb=,m ,b
 alias.,wb=,w ,b
 alias.,bw=burndown
+news.version=2.6.0

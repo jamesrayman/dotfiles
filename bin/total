@@ -1,8 +1,68 @@
 #!/usr/bin/env python3
+import sys
+from enum import Enum
 
 '''
 total: sums its inputs
-integers
-decimals
-time
 '''
+
+class MyException(Exception):
+    pass
+
+
+class AddendType(Enum):
+    Unknown = 0
+    Integer = 0
+    Real = 1
+    Time = 2
+
+
+class Args():
+    help: bool = False
+    addendType: AddendType = AddendType.Unknown
+
+def parse_args():
+    args = Args()
+    for arg in sys.argv[1:]:
+        match arg:
+            case '-h' | '--help':
+                args.help = True
+            case _:
+                raise MyException(f'Unknown argument `{arg}\'')
+
+    return args
+
+left = []
+def get():
+    global left
+    while len(left) == 0:
+        left = input().split()[::-1]
+    return left.pop()
+
+if __name__ == '__main__':
+    try:
+        args = parse_args()
+
+        if args.help:
+            print(
+'''\
+total: sums its input and prints the total
+  -h, --help        print this help\
+'''
+            )
+        else:
+            total = 0
+            try:
+                while True:
+                    x = get()
+                    try: x = int(x)
+                    except ValueError:
+                        try: x = float(x)
+                        except ValueError:
+                            raise MyException(f'Invalid addend `{x}\'')
+                    total += x
+            except EOFError:
+                print(total)
+    except MyException as e:
+        print(f'Error: {e}', file=sys.stderr)
+        exit(1)
