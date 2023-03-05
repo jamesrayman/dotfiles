@@ -125,11 +125,6 @@ export GPG_TTY="$(tty)"
 # set pythonrc
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
-# Python path
-export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.9/site-packages/"
-export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.8/site-packages/"
-export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python3.6/site-packages/"
-
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 
@@ -386,4 +381,3 @@ if [ -f "$HOME/.bash_extra" ]
 then
     source "$HOME/.bash_extra"
 fi
-
