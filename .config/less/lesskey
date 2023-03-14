@@ -1,0 +1,10 @@
+#command
+\  forw-scroll
+h back-scroll
+#\0 forw-line
+^h  back-line
+f forw-search
+F back-search
+
+#line-edit
+

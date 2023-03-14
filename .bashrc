@@ -30,22 +30,6 @@ then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null
-then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
-else
-    color_prompt=
-fi
-
-
 if [[ -f '/usr/share/git/completion/git-prompt.sh' ]]
 then
     source '/usr/share/git/completion/git-prompt.sh'
@@ -54,16 +38,8 @@ GIT_PS1_SHOWDIRTYSTATE=y
 GIT_PS1_SHOWUNTRACKEDFILES=y
 GIT_PS1_SHOWUPSTREAM=auto
 PS1=''
-
-if [[ "$color_prompt" = yes ]]
-then
-    GIT_PS1_SHOWCOLORHINTS=y
-    PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] ${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\w\e[0m\]" "\$ "'
-else
-    PROMPT_COMMAND='__git_ps1 "[\t] ${debian_chroot:+($debian_chroot)}\u@\h:\w" "\$ "'
-fi
-
-
+GIT_PS1_SHOWCOLORHINTS=y
+PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] ${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\w\e[0m\]" "\$ "'
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -74,34 +50,22 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]
-then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
 # enable programmable completion features
 if ! shopt -oq posix
 then
-    if [ -f /usr/share/bash-completion/bash_completion ]
+    if [[ -f /usr/share/bash-completion/bash_completion ]]
     then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]
+        source /usr/share/bash-completion/bash_completion
+    elif [[ -f /etc/bash_completion ]]
     then
-        . /etc/bash_completion
+        source /etc/bash_completion
     fi
 fi
 
@@ -142,10 +106,6 @@ do
     PATH="$PATH:$bin_dir"
 done
 
-
-# quick links with cd
-CDPATH="$HOME/symlinks"
-
 # history time stamp
 HISTTIMEFORMAT="%F %T     "
 
@@ -173,24 +133,21 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_vb=$'\x7f'
 export LESSHISTFILE="$XDG_STATE_HOME/less/history"
-
-if (( $(less --version | head -n 1 | tr -dc '0-9') < 530 ))
-then
-    export LESS="$LESS -X"
-fi
+export LESSKEYIN="$XDG_CONFIG_HOME/less/lesskey"
 
 # man
 export MANWIDTH=78
 
-
 # fzf
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --select-1 --exit-0 --no-mouse"
-export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
+export FZF_DEFAULT_COMMAND='idfs --hidden --follow --exclude .git --strip-cwd-prefix'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
-export FZF_CTRL_T_OPTS="--preview='preview {}'"
-export FZF_ALT_C_OPTS="--preview='preview {}'"
+export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme=path"
+export FZF_CTRL_R_OPTS="--scheme=history"
+export FZF_ALT_C_OPTS="--preview='preview {}' --scheme=path"
 _fzf_compgen_path() {
     echo "$1"
     $FZF_DEFAULT_COMMAND "$1"
@@ -198,7 +155,6 @@ _fzf_compgen_path() {
 _fzf_compgen_dir() {
     $FZF_ALT_C_COMMAND "$1"
 }
-export FZF_COMPLETION_TRIGGER=","
 PATH="$PATH:$HOME/src/fzf/bin"
 source "$XDG_CONFIG_HOME/fzf/fzfrc"
 
@@ -215,8 +171,8 @@ export NODE_REPL_HISTORY="$XDG_STATE_HOME/node/history"
 
 # NVM
 export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
 
 # ICE
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
@@ -232,7 +188,7 @@ export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 
 # Opam
 export OPAMROOT="$XDG_DATA_HOME/opam"
-test -r "$OPAMROOT/opam-init/init.sh" && . "$OPAMROOT/opam-init/init.sh" &> /dev/null || true
+[ -r "$OPAMROOT/opam-init/init.sh" ] && source "$OPAMROOT/opam-init/init.sh" &> /dev/null || true
 
 # shell options
 
@@ -253,9 +209,7 @@ m() {
 }
 
 # alias python3
-hash python3.9 &>/dev/null && alias python="python3.9"
-hash python3.8 &>/dev/null && alias python="python3.8"
-hash python3 &>/dev/null && alias python="python3"
+alias python="python3"
 alias pip="pip3"
 
 # consistent with autocd
@@ -374,7 +328,6 @@ g() {
         git "$@"
     fi
 }
-
 
 # any extra machine-dependent stuff
 if [ -f "$HOME/.bash_extra" ]
