@@ -7,22 +7,19 @@ case $- in
     *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
+# history
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTCONTROL=ignoreboth
 HISTSIZE=10000
 HISTFILESIZE=20000
+HISTFILE="$XDG_STATE_HOME/bash/history"
+HISTTIMEFORMAT="%F %T     "
 
-# check the window size after each command and, if necessary, update the
-# values of LINES and COLUMNS.
+set -P
+set enable-bracketed-paste on
+shopt -s globstar
+shopt -s nullglob
 shopt -s checkwinsize
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
@@ -49,10 +46,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
-
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -86,14 +79,13 @@ export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 # GPG
 export GPG_TTY="$(tty)"
 
-# set pythonrc
+# Python
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
+alias python="python3"
+alias pip="pip3"
 
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
-
-# Bash
-export HISTFILE="$XDG_STATE_HOME/bash/history"
 
 # make ls prettier
 export LS_COLORS="$LS_COLORS:ow=1;34;35:tw=1;34;35"
@@ -106,12 +98,10 @@ do
     PATH="$PATH:$bin_dir"
 done
 
-# history time stamp
-HISTTIMEFORMAT="%F %T     "
-
 # visual and editor
 export VISUAL="/usr/bin/nvim"
 export EDITOR="$VISUAL"
+export PAGER="less"
 
 # Use $VISUAL for vi-inspired editors
 alias nvim="$VISUAL"
@@ -124,7 +114,6 @@ alias rview="$VISUAL -R -Z"
 alias vimdiff="$VISUAL -d"
 
 # less
-export PAGER="less"
 export LESS="-F -i -Q -R -z-4"
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
@@ -136,11 +125,13 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_vb=$'\x7f'
 export LESSHISTFILE="$XDG_STATE_HOME/less/history"
 export LESSKEYIN="$XDG_CONFIG_HOME/less/lesskey"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # man
 export MANWIDTH=78
 
 # fzf
+PATH="$PATH:$HOME/src/fzf/bin"
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --select-1 --exit-0 --no-mouse"
 export FZF_DEFAULT_COMMAND='idfs --hidden --follow --exclude .git --strip-cwd-prefix'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -148,15 +139,78 @@ export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
 export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme=path"
 export FZF_CTRL_R_OPTS="--scheme=history"
 export FZF_ALT_C_OPTS="--preview='preview {}' --scheme=path"
-_fzf_compgen_path() {
-    echo "$1"
-    $FZF_DEFAULT_COMMAND "$1"
+
+__fzf_select__() {
+  eval "$FZF_CTRL_T_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) "$@" -m | while read -r item; do
+    printf '%q' "$item"
+  done
 }
-_fzf_compgen_dir() {
-    $FZF_ALT_C_COMMAND "$1"
+
+__fzfcmd() {
+  [[ -n "$TMUX_PANE" ]] && { [[ "${FZF_TMUX:-0}" != 0 ]] || [[ -n "$FZF_TMUX_OPTS" ]]; } &&
+    echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
 }
-PATH="$PATH:$HOME/src/fzf/bin"
-source "$XDG_CONFIG_HOME/fzf/fzfrc"
+
+fzf-file-widget() {
+  local selected="$(__fzf_select__)"
+  [[ -n "$selected" ]] && selected="$selected "
+  READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$selected${READLINE_LINE:$READLINE_POINT}"
+  READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
+}
+
+__fzf_cd__() {
+  local dir
+  dir=$(eval "$FZF_ALT_C_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS" $(__fzfcmd) "$@" +m) && printf 'cd %q' "$dir"
+}
+
+__fzf_history__() {
+  local output
+  output=$(
+    builtin fc -lnr -2147483648 |
+      last_hist=$(HISTTIMEFORMAT='' builtin history 1) perl -n -l0 -e 'BEGIN { getc; $/ = "\n\t"; $HISTCMD = $ENV{last_hist} + 1 } s/^[ *]//; print $HISTCMD - $. . "\t$_" if !$seen{$_}++' |
+      FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort,ctrl-z:ignore $FZF_CTRL_R_OPTS +m --read0" $(__fzfcmd) --query "$READLINE_LINE"
+  ) || return
+  READLINE_LINE=${output#*$'\t'}
+  if [[ -z "$READLINE_POINT" ]]; then
+    echo "$READLINE_LINE"
+  else
+    READLINE_POINT=0x7fffffff
+  fi
+}
+
+bind -m emacs-standard '"\er": redraw-current-line'
+bind -m emacs-standard -x '"\C-f": fzf-file-widget'
+bind -m emacs-standard -x '"\C-r": __fzf_history__'
+
+t() {
+  local comm
+  comm="$(__fzf_cd__ --query "$*")"
+  history -s "$comm"
+  eval "$comm"
+}
+
+e() {
+  local comm file
+  file="$(__fzf_select__ --query "$*")"
+  if [[ -n "$file" ]]
+  then
+    comm="$(printf '%s %s' "vim" "$file")"
+    history -s "$comm"
+    eval "$comm"
+  fi
+}
+
+s() {
+  local comm file
+  file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --no-ignore-vcs" __fzf_select__ --query "$*")"
+  if [[ -n "$file" ]]
+  then
+    comm="$(printf 'start %s' "$file")"
+    history -s "$comm"
+    eval "$comm"
+  fi
+}
+
 
 # Ruby
 export GEM_HOME="$XDG_DATA_HOME/gem"
@@ -190,15 +244,6 @@ export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export OPAMROOT="$XDG_DATA_HOME/opam"
 [ -r "$OPAMROOT/opam-init/init.sh" ] && source "$OPAMROOT/opam-init/init.sh" &> /dev/null || true
 
-# shell options
-
-# evaluate symlinks immediately
-set -P
-
-set enable-bracketed-paste on
-shopt -s globstar
-shopt -s nullglob
-
 # makefile
 export CPPFLAGS="-Wall -std=c++17"
 export JAVAC="javac"
@@ -208,9 +253,6 @@ m() {
     MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make all "$@"
 }
 
-# alias python3
-alias python="python3"
-alias pip="pip3"
 
 # consistent with autocd
 alias -- -='cd -'
@@ -230,8 +272,11 @@ alias ls='ls -lGhv --group-directories-first --color=auto'
 alias more="less"
 alias mutt="neomutt"
 
-# color diff by default
-alias diff='diff --color'
+# use color by default
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 # weather
 alias weather='curl -sSL https://wttr.in | head -n -2'
@@ -247,12 +292,10 @@ v() {
     printf "%s\n" "$*"
 }
 
-
 # Alias for history. Prints 10 entries by default
 h() {
     history "${1-10}"
 }
-
 
 f_r_i() {
     local i=1
