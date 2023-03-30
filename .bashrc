@@ -18,6 +18,7 @@ set enable-bracketed-paste on
 shopt -s globstar
 shopt -s nullglob
 shopt -s checkwinsize
+shopt -s direxpand
 
 # history
 shopt -s histappend
