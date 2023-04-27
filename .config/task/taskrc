@@ -29,14 +29,16 @@ search.case.sensitive=no
 nag=
 
 urgency.tags.coefficient=0.0
-urgency.user.project.Chore.coefficient=4.0
+urgency.user.project.Chore.coefficient=1.0
 urgency.user.project.UT.coefficient=1.0
 urgency.user.project.Ovid.coefficient=4.5
-urgency.user.project.Rachel.coefficient=4.0
+urgency.user.project.Rachel.coefficient=5.0
 urgency.user.project.Finance.coefficient=1.0
-urgency.user.tag.review.coefficient=5.0
+urgency.user.project.Arch.coefficient=-1.0
+urgency.user.project.Server.coefficient=-2.0
+urgency.user.tag.review.coefficient=10.0
 
-alias.,m=due.after:socm due.before:eom+1s
+alias.,m=due.after:som due.before:eom+1s
 alias.,w=due.after:now due.before:1w
 alias.,b=burndown.daily
 alias.,mb=,m ,b

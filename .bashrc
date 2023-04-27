@@ -218,13 +218,7 @@ export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 
 # Node
 export NODE_REPL_HISTORY="$XDG_STATE_HOME/node/history"
-
-# NVM
-export NVM_DIR="$HOME/.config/nvm"
-load_nvm() {
-  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
-}
+export PATH="$PATH:$HOME/src/node/bin"
 
 # ICE
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
