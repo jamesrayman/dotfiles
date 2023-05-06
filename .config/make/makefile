@@ -6,6 +6,8 @@ java_src := $(wildcard *.java)
 tex_src := $(wildcard *.tex)
 
 
+all: $(c_src:.c=) $(cpp_src:.cpp=) $(java_src:.java=.class) $(tex_src:.tex=.pdf)
+
 % : %.c
 	$(CC) $(CFLAGS) -o $@ $<
 
@@ -23,5 +25,3 @@ tex_src := $(wildcard *.tex)
 	fi
 	latexmk -c >/dev/null 2>&1
 	rm -f $*.pre
-
-all: $(c_src:.c=) $(cpp_src:.cpp=) $(java_src:.java=.class) $(tex_src:.tex=.pdf)

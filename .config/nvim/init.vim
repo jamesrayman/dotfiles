@@ -46,6 +46,8 @@ Plug 'moll/vim-bbye'
 Plug 'aymericbeaumet/vim-symlink'
 Plug 'tpope/vim-fugitive'
 Plug 'whonore/Coqtail'
+Plug 'tikhomirov/vim-glsl'
+Plug 'wuelnerdotexe/vim-astro'
 call plug#end()
 filetype plugin on
 

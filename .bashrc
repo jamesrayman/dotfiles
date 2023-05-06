@@ -242,8 +242,14 @@ export JAVAC="javac"
 
 # make with custom defaults
 m() {
-    MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make all "$@"
+    MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make "$@"
 }
+mc() {
+  m clean "$@"
+}
+
+# Notecard
+alias en="vi $HOME/andromeda/note/card.txt"
 
 # Mutt
 alias mutt="neomutt"
