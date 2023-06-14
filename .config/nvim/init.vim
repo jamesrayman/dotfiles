@@ -316,6 +316,9 @@ call textobj#user#plugin('latex', {
 \ })
 
 autocmd BufReadPre,FileReadPre *.asy setl ft=cpp
+autocmd BufReadPre,FileReadPre *.sage setl ft=python
+autocmd BufReadPre,FileReadPre *.astro setl fo+=t
+autocmd BufReadPre,FileReadPre *.astro setl indentkeys=
 autocmd FileType plaintex setl fo+=t
 autocmd FileType tex setl fo+=t
 autocmd FileType text setl fo+=t

@@ -128,7 +128,7 @@ export MANWIDTH=78
 
 # fzf
 PATH="$PATH:$HOME/src/fzf/bin"
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --select-1 --exit-0 --no-mouse"
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
 export FZF_DEFAULT_COMMAND='idfs --hidden --follow --exclude .git --strip-cwd-prefix'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
