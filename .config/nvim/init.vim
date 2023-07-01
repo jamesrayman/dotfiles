@@ -29,7 +29,6 @@ endif
 call plug#begin($XDG_DATA_HOME."/nvim/plugged")
 Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
@@ -213,6 +212,8 @@ noremap C O
 noremap <C-c> <C-a>
 noremap gww gww
 nnoremap gy "+y<Plug>(textobj-entire-a)
+nnoremap gh gk
+nnoremap g<Space> gj
 
 nnoremap b i<CR><ESC>
 nnoremap B a<CR><ESC>

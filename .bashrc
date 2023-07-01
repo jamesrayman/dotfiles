@@ -20,6 +20,9 @@ shopt -s nullglob
 shopt -s checkwinsize
 shopt -s direxpand
 
+# more secure umask
+umask 077
+
 # history
 shopt -s histappend
 HISTCONTROL=ignoreboth
@@ -80,6 +83,7 @@ export GPG_TTY="$(tty)"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 alias python="python3"
 alias pip="pip3"
+alias -- -m="python -m"
 
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
@@ -292,10 +296,20 @@ g() {
     if (( $# == 0 ))
     then
         git s
+    elif [[ "$*" == "-" ]]
+    then
+        git checkout -
     else
         git "$@"
     fi
 }
 
 # any extra machine-dependent stuff
-[ -r "$XDG_CONFIG_HOME/bash/bash_extra" ] && source "$XDG_CONFIG_HOME/bash/bash_extra"
+[ -r "$XDG_CONFIG_HOME/bash/extra" ] && source "$XDG_CONFIG_HOME/bash/extra"
+if [ -r "$XDG_CONFIG_HOME/bash/secrets" ]
+then
+    source "$XDG_CONFIG_HOME/bash/secrets"
+else
+    printf "# %s: noudf\n" 'vim' >> "$XDG_CONFIG_HOME/bash/secrets"
+    chmod go= "$XDG_CONFIG_HOME/bash/secrets"
+fi

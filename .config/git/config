@@ -6,13 +6,14 @@
 [pull]
 	rebase = true
 [alias]
-	s = status --short
-	l = log --oneline -10
+	a = add
 	b = branch
 	c = commit
-	a = add
-	p = push
 	d = diff
+	l = log --oneline -10
+	p = push
+	s = status --short
 	ll = log --oneline
 	ch = checkout
 	graph = log --all --graph --decorate --oneline
+	gr = graph

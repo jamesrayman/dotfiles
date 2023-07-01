@@ -5,8 +5,7 @@
 
 
 # My Taskwarrior philosophy:
-#   Tags should be verbs, with the following exceptions:
-#       +next
+#   Tags should be verbs, with the exception of +next
 #   Projects should group tasks of a single theme or aimed at a common goal
 #   priority:H means top priority which should be done soon
 #   priority:M means should be done sooner than tasks without high priority or a close due date
