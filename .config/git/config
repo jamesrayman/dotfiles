@@ -10,10 +10,15 @@
 	b = branch
 	c = commit
 	d = diff
+	f = fetch
 	l = log --oneline -10
 	p = push
+	pf = push --force-with-lease
 	s = status --short
 	ll = log --oneline
 	ch = checkout
 	graph = log --all --graph --decorate --oneline
 	gr = graph
+	fd = ls-tree -r HEAD --name-only
+	ls = fd
+	tree = fd

@@ -6,10 +6,17 @@ then
     exit 1
 fi
 
-if case "$1" in 'http://'*) false;; 'https://'*) false;; *) [ ! -e "$1" ] ;; esac;
-then
-    printf "start: file \`%s' does not exist\n" "$1" >&2
-    exit 1
-fi
+ret=0
 
-xdg-open "$1" &> /dev/null &
+for file in "$@"
+do
+    if case "$file" in 'http://'*) false;; 'https://'*) false;; *) [ ! -e "$file" ] ;; esac;
+    then
+        printf "start: file \`%s' does not exist\n" "$file" >&2
+        ret=1
+    else
+        xdg-open "$file" &> /dev/null &
+    fi
+done
+
+exit $ret

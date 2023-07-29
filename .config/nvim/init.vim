@@ -153,10 +153,6 @@ autocmd FileType man wincmd L
 " Don't spell check man pages
 autocmd FileType man setl nospell
 
-""" FZF
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>b :Buffers<CR>
-
 " Insert mode paste shortcut
 inoremap <C-y> <C-r>"
 
@@ -212,8 +208,10 @@ noremap C O
 noremap <C-c> <C-a>
 noremap gww gww
 nnoremap gy "+y<Plug>(textobj-entire-a)
+vnoremap gy "+y
 nnoremap gh gk
 nnoremap g<Space> gj
+nnoremap <expr> gs &l:sw == 4 ? ":setl sw=8\<CR>" : &l:sw == 8 ? ":setl sw=2\<CR>" : ":setl sw=4\<CR>"
 
 nnoremap b i<CR><ESC>
 nnoremap B a<CR><ESC>
@@ -225,7 +223,9 @@ nnoremap <leader>w gwap
 
 " Global search
 nnoremap <leader>e :Files<CR>
-nnoremap <leader>f :Rg<CR>
+nnoremap <leader>f :BLines<CR>
+nnoremap <leader>a :Rg<CR>
+nnoremap <leader>o :Buffers<CR>
 
 
 """ Scrolling
@@ -255,6 +255,7 @@ set nofoldenable
 """ Spell check
 set spell
 set spelllang=en_us
+set spelloptions=camel
 
 """ grep
 set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow
@@ -320,6 +321,7 @@ autocmd BufReadPre,FileReadPre *.asy setl ft=cpp
 autocmd BufReadPre,FileReadPre *.sage setl ft=python
 autocmd BufReadPre,FileReadPre *.astro setl fo+=t
 autocmd BufReadPre,FileReadPre *.astro setl indentkeys=
+autocmd BufReadPre,FileReadPre *.astro setl sw=2
 autocmd FileType plaintex setl fo+=t
 autocmd FileType tex setl fo+=t
 autocmd FileType text setl fo+=t

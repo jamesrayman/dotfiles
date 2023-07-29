@@ -1,4 +1,4 @@
-# If not running interactively, don't do anything
+# If not running interactively,fdon't do anything
 case $- in *i*) ;; *) return;; esac
 
 # XDG
@@ -127,8 +127,17 @@ export LESSKEYIN="$XDG_CONFIG_HOME/less/lesskey"
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 alias more="$PAGER"
 
+# Favor rg over grep
+alias grep='rg'
+alias fgrep='rg -F'
+alias egrep='rg'
+alias rgrep='rg'
+
 # man
 export MANWIDTH=78
+
+# Andromeda
+export AND="$HOME/andromeda"
 
 # fzf
 PATH="$PATH:$HOME/src/fzf/bin"
@@ -142,7 +151,7 @@ export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path"
 
 __fzf_select__() {
   eval "$FZF_CTRL_T_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) "$@" -m | while read -r item; do
-    printf '%q' "$item"
+    printf '%q ' "$item"
   done
 }
 
@@ -153,7 +162,6 @@ __fzfcmd() {
 
 fzf-file-widget() {
   local selected="$(__fzf_select__)"
-  [[ -n "$selected" ]] && selected="$selected "
   READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$selected${READLINE_LINE:$READLINE_POINT}"
   READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
 }
@@ -188,6 +196,9 @@ t() {
   history -s "$comm"
   eval "$comm"
 }
+T() {
+    FZF_ALT_C_COMMAND="$FZF_ALT_C_COMMAND --no-ignore" t "$@"
+}
 
 e() {
   local comm file
@@ -199,10 +210,13 @@ e() {
     eval "$comm"
   fi
 }
+E() {
+    FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --no-ignore" e "$@"
+}
 
 s() {
   local comm file
-  file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --no-ignore-vcs" __fzf_select__ --query "$*")"
+  file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --no-ignore" __fzf_select__ --query "$*")"
   if [[ -n "$file" ]]
   then
     comm="$(printf 'start %s' "$file")"
@@ -240,20 +254,32 @@ export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export OPAMROOT="$XDG_DATA_HOME/opam"
 [ -r "$OPAMROOT/opam-init/init.sh" ] && source "$OPAMROOT/opam-init/init.sh" &> /dev/null
 
+# Psalm (PHP)
+export PATH="$PATH:$HOME/src/psalm"
+
 # makefile
 export CPPFLAGS="-Wall -std=c++17"
 export JAVAC="javac"
 
 # make with custom defaults
 m() {
-    MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make "$@"
+    if (( $# > 0 ))
+    then
+        MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make "$@"
+    else
+        MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make all
+    fi
 }
 mc() {
   m clean "$@"
 }
 
-# Notecard
-alias en="vi $HOME/andromeda/note/card.txt"
+# Quick edit common files
+alias en="vi $AND/note/card.txt" # notecard
+alias ev="vi $XDG_CONFIG_HOME/nvim/init.vim" # .vimrc
+alias eb="vi $HOME/.bashrc"
+alias em="vi $XDG_CONFIG_HOME/make/makefile"
+alias eg="vi $XDG_CONFIG_HOME/git/config"
 
 # Mutt
 alias mutt="neomutt"
@@ -269,9 +295,6 @@ alias cp='cp -i'
 
 # use color by default
 alias diff='diff --color=auto'
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 
 # weather
 alias weather='curl -sSL https://wttr.in | head -n -2'

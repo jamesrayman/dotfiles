@@ -6,8 +6,8 @@ set show-all-if-unmodified on
 set mark-symlinked-directories on
 
 
-"\C-h": forward-char
-"\C-s": backward-char
+"\C-@": forward-char
+"\C-h": backward-char
 "\C-e": forward-word
 "\C-t": backward-word
 "\C-o": end-of-line
