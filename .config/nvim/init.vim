@@ -47,6 +47,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'whonore/Coqtail'
 Plug 'tikhomirov/vim-glsl'
 Plug 'wuelnerdotexe/vim-astro'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
 call plug#end()
 filetype plugin on
 
@@ -97,11 +98,13 @@ set nojoinspaces
 set cmdheight=2
 set ttimeoutlen=10
 
-" set list
 set list
 set listchars=trail:•,tab:┃\ ,nbsp:␣,extends:›,precedes:‹
 set breakindent
 set showbreak=\ ↪\ 
+
+""" path
+let &path = &path .. "," .. $HOME . "/andromeda"
 
 """ No intro screen, no completion messages
 set shortmess+=Ic
@@ -158,9 +161,9 @@ inoremap <C-y> <C-r>"
 
 " Other shortcuts
 noremap , :
-noremap a i
+nnoremap a i
 noremap A I
-noremap i a
+nnoremap i a
 noremap I A
 noremap <C-a> ^
 noremap <TAB> $
@@ -176,7 +179,7 @@ noremap e w
 noremap E W
 noremap <C-e> l
 noremap s c
-noremap ss cc
+nnoremap ss cc
 noremap S C
 noremap <C-s> (
 noremap o e
@@ -276,10 +279,11 @@ onoremap <silent> im : normal vim<CR>
 xnoremap <silent> am :<C-u> normal! `[v`]<CR>
 onoremap <silent> am : normal vam<CR>
 
-""" Language specific
-
 set matchpairs+=<:>
-set indentkeys-=:
+set indentkeys=
+
+
+""" Language specific
 
 call textobj#user#plugin('latex', {
 \   'environment': {
@@ -320,10 +324,13 @@ call textobj#user#plugin('latex', {
 autocmd BufReadPre,FileReadPre *.asy setl ft=cpp
 autocmd BufReadPre,FileReadPre *.sage setl ft=python
 autocmd BufReadPre,FileReadPre *.astro setl fo+=t
-autocmd BufReadPre,FileReadPre *.astro setl indentkeys=
 autocmd BufReadPre,FileReadPre *.astro setl sw=2
+autocmd FileType plaintex setl sw=2
 autocmd FileType plaintex setl fo+=t
+autocmd FileType tex setl sw=2
 autocmd FileType tex setl fo+=t
 autocmd FileType text setl fo+=t
+autocmd FileType html setl sw=2
+autocmd FileType javascript setl sw=2
 
 redraw!

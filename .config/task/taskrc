@@ -43,6 +43,7 @@ alias.,b=burndown.daily
 alias.,mb=,m ,b
 alias.,wb=,w ,b
 alias.,bw=burndown
+alias.,bm=burndown.monthly
 alias.misc=-TAGGED -PROJECT
 
 default.command=next

@@ -1,4 +1,4 @@
-# If not running interactively,fdon't do anything
+# If not running interactively, don't do anything
 case $- in *i*) ;; *) return;; esac
 
 # XDG
@@ -26,7 +26,7 @@ umask 077
 # history
 shopt -s histappend
 HISTCONTROL=ignoreboth
-HISTSIZE=10000
+HISTSIZE=20000
 HISTFILESIZE=20000
 HISTFILE="$XDG_STATE_HOME/bash/history"
 HISTTIMEFORMAT="%F %T     "
@@ -55,7 +55,7 @@ GIT_PS1_SHOWUNTRACKEDFILES=y
 GIT_PS1_SHOWUPSTREAM=auto
 PS1=''
 GIT_PS1_SHOWCOLORHINTS=y
-PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] ${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\w\e[0m\]" "\$ "'
+PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] ${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]" "\$ "'
 
 case "$TERM" in
 xterm*|rxvt*)
@@ -96,7 +96,7 @@ alias l='command ls -v --group-directories-first --color=auto'
 alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # local PATH
-export PATH="$PATH:$HOME/.local/bin:$HOME/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/bin:$HOME/src"
 for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
 do
     PATH="$PATH:$bin_dir"
@@ -113,7 +113,7 @@ alias rview="$VISUAL -R -Z"
 alias vimdiff="$VISUAL -d"
 
 # less
-export LESS="-F -i -Q -R -z-4"
+export LESS="-F -i -Q -R -z-4 -Ps%f\:%lb of %L (%Pb\%) "
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -141,13 +141,14 @@ export AND="$HOME/andromeda"
 
 # fzf
 PATH="$PATH:$HOME/src/fzf/bin"
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
 export FZF_DEFAULT_COMMAND='idfs --hidden --follow --exclude .git --strip-cwd-prefix'
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
-export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path"
+export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path --bind 'ctrl-b:reload($FZF_CTRL_T_COMMAND --base-directory ..)'"
 export FZF_CTRL_R_OPTS="--scheme=history"
 export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path"
+export FZF_TMUX=1
 
 __fzf_select__() {
   eval "$FZF_CTRL_T_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) "$@" -m | while read -r item; do
@@ -224,6 +225,9 @@ s() {
     eval "$comm"
   fi
 }
+# TODO use fzf to select a job
+alias j=jobs
+alias f=t
 
 
 # Ruby
@@ -280,6 +284,10 @@ alias ev="vi $XDG_CONFIG_HOME/nvim/init.vim" # .vimrc
 alias eb="vi $HOME/.bashrc"
 alias em="vi $XDG_CONFIG_HOME/make/makefile"
 alias eg="vi $XDG_CONFIG_HOME/git/config"
+alias ee="vi $XDG_CONFIG_HOME/bash/extra"
+alias ei="vi $XDG_CONFIG_HOME/readline/inputrc"
+alias et="vi $XDG_CONFIG_HOME/task/taskrc"
+alias es="vi $XDG_CONFIG_HOME/bash/secrets"
 
 # Mutt
 alias mutt="neomutt"
