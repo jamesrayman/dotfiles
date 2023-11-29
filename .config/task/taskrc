@@ -26,6 +26,7 @@ uda.details.label=Details
 
 search.case.sensitive=no
 nag=
+verbose=blank,header,footnote,label,new-id,affected,edit,project,sync
 
 urgency.tags.coefficient=0.0
 urgency.user.project.Chore.coefficient=1.0

@@ -145,9 +145,10 @@ export FZF_DEFAULT_COMMAND='idfs --hidden --follow --exclude .git --strip-cwd-pr
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
-export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path --bind 'ctrl-b:reload($FZF_CTRL_T_COMMAND --base-directory ..)'"
+export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path --bind 'ctrl-g:reload($FZF_CTRL_T_COMMAND --base-directory ..)+change-preview(preview ../{})'"
 export FZF_CTRL_R_OPTS="--scheme=history"
-export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path"
+# TODO: fix
+export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path --bind 'ctrl-g:reload($FZF_ALT_C_COMMAND --base-directory ..)+change-preview(preview ../{})'"
 export FZF_TMUX=1
 
 __fzf_select__() {
@@ -225,6 +226,7 @@ s() {
     eval "$comm"
   fi
 }
+
 # TODO use fzf to select a job
 alias j=jobs
 alias f=t
