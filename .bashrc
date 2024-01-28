@@ -8,9 +8,9 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # defaults
-export VISUAL="/usr/bin/nvim"
+export VISUAL="nvim"
 export EDITOR="$VISUAL"
-export PAGER="/usr/bin/less"
+export PAGER="less"
 
 # shell
 set -P
@@ -229,6 +229,7 @@ s() {
 
 # TODO use fzf to select a job
 alias j=jobs
+# f is find and cd
 alias f=t
 
 
@@ -282,6 +283,7 @@ mc() {
 
 # Quick edit common files
 alias en="vi $AND/note/card.txt" # notecard
+alias eq="vi $AND/note/questions.txt"
 alias ev="vi $XDG_CONFIG_HOME/nvim/init.vim" # .vimrc
 alias eb="vi $HOME/.bashrc"
 alias em="vi $XDG_CONFIG_HOME/make/makefile"

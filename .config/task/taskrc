@@ -30,22 +30,32 @@ verbose=blank,header,footnote,label,new-id,affected,edit,project,sync
 
 urgency.tags.coefficient=0.0
 urgency.user.project.Chore.coefficient=1.0
-urgency.user.project.UT.coefficient=1.0
-urgency.user.project.Ovid.coefficient=4.5
+urgency.user.project.Thesis.coefficient=1.0
 urgency.user.project.Rachel.coefficient=5.0
 urgency.user.project.Finance.coefficient=1.0
 urgency.user.project.Arch.coefficient=-1.0
 urgency.user.project.Server.coefficient=-2.0
+
+# used for reminding myself to review a book a week after I finish it
 urgency.user.tag.review.coefficient=10.0
 
 alias.,m=due.after:som due.before:eom+1s
-alias.,w=due.after:now due.before:1w
-alias.,b=burndown.daily
+alias.,w=due.before:1w
 alias.,mb=,m ,b
 alias.,wb=,w ,b
-alias.,bw=burndown
-alias.,bm=burndown.monthly
 alias.misc=-TAGGED -PROJECT
+
+report.recent.description=The most recently added tasks
+report.recent.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.recent.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.recent.sort=id-
+report.recent.filter=status:pending limit:page
+
+report.id.description=All pending tasks sorted by id
+report.id.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.id.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.id.sort=id+
+report.id.filter=status:pending
 
 default.command=next
 
