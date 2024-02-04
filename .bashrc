@@ -282,16 +282,17 @@ mc() {
 }
 
 # Quick edit common files
+alias eb="vi $HOME/.bashrc"
+alias ee="vi $XDG_CONFIG_HOME/bash/extra"
+alias eg="vi $XDG_CONFIG_HOME/git/config"
+alias ei="vi $XDG_CONFIG_HOME/readline/inputrc"
+alias em="vi $XDG_CONFIG_HOME/make/makefile"
 alias en="vi $AND/note/card.txt" # notecard
 alias eq="vi $AND/note/questions.txt"
-alias ev="vi $XDG_CONFIG_HOME/nvim/init.vim" # .vimrc
-alias eb="vi $HOME/.bashrc"
-alias em="vi $XDG_CONFIG_HOME/make/makefile"
-alias eg="vi $XDG_CONFIG_HOME/git/config"
-alias ee="vi $XDG_CONFIG_HOME/bash/extra"
-alias ei="vi $XDG_CONFIG_HOME/readline/inputrc"
-alias et="vi $XDG_CONFIG_HOME/task/taskrc"
 alias es="vi $XDG_CONFIG_HOME/bash/secrets"
+alias et="vi $XDG_CONFIG_HOME/task/taskrc"
+alias eu="vi $AND/note/urbanism.txt"
+alias ev="vi $XDG_CONFIG_HOME/nvim/init.vim" # .vimrc
 
 # Mutt
 alias mutt="neomutt"

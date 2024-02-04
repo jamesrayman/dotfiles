@@ -11,10 +11,22 @@
 #   priority:M means should be done sooner than tasks without high priority or a close due date
 #   priority:L means less important than other attributes would suggest
 
+# TODO: separate +read and +watch into genre
 
 data.location=~/.local/share/task
 
-include /usr/share/taskwarrior/dark-gray-256.theme
+include /usr/share/taskwarrior/dark-256.theme
+color.active=white on rgb010
+color.due=white on rgb100
+color.due.today=white on rgb200
+color.header=
+color.footnote=
+color.blocking=
+color.uda.priority.H=white
+color.uda.priority.M=white
+color.uda.priority.=gray20
+color.uda.priority.L=gray13
+color.blocked=gray13
 
 uda.priority.values=H,M,,L
 urgency.uda.priority.H.coefficient=6.0
