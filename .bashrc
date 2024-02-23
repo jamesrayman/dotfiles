@@ -12,6 +12,9 @@ export VISUAL="nvim"
 export EDITOR="$VISUAL"
 export PAGER="less"
 
+# locale
+export LC_ALL="C"
+
 # shell
 set -P
 set enable-bracketed-paste on

@@ -1,17 +1,12 @@
 # Use the command 'task show' to see all defaults and overrides
 
-# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
-# 'man task-sync' or 'man taskrc'
-
-
 # My Taskwarrior philosophy:
 #   Tags should be verbs, with the exception of +next
 #   Projects should group tasks of a single theme or aimed at a common goal
 #   priority:H means top priority which should be done soon
 #   priority:M means should be done sooner than tasks without high priority or a close due date
 #   priority:L means less important than other attributes would suggest
-
-# TODO: separate +read and +watch into genre
+#   See bottom of file for list of genres
 
 data.location=~/.local/share/task
 
@@ -19,6 +14,7 @@ include /usr/share/taskwarrior/dark-256.theme
 color.active=white on rgb010
 color.due=white on rgb100
 color.due.today=white on rgb200
+color.overdue=white on rgb300
 color.header=
 color.footnote=
 color.blocking=
@@ -28,6 +24,8 @@ color.uda.priority.=gray20
 color.uda.priority.L=gray13
 color.blocked=gray13
 
+rule.precedence.color=deleted,completed,keyword.,tag.,project.,overdue,scheduled,due.today,active,due,blocked,blocking,recurring,tagged,uda
+
 uda.priority.values=H,M,,L
 urgency.uda.priority.H.coefficient=6.0
 urgency.uda.priority.M.coefficient=2.0
@@ -35,6 +33,9 @@ urgency.uda.priority.L.coefficient=-3.0
 
 uda.details.type=string
 uda.details.label=Details
+
+uda.genre.type=string
+uda.genre.label=Genre
 
 search.case.sensitive=no
 nag=
@@ -47,6 +48,7 @@ urgency.user.project.Rachel.coefficient=5.0
 urgency.user.project.Finance.coefficient=1.0
 urgency.user.project.Arch.coefficient=-1.0
 urgency.user.project.Server.coefficient=-2.0
+urgency.user.project.Dashboard.coefficient=4.0
 
 # used for reminding myself to review a book a week after I finish it
 urgency.user.tag.review.coefficient=10.0
@@ -58,17 +60,40 @@ alias.,wb=,w ,b
 alias.misc=-TAGGED -PROJECT
 
 report.recent.description=The most recently added tasks
-report.recent.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
-report.recent.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.recent.columns=id,start.age,entry.age,depends,priority,project,tags,genre,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.recent.labels=ID,Active,Age,Deps,P,Project,Tag,Genre,Recur,S,Due,Until,Description,Urg
 report.recent.sort=id-
 report.recent.filter=status:pending limit:page
 
 report.id.description=All pending tasks sorted by id
-report.id.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
-report.id.labels=ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.id.columns=id,start.age,entry.age,depends,priority,project,tags,genre,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.id.labels=ID,Active,Age,Deps,P,Project,Tag,Genre,Recur,S,Due,Until,Description,Urg
 report.id.sort=id+
 report.id.filter=status:pending
+
+report.next.columns =id,start.age,entry.age,depends,priority,project,tags,genre,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
+report.next.labels=ID,Active,Age,Deps,P,Project,Tag,Genre,Recur,S,Due,Until,Description,Urg
 
 default.command=next
 
 news.version=2.6.0
+
+# List of Genres
+#   All genres have ids that are 5 or fewer letters. Some genres are
+#   general (e.g. nfic).
+#
+# cook  Cooking (distinct from cookbook)
+# cookb Cookbook
+# cs    Computer science
+# docu  Documentary film
+# edu   Education
+# fic   Fiction
+# math  Mathematics
+# nfic  Non-fiction
+# phil  Philosophy
+# queer LGBTQ
+# relig Religion
+# selfh Self-help
+# show  TV series
+# swe   Software engineering
+# urb   Urbanism
