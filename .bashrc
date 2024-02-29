@@ -8,7 +8,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # defaults
-export VISUAL="nvim"
+export VISUAL="$HOME/src/nvim/bin/nvim"
 export EDITOR="$VISUAL"
 export PAGER="less"
 
@@ -70,8 +70,8 @@ esac
 
 # stty
 stty erase '^?'
-stty werase ''  # Allow .inputrc to bind ^W
-stty -ixon      # Disable ^S and ^Q flow control
+stty werase '' # Allow .inputrc to bind ^W
+stty -ixon # Disable ^S and ^Q flow control
 
 # inputrc
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
@@ -90,6 +90,7 @@ alias -- -m="python -m"
 
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export PATH="$PATH:$CARGO_HOME/bin"
 
 # ls
@@ -109,14 +110,9 @@ done
 alias nvim="$VISUAL"
 alias vim="$VISUAL"
 alias vi="$VISUAL"
-alias ex="$VISUAL -e"
-alias view="$VISUAL -R"
-alias rvim="$VISUAL -Z"
-alias rview="$VISUAL -R -Z"
-alias vimdiff="$VISUAL -d"
 
 # less
-export LESS="-F -i -Q -R -z-4 -Ps%f\:%lb of %L (%Pb\%) "
+export LESS="-F -i -Q -R -z-4 -j.5 -Ps%f\:%lb of %L (%Pb\%) "
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -148,10 +144,9 @@ export FZF_DEFAULT_COMMAND='idfs --hidden --follow --exclude .git --strip-cwd-pr
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
-export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path --bind 'ctrl-g:reload($FZF_CTRL_T_COMMAND --base-directory ..)+change-preview(preview ../{})'"
+export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path"
 export FZF_CTRL_R_OPTS="--scheme=history"
-# TODO: fix
-export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path --bind 'ctrl-g:reload($FZF_ALT_C_COMMAND --base-directory ..)+change-preview(preview ../{})'"
+export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path"
 export FZF_TMUX=1
 
 __fzf_select__() {
@@ -267,6 +262,9 @@ export OPAMROOT="$XDG_DATA_HOME/opam"
 # Psalm (PHP)
 export PATH="$PATH:$HOME/src/psalm"
 
+# Zoxide
+eval "$(zoxide init bash --cmd cd)"
+
 # makefile
 export CPPFLAGS="-Wall -std=c++17"
 export JAVAC="javac"
@@ -295,7 +293,11 @@ alias eq="vi $AND/note/questions.txt"
 alias es="vi $XDG_CONFIG_HOME/bash/secrets"
 alias et="vi $XDG_CONFIG_HOME/task/taskrc"
 alias eu="vi $AND/note/urbanism.txt"
-alias ev="vi $XDG_CONFIG_HOME/nvim/init.vim" # .vimrc
+alias ev="vi $XDG_CONFIG_HOME/nvim/init.lua" # .vimrc
+alias ex="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
+
+# tmux
+alias tmux='tmux -u'
 
 # Mutt
 alias mutt="neomutt"
@@ -309,8 +311,8 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 
-# use color by default
-alias diff='diff --color=auto'
+# better diff
+alias diff='delta'
 
 # weather
 alias weather='curl -sSL https://wttr.in | head -n -2'
@@ -330,7 +332,7 @@ h() {
     history "${1-10}"
 }
 
-# git alias. git s is used if arguments are given
+# git alias
 g() {
     if (( $# == 0 ))
     then
@@ -351,4 +353,9 @@ then
 else
     printf "# %s: noudf\n" 'vim' >> "$XDG_CONFIG_HOME/bash/secrets"
     chmod go= "$XDG_CONFIG_HOME/bash/secrets"
+fi
+
+if command -v tmux &> /dev/null && [[ ! "$TERM" =~ screen ]]
+then
+    exec tmux -u
 fi

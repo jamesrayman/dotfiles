@@ -8,12 +8,14 @@ fi
 
 ft="$(file -bL --mime-type "$1")"
 
-if case "$ft" in "text/"*) true;; *) false;; esac
-then
-    bat --style=plain --line-range=:200 "$1"
-elif [ "$ft" = "inode/directory" ]
-then
-    tree -C "$1" | head -n 200
-else
-    file -bL "$1"
-fi
+case "$ft" in
+    "text/"* | "application/json"* | "application/ld-json"*)
+        bat --style=plain --line-range=:200 "$1"
+        ;;
+    "inode/directory")
+        tree -C "$1"
+        ;;
+    *)
+        file -bL "$1"
+        ;;
+esac

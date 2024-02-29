@@ -1,3 +1,4 @@
+# vim: noet:sw=8
 [user]
 	email = james@jamesrayman.com
 	name = James Rayman
@@ -22,3 +23,20 @@
 	fd = ls-tree -r HEAD --name-only
 	ls = fd
 	tree = fd
+[rerere]
+	enabled = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[merge]
+	conflictstyle = diff3
+[core]
+	untrackedcache = true
+	pager = delta
+[diff]
+	colorMoved = default
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true

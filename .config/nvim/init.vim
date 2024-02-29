@@ -1,15 +1,10 @@
 " TODO:
-" Language features
-" config files (e.g. comment styles, dictionaries, etc)
+" Redo in Lua
 " Separate large features into plugins
 " Snippets
-" Only vsp help and man if columns > 165, shrink to 80 cols
-" Annotate everything
 " Column selection
-" Git column off by default
 " Unicode.vim
 " open link
-" Redo in Lua
 " lp should paste line <count> times and g<C-a> selection starting at cursor
 " lT and lE should go up or down until line has fewer characters
 " lc should select a column with lT and lE
@@ -45,9 +40,8 @@ Plug 'moll/vim-bbye'
 Plug 'aymericbeaumet/vim-symlink'
 Plug 'tpope/vim-fugitive'
 Plug 'whonore/Coqtail'
-Plug 'tikhomirov/vim-glsl'
-Plug 'wuelnerdotexe/vim-astro'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " TODO: enable
 call plug#end()
 filetype plugin on
 
@@ -149,10 +143,6 @@ set showtabline=0
 " Man
 let g:man_hardwrap="78"
 
-" Open help and man in vertical split
-autocmd FileType help wincmd L
-autocmd FileType man wincmd L
-
 " Don't spell check man pages
 autocmd FileType man setl nospell
 
@@ -181,12 +171,10 @@ noremap <C-e> l
 noremap s c
 nnoremap ss cc
 noremap S C
-noremap <C-s> (
 noremap o e
 noremap O E
 noremap go ge
 noremap gO gE
-noremap <C-o> )
 noremap <C-n> :bnext<CR>
 noremap <C-p> :bprev<CR>
 noremap \ <C-^>
