@@ -49,6 +49,7 @@ urgency.user.project.Finance.coefficient=1.0
 urgency.user.project.Arch.coefficient=-1.0
 urgency.user.project.Server.coefficient=-2.0
 urgency.user.project.Dashboard.coefficient=4.0
+urgency.user.project.Security.coefficient=2.0
 
 # used for reminding myself to review a book a week after I finish it
 urgency.user.tag.review.coefficient=10.0
@@ -80,7 +81,7 @@ news.version=2.6.0
 
 # List of Genres
 #   All genres have ids that are 5 or fewer letters. Some genres are
-#   general (e.g. nfic).
+#   general and contain other genres (e.g. nfic).
 #
 # cook  Cooking (distinct from cookbook)
 # cookb Cookbook

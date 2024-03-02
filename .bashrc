@@ -1,6 +1,11 @@
 # If not running interactively, don't do anything
 case $- in *i*) ;; *) return;; esac
 
+if command -v tmux &> /dev/null && [[ ! "$TERM" =~ screen ]] && [[ -z "$TMUX" ]]
+then
+    exec tmux -u
+fi
+
 # XDG
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -353,9 +358,4 @@ then
 else
     printf "# %s: noudf\n" 'vim' >> "$XDG_CONFIG_HOME/bash/secrets"
     chmod go= "$XDG_CONFIG_HOME/bash/secrets"
-fi
-
-if command -v tmux &> /dev/null && [[ ! "$TERM" =~ screen ]]
-then
-    exec tmux -u
 fi
