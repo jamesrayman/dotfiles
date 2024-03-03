@@ -18,7 +18,8 @@ export EDITOR="$VISUAL"
 export PAGER="less"
 
 # locale
-export LC_ALL="C"
+export LC_ALL="C.utf8"
+export LANG="en_US.utf8"
 
 # shell
 set -P
@@ -86,6 +87,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 # GPG
 export GPG_TTY="$(tty)"
+gpgconf --launch gpg-agent
 
 # Python
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"

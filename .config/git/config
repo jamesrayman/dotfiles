@@ -2,6 +2,8 @@
 [user]
 	email = james@jamesrayman.com
 	name = James Rayman
+[include]
+	path = ~/.config/git/secret
 [init]
 	defaultBranch = main
 [pull]
@@ -40,3 +42,7 @@
 	diffFilter = delta --color-only
 [delta]
 	navigate = true
+[commit]
+	gpgSign = true
+[tag]
+	gpgSign = true
