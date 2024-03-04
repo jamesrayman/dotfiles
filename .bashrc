@@ -18,8 +18,8 @@ export EDITOR="$VISUAL"
 export PAGER="less"
 
 # locale
-export LC_ALL="C.utf8"
-export LANG="en_US.utf8"
+export LC_ALL="C.UTF-8"
+export LANG="en_US.UTF-8"
 
 # shell
 set -P
@@ -53,22 +53,17 @@ then
 fi
 
 # prompt
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
-then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
 [ -r '/usr/share/git/completion/git-prompt.sh' ] && source '/usr/share/git/completion/git-prompt.sh'
 GIT_PS1_SHOWDIRTYSTATE=y
 GIT_PS1_SHOWUNTRACKEDFILES=y
 GIT_PS1_SHOWUPSTREAM=auto
 PS1=''
 GIT_PS1_SHOWCOLORHINTS=y
-PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] ${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]" "\$ "'
+PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] \[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]" "\$ "'
 
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
     ;;
 *)
     ;;
@@ -107,7 +102,7 @@ alias l='command ls -v --group-directories-first --color=auto'
 alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # local PATH
-export PATH="$PATH:$HOME/.local/bin:$HOME/bin:$HOME/src"
+export PATH="$PATH:$HOME/.local/bin"
 for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
 do
     PATH="$PATH:$bin_dir"
