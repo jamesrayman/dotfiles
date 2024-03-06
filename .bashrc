@@ -102,7 +102,7 @@ alias l='command ls -v --group-directories-first --color=auto'
 alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # local PATH
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
 for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
 do
     PATH="$PATH:$bin_dir"
@@ -264,9 +264,6 @@ export OPAMROOT="$XDG_DATA_HOME/opam"
 # Psalm (PHP)
 export PATH="$PATH:$HOME/src/psalm"
 
-# Zoxide
-eval "$(zoxide init bash --cmd cd)"
-
 # makefile
 export CPPFLAGS="-Wall -std=c++17"
 export JAVAC="javac"
@@ -296,7 +293,7 @@ alias es="vi $XDG_CONFIG_HOME/bash/secrets"
 alias et="vi $XDG_CONFIG_HOME/task/taskrc"
 alias eu="vi $AND/note/urbanism.txt"
 alias ev="vi $XDG_CONFIG_HOME/nvim/init.lua" # .vimrc
-alias ex="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
+alias ew="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
 
 # tmux
 alias tmux='tmux -u'

@@ -1,0 +1,5 @@
+style: "auto"
+local: false # show local files only; no network (TUI-mode only)
+mouse: false
+pager: true
+width: 80
