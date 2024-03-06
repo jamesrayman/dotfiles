@@ -13,7 +13,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # defaults
-export VISUAL="$HOME/src/nvim/bin/nvim"
+export VISUAL="nvim"
 export EDITOR="$VISUAL"
 export PAGER="less"
 
@@ -82,6 +82,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 # GPG
 export GPG_TTY="$(tty)"
+export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 gpgconf --launch gpg-agent
 
 # Python
@@ -109,7 +110,6 @@ do
 done
 
 # Use $VISUAL for vi-inspired editors
-alias nvim="$VISUAL"
 alias vim="$VISUAL"
 alias vi="$VISUAL"
 
@@ -141,7 +141,6 @@ export MANWIDTH=78
 export AND="$HOME/andromeda"
 
 # fzf
-PATH="$PATH:$HOME/src/fzf/bin"
 export FZF_DEFAULT_COMMAND='idfs --hidden --follow --exclude .git --strip-cwd-prefix'
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -243,7 +242,6 @@ export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 
 # Node
 export NODE_REPL_HISTORY="$XDG_STATE_HOME/node/history"
-export PATH="$PATH:$HOME/src/node/bin"
 
 # ICE
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
@@ -260,9 +258,6 @@ export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 # Opam
 export OPAMROOT="$XDG_DATA_HOME/opam"
 [ -r "$OPAMROOT/opam-init/init.sh" ] && source "$OPAMROOT/opam-init/init.sh" &> /dev/null
-
-# Psalm (PHP)
-export PATH="$PATH:$HOME/src/psalm"
 
 # makefile
 export CPPFLAGS="-Wall -std=c++17"
@@ -291,9 +286,8 @@ alias en="vi $AND/note/card.txt" # notecard
 alias eq="vi $AND/note/questions.txt"
 alias es="vi $XDG_CONFIG_HOME/bash/secrets"
 alias et="vi $XDG_CONFIG_HOME/task/taskrc"
-alias eu="vi $AND/note/urbanism.txt"
+alias eu="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias ev="vi $XDG_CONFIG_HOME/nvim/init.lua" # .vimrc
-alias ew="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
 
 # tmux
 alias tmux='tmux -u'
