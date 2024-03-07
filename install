@@ -5,6 +5,6 @@ cd "$(dirname "$0")"
 
 for dotfile in $(fd --strip-cwd-prefix --hidden --type=file --exclude ./LICENSE --exclude ./README.md --exclude ./.gitignore --exclude ./install)
 do
-    mkdir -p "$(dirname "$dotfile")"
-    ln -sf "$dotfile" "$HOME/$dotfile"
+    mkdir -p "$(dirname "$HOME/$dotfile")"
+    ln -sf "$PWD/$dotfile" "$HOME/$dotfile"
 done
