@@ -344,6 +344,7 @@ if [ -r "$XDG_CONFIG_HOME/bash/secrets" ]
 then
     source "$XDG_CONFIG_HOME/bash/secrets"
 else
+    mkdir -p "$XDG_CONFIG_HOME/bash"
     printf "# %s: noudf\n" 'vim' >> "$XDG_CONFIG_HOME/bash/secrets"
     chmod go= "$XDG_CONFIG_HOME/bash/secrets"
 fi
