@@ -10,7 +10,7 @@
 
 data.location=~/.local/share/task
 
-include /usr/share/taskwarrior/dark-256.theme
+include /usr/share/doc/task/rc/dark-256.theme
 color.active=white on rgb010
 color.due=white on rgb100
 color.due.today=white on rgb200
