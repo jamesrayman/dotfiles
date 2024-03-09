@@ -29,9 +29,6 @@ shopt -s nullglob
 shopt -s checkwinsize
 shopt -s direxpand
 
-# more secure umask
-umask 077
-
 # history
 shopt -s histappend
 HISTCONTROL=ignoreboth
