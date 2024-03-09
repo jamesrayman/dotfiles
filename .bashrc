@@ -73,6 +73,7 @@ esac
 stty erase '^?'
 stty werase '' # Allow .inputrc to bind ^W
 stty -ixon # Disable ^S and ^Q flow control
+stty sane
 
 # inputrc
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"

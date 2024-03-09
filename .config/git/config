@@ -1,9 +1,9 @@
 # vim: noet:sw=8
+[include]
+	path = ~/.config/git/extra
 [user]
 	email = james@jamesrayman.com
 	name = James Rayman
-[include]
-	path = ~/.config/git/secret
 [init]
 	defaultBranch = main
 [pull]

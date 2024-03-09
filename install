@@ -8,3 +8,6 @@ do
     mkdir -p "$(dirname "$HOME/$dotfile")"
     ln -sf "$PWD/$dotfile" "$HOME/$dotfile"
 done
+
+chmod go= "$HOME/.config/gnupg"
+mkdir -p "$HOME/.local/state/bash"
