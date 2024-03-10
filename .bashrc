@@ -282,7 +282,7 @@ alias ei="vi $XDG_CONFIG_HOME/readline/inputrc"
 alias em="vi $XDG_CONFIG_HOME/make/makefile"
 alias en="vi $AND/note/card.txt" # notecard
 alias eq="vi $AND/note/questions.txt"
-alias es="vi $XDG_CONFIG_HOME/bash/secrets"
+alias es="vi $XDG_CONFIG_HOME/bash/secret"
 alias et="vi $XDG_CONFIG_HOME/task/taskrc"
 alias eu="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias ev="vi $XDG_CONFIG_HOME/nvim/init.lua" # .vimrc
@@ -336,13 +336,6 @@ g() {
     fi
 }
 
-# any extra machine-dependent stuff
+# any extra machine-dependent configuration
 [ -r "$XDG_CONFIG_HOME/bash/extra" ] && source "$XDG_CONFIG_HOME/bash/extra"
-if [ -r "$XDG_CONFIG_HOME/bash/secrets" ]
-then
-    source "$XDG_CONFIG_HOME/bash/secrets"
-else
-    mkdir -p "$XDG_CONFIG_HOME/bash"
-    printf "# %s: noudf\n" 'vim' >> "$XDG_CONFIG_HOME/bash/secrets"
-    chmod go= "$XDG_CONFIG_HOME/bash/secrets"
-fi
+[ -r "$XDG_CONFIG_HOME/bash/secret" ] && source "$XDG_CONFIG_HOME/bash/secret"
