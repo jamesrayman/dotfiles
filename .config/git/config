@@ -8,6 +8,8 @@
 	defaultBranch = main
 [pull]
 	rebase = true
+[rebase]
+	updateRefs = true
 [alias]
 	a = add
 	b = branch
@@ -19,7 +21,7 @@
 	pf = push --force-with-lease
 	s = status --short
 	ll = log --oneline
-	ch = checkout
+	sw = switch
 	graph = log --all --graph --decorate --oneline
 	gr = graph
 	fd = ls-tree -r HEAD --name-only

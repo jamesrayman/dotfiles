@@ -5,6 +5,14 @@ h back-scroll
 ^h  back-line
 f forw-search
 F back-search
+,f status
+,e examine
+,q quit
+,Q quit
+,n next-file
+,p prev-file
+,t toggle-option t
 
 #line-edit
 
+#env

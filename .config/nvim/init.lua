@@ -10,7 +10,6 @@
 -- marks.nvim
 -- netrw
 -- i% and a%
--- treesitter
 -- textobjects
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -38,7 +37,6 @@ vim.opt.packpath:append(vim.env.XDG_DATA_HOME .. '/nvim/after')
 require('lazy').setup({
   'sainnhe/sonokai',
   'tpope/vim-repeat',
-  'tpope/vim-commentary',
   'tpope/vim-unimpaired',
   'tpope/vim-eunuch',
   'airblade/vim-gitgutter',
@@ -51,7 +49,8 @@ require('lazy').setup({
   'aymericbeaumet/vim-symlink',
   'tpope/vim-fugitive',
   'whonore/Coqtail',
-  { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
+  { 'numToStr/Comment.nvim', lazy = false }
 })
 
 require('nvim-treesitter.configs').setup({
@@ -65,6 +64,8 @@ require('nvim-treesitter.configs').setup({
     enable = true
   }
 })
+
+require('Comment').setup()
 
 vim.o.showcmd = true
 vim.o.wildmenu = true

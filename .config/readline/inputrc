@@ -29,3 +29,8 @@ set mark-symlinked-directories on
 
 "\C-xj": end-of-history
 "\C-x\C-j": "\C-xj"
+
+"\e[A": ""
+"\e[B": ""
+"\e[C": ""
+"\e[D": ""
