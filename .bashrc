@@ -138,6 +138,9 @@ export MANWIDTH=78
 # Andromeda
 export AND="$HOME/andromeda"
 
+# Dotfiles
+export DOT="$HOME/dotfiles"
+
 # fzf
 export FZF_DEFAULT_COMMAND="idfs --hidden --follow --exclude .git --exclude '$XDG_STATE_HOME' --exclude '$XDG_CACHE_HOME' --strip-cwd-prefix"
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
@@ -316,11 +319,6 @@ alias wget='wget --hsts-file "$XDG_STATE_HOME/wget/hsts"'
 v() {
     history -s "$@"
     printf "%s\n" "$*"
-}
-
-# Alias for history. Prints 10 entries by default
-h() {
-    history "${1-10}"
 }
 
 # git alias

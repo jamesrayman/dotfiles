@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# TODO
+# https://raw.githubusercontent.com/tldr-pages/tldr/main/pages/common/tar.md
+
+# If $query matches file exactly, open it
+# else if matches tldr exactly, copy to file and open it
+# else full text search, if

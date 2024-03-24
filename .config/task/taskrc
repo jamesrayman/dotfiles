@@ -83,18 +83,25 @@ news.version=2.6.0
 #   All genres have ids that are 5 or fewer letters. Some genres are
 #   general and contain other genres (e.g. nfic).
 #
-# cook  Cooking (distinct from cookbook)
-# cookb Cookbook
-# cs    Computer science
-# docu  Documentary film
-# edu   Education
-# fic   Fiction
-# math  Mathematics
-# nfic  Non-fiction
-# phil  Philosophy
-# queer LGBTQ
-# relig Religion
-# selfh Self-help
-# show  TV series
-# swe   Software engineering
-# urb   Urbanism
+# bness  Business
+# cook   Cooking (distinct from cookbook)
+# cookb  Cookbook
+# cs     Computer science
+# docu   Documentary film
+# econ   Economics
+# edu    Education
+# fic    Fiction
+# graph  Graphic novel
+# math   Mathematics
+# mem    Memoir
+# music  Music
+# nfic   Non-fiction
+# phil   Philosophy
+# pol    Politics
+# queer  LGBTQ
+# relig  Religion
+# selfh  Self-help
+# show   TV series
+# swe    Software engineering
+# urb    Urbanism
+# write  Writing, especially style guides

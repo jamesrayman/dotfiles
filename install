@@ -12,5 +12,5 @@ done
 chmod go= "$HOME/.config/gnupg"
 mkdir -p "$HOME/.local/state/bash"
 mkdir -p "$HOME/.config/bash"
-printf "# vim: noudf\n" >> "$HOME/.config/bash/secrets"
+printf "# vim"": noudf\n" >> "$HOME/.config/bash/secrets"
 chmod go= "$HOME/.config/bash/secrets"
