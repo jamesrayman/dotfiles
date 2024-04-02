@@ -1,14 +1,12 @@
 -- vim: sw=2
 -- TODO:
 -- Snippets
--- Column selection
 -- open link
 -- lp should paste line <count> times and g<C-a> selection starting at cursor
 -- lT and lE should go up or down until line has fewer characters
 -- lc should select a column with lT and lE
 -- targets.nvim
 -- marks.nvim
--- netrw
 -- i% and a%
 -- textobjects
 
@@ -62,6 +60,15 @@ require('nvim-treesitter.configs').setup({
   },
   indent = {
     enable = true
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = '<CR>',
+      node_incremental = 'ge',
+      scope_incremental = 'gs',
+      node_decremental = 'gt'
+    }
   }
 })
 
@@ -173,8 +180,8 @@ vim.keymap.set('', 'c', 'o')
 vim.keymap.set('', 'C', 'O')
 vim.keymap.set('', '<C-c>', '<C-a>')
 vim.keymap.set('', 'gww', 'gww')
-vim.keymap.set('n', 'gy', '"+y<Plug>(textobj-entire-a)')
-vim.keymap.set('v', 'gy', '"+y')
+vim.keymap.set('n', 'gm', ':%y+<CR>')
+vim.keymap.set('v', 'gm', '"+y')
 vim.keymap.set('n', 'gh', 'gk')
 vim.keymap.set('n', 'g<Space>', 'gj')
 vim.keymap.set(
@@ -202,6 +209,11 @@ vim.keymap.set('o', 'im', ': normal vim<CR>', { silent = true })
 vim.keymap.set('x', 'am', ':<C-u> normal! `[v`]<CR>', { silent = true })
 vim.keymap.set('o', 'am', ': normal vam<CR>', { silent = true })
 
+vim.keymap.set('x', 'ie', ':<C-u> normal! ggVG<CR>', { silent = true })
+vim.keymap.set('o', 'ie', ':normal vie<CR>', { silent = true })
+vim.keymap.set('x', 'ae', ':<C-u> normal! ggVG<CR>', { silent = true })
+vim.keymap.set('o', 'ae', ':normal vae<CR>', { silent = true })
+
 vim.keymap.set('', '<C-z>', '') -- tmux training wheels
 
 vim.cmd.colorscheme('sonokai')
@@ -226,9 +238,13 @@ vim.g.netrw_home = vim.env.XDG_DATA_HOME .. '/nvim'
 
 vim.g.man_hardwrap = '78'
 
-vim.api.nvim_create_autocmd(
-  { 'BufReadPre', 'FileReadPre' }, { pattern = '*.asy', command = 'setl ft=cpp' }
-)
+vim.filetype.add({
+  extension = {
+    asy = 'cpp',
+    sage = 'python'
+  }
+})
+
 vim.api.nvim_create_autocmd(
   { 'BufReadPre', 'FileReadPre' }, { pattern = '*.sage', command = 'setl ft=python' }
 )

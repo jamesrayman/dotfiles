@@ -83,6 +83,8 @@ news.version=2.6.0
 #   All genres have ids that are 5 or fewer letters. Some genres are
 #   general and contain other genres (e.g. nfic).
 #
+# bio    Biography
+# blogy  Biology
 # bness  Business
 # cook   Cooking (distinct from cookbook)
 # cookb  Cookbook
@@ -98,6 +100,7 @@ news.version=2.6.0
 # nfic   Non-fiction
 # phil   Philosophy
 # pol    Politics
+# popsi  Pop science and pop mathematics
 # queer  LGBTQ
 # relig  Religion
 # selfh  Self-help

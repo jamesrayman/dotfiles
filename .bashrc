@@ -6,6 +6,9 @@ then
     exec tmux -u
 fi
 
+# align to bottom
+tput cup 1000 0
+
 # XDG
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -51,16 +54,17 @@ fi
 
 # prompt
 [ -r '/usr/share/git/completion/git-prompt.sh' ] && source '/usr/share/git/completion/git-prompt.sh'
-GIT_PS1_SHOWDIRTYSTATE=y
-GIT_PS1_SHOWUNTRACKEDFILES=y
+GIT_PS1_SHOWDIRTYSTATE=yes
+GIT_PS1_SHOWUNTRACKEDFILES=yes
 GIT_PS1_SHOWUPSTREAM=auto
-PS1=''
-GIT_PS1_SHOWCOLORHINTS=y
+GIT_PS1_SHOWCOLORHINTS=yes
+GIT_PS1_SHOWSTASHSTATE=yes
+GIT_PS1_SHOWCONFLICTSTATE=yes
 PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] \[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]" "\$ "'
 
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+    PS1="\[\e]0;\u@\h: \w\a\]"
     ;;
 *)
     ;;
