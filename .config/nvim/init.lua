@@ -9,6 +9,7 @@
 -- marks.nvim
 -- i% and a%
 -- textobjects
+-- colorscheme
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -37,16 +38,20 @@ require('lazy').setup({
   'tpope/vim-repeat',
   'tpope/vim-unimpaired',
   'tpope/vim-eunuch',
-  'airblade/vim-gitgutter',
   {
     'ibhagwan/fzf-lua',
-    dependecies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function() require('fzf-lua').setup({}) end
   },
+  {
+    'NeogitOrg/neogit',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = true
+  },
+  'lewis6991/gitsigns.nvim',
   'moll/vim-bbye',
   'aymericbeaumet/vim-symlink',
-  'tpope/vim-fugitive',
-  'whonore/Coqtail',
+  'anuvyklack/hydra.nvim',
   { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
   { 'numToStr/Comment.nvim', lazy = false }
 })
@@ -73,6 +78,11 @@ require('nvim-treesitter.configs').setup({
 })
 
 require('Comment').setup()
+
+local gitsigns = require('gitsigns')
+gitsigns.setup()
+
+local hydra = require("hydra")
 
 vim.o.showcmd = true
 vim.o.wildmenu = true
@@ -128,7 +138,7 @@ vim.o.spellfile = vim.env.XDG_CONFIG_HOME .. '/nvim/en.utf-8.add'
 vim.o.grepprg = 'rg --vimgrep --smart-case --hidden --follow'
 vim.o.diffopt = 'internal,filler,algorithm:myers,indent-heuristic,vertical'
 
-vim.g.mapleader = 'l'
+vim.cmd('let mapleader="\\<BS>"')
 
 vim.keymap.set('i', '<C-y>', '<C-r>"')
 vim.keymap.set('', ',', ':')
@@ -172,7 +182,8 @@ vim.keymap.set('', 'j', 'J')
 vim.keymap.set('', 'J', 'gJ')
 vim.keymap.set('', 'ZA', ':q<CR>')
 vim.keymap.set('i', '<C-l>', '<C-x><C-l>')
-vim.keymap.set('', '<BS>', '%')
+vim.keymap.set('', 'l', '%')
+vim.keymap.set('', '<BS>', '<Nop>')
 vim.keymap.set('', '<C-d>', '<C-o>')
 vim.keymap.set('', '<C-u>', '<C-i>')
 vim.keymap.set('', '<C-g>', 'g<C-g>')
@@ -198,11 +209,11 @@ vim.keymap.set('n', 'b', 'i<CR><ESC>')
 vim.keymap.set('n', 'B', 'a<CR><ESC>')
 vim.keymap.set('', 'gz', '1z=')
 
-vim.keymap.set('n', '<leader>w', 'gwap')
-vim.keymap.set('n', '<leader>e', ':FzfLua files<CR>')
-vim.keymap.set('n', '<leader>f', ':FzfLua blines<CR>')
-vim.keymap.set('n', '<leader>a', ':FzfLua grep<CR>')
-vim.keymap.set('n', '<leader>o', ':FzfLua buffers<CR>')
+vim.keymap.set('n', '<Leader>w', 'gwap')
+vim.keymap.set('n', '<Leader>e', ':FzfLua files<CR>')
+vim.keymap.set('n', '<Leader>f', ':FzfLua blines<CR>')
+vim.keymap.set('n', '<Leader>a', ':FzfLua grep<CR>')
+vim.keymap.set('n', '<Leader>o', ':FzfLua buffers<CR>')
 
 vim.keymap.set('x', 'im', ':<C-u> normal! `[v`]<CR>', { silent = true })
 vim.keymap.set('o', 'im', ': normal vim<CR>', { silent = true })
@@ -223,6 +234,9 @@ vim.cmd.highlight({ 'Whitespace', 'cterm=bold', 'ctermfg=242' })
 vim.cmd.highlight({ 'LineNr', 'ctermfg=242' })
 vim.cmd.highlight({ 'EndOfBuffer', 'cterm=bold', 'ctermfg=90' })
 
+vim.cmd('dig %o 8240')
+vim.cmd('dig %% 8241')
+
 -- Diff should inherit wrap
 vim.api.nvim_create_autocmd(
   'FilterWritePre', { pattern = '*', command = 'if &diff | setlocal wrap< | endif' }
@@ -230,9 +244,6 @@ vim.api.nvim_create_autocmd(
 
 vim.opt.matchpairs:append('<:>')
 vim.o.indentkeys = ''
-
-vim.g.coqtail_noimap = '1'
-vim.g.coqtail_coq_proq = 'coqidetop.opt'
 
 vim.g.netrw_home = vim.env.XDG_DATA_HOME .. '/nvim'
 
@@ -262,3 +273,69 @@ vim.api.nvim_create_autocmd('FileType', { pattern = 'text', command = 'setl fo+=
 vim.api.nvim_create_autocmd('FileType', { pattern = 'html', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'javascript', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'man', command = 'setl nospell' })
+
+
+local git_hydra_hint = [[
+ _J_: next hunk   _s_: stage hunk        _d_: show deleted   _b_: blame line
+ _K_: prev hunk   _u_: undo last stage   _p_: preview hunk   _B_: blame show full
+ ^ ^              _S_: stage buffer      ^ ^                 _/_: show base file
+ ^
+ ^ ^              _<Enter>_: Neogit              _q_: exit
+]]
+
+hydra({
+   name = 'Git',
+   hint = git_hydra_hint,
+   config = {
+      buffer = bufnr,
+      color = 'pink',
+      invoke_on_body = true,
+      hint = {
+         border = 'rounded'
+      },
+      on_enter = function()
+         vim.cmd 'mkview'
+         vim.cmd 'silent! %foldopen!'
+         vim.bo.modifiable = false
+         gitsigns.toggle_signs(true)
+         gitsigns.toggle_linehl(true)
+      end,
+      on_exit = function()
+         local cursor_pos = vim.api.nvim_win_get_cursor(0)
+         vim.cmd 'loadview'
+         vim.api.nvim_win_set_cursor(0, cursor_pos)
+         vim.cmd 'normal zv'
+         gitsigns.toggle_signs(false)
+         gitsigns.toggle_linehl(false)
+         gitsigns.toggle_deleted(false)
+      end,
+   },
+   mode = {'n','x'},
+   body = '<Leader>hh',
+   heads = {
+      { 'J',
+         function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gitsigns.next_hunk() end)
+            return '<Ignore>'
+         end,
+         { expr = true, desc = 'next hunk' } },
+      { 'K',
+         function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gitsigns.prev_hunk() end)
+            return '<Ignore>'
+         end,
+         { expr = true, desc = 'prev hunk' } },
+      { 's', ':Gitsigns stage_hunk<CR>', { silent = true, desc = 'stage hunk' } },
+      { 'u', gitsigns.undo_stage_hunk, { desc = 'undo last stage' } },
+      { 'S', gitsigns.stage_buffer, { desc = 'stage buffer' } },
+      { 'p', gitsigns.preview_hunk, { desc = 'preview hunk' } },
+      { 'd', gitsigns.toggle_deleted, { nowait = true, desc = 'toggle deleted' } },
+      { 'b', gitsigns.blame_line, { desc = 'blame' } },
+      { 'B', function() gitsigns.blame_line{ full = true } end, { desc = 'blame show full' } },
+      { '/', gitsigns.show, { exit = true, desc = 'show base file' } },
+      { '<Enter>', '<Cmd>Neogit<CR>', { exit = true, desc = 'Neogit' } },
+      { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
+   }
+})
