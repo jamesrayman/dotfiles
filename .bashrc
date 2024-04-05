@@ -53,22 +53,13 @@ then
 fi
 
 # prompt
-[ -r '/usr/share/git/completion/git-prompt.sh' ] && source '/usr/share/git/completion/git-prompt.sh'
-GIT_PS1_SHOWDIRTYSTATE=yes
-GIT_PS1_SHOWUNTRACKEDFILES=yes
-GIT_PS1_SHOWUPSTREAM=auto
-GIT_PS1_SHOWCOLORHINTS=yes
-GIT_PS1_SHOWSTASHSTATE=yes
-GIT_PS1_SHOWCONFLICTSTATE=yes
-PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\t]\[\e[0m\] \[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]" "\$ "'
-
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;\u@\h: \w\a\]"
-    ;;
-*)
-    ;;
-esac
+# GIT_PS1_SHOWDIRTYSTATE=yes
+# GIT_PS1_SHOWUNTRACKEDFILES=yes
+# GIT_PS1_SHOWUPSTREAM=auto
+# GIT_PS1_SHOWCOLORHINTS=yes
+# GIT_PS1_SHOWSTASHSTATE=yes
+# GIT_PS1_SHOWCONFLICTSTATE=yes
+PS1='\[\e[0;36m\][\t]\[\e[0m\] \[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
 
 # stty
 stty erase '^?'

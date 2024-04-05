@@ -15,7 +15,7 @@ do
         printf "start: file \`%s' does not exist\n" "$file" >&2
         ret=1
     else
-        xdg-open "$file" &> /dev/null &
+        xdg-open "$file" > /dev/null 2> /dev/null &
     fi
 done
 
