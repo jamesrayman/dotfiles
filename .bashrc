@@ -1,6 +1,8 @@
 # If not running interactively, don't do anything
 case $- in *i*) ;; *) return;; esac
 
+export PATH="$HOME/.local/bin:$PATH"
+
 if command -v tmux &> /dev/null && [[ ! "$TERM" =~ screen ]] && [[ -z "$TMUX" ]]
 then
     exec tmux -u
@@ -9,7 +11,6 @@ fi
 # align to bottom
 tput cup 1000 0
 
-# XDG
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_STATE_HOME="$HOME/.local/state"
@@ -32,7 +33,6 @@ shopt -s nullglob
 shopt -s checkwinsize
 shopt -s direxpand
 
-# history
 shopt -s histappend
 HISTCONTROL=ignoreboth
 HISTSIZE=20000
@@ -40,7 +40,6 @@ HISTFILESIZE=20000
 HISTFILE="$XDG_STATE_HOME/bash/history"
 HISTTIMEFORMAT="%F %T     "
 
-# completion
 if ! shopt -oq posix
 then
     if [[ -f /usr/share/bash-completion/bash_completion ]]
@@ -52,61 +51,44 @@ then
     fi
 fi
 
-# prompt
-# GIT_PS1_SHOWDIRTYSTATE=yes
-# GIT_PS1_SHOWUNTRACKEDFILES=yes
-# GIT_PS1_SHOWUPSTREAM=auto
-# GIT_PS1_SHOWCOLORHINTS=yes
-# GIT_PS1_SHOWSTASHSTATE=yes
-# GIT_PS1_SHOWCONFLICTSTATE=yes
-PS1='\[\e[0;36m\][\t]\[\e[0m\] \[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
+PS1='\[\e[1;33m\]\$\[\e[0m\] '
 
-# stty
 stty erase '^?'
 stty werase '' # Allow .inputrc to bind ^W
 stty -ixon # Disable ^S and ^Q flow control
 stty sane
 
-# inputrc
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 
-# GCC
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# GPG
 export GPG_TTY="$(tty)"
 export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 gpgconf --launch gpg-agent
 
-# Python
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 alias python="python3"
 alias pip="pip3"
 alias -- -m="python -m"
 
-# Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export PATH="$PATH:$CARGO_HOME/bin"
 
-# ls
 export LS_COLORS="ow=1;35:tw=1;35:mi=1;91"
 alias la='command ls -laGhv --group-directories-first --color=auto'
 alias l='command ls -v --group-directories-first --color=auto'
 alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # local PATH
-export PATH="$HOME/.local/bin:$PATH"
 for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
 do
     PATH="$PATH:$bin_dir"
 done
 
-# Use $VISUAL for vi-inspired editors
 alias vim="$VISUAL"
 alias vi="$VISUAL"
 
-# less
 export LESS="-F -i -Q -R -z-4 -j.5 -Ps%f\:%lb of %L (%Pb\%) "
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
@@ -121,22 +103,17 @@ export LESSKEYIN="$XDG_CONFIG_HOME/less/lesskey"
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 alias more="$PAGER"
 
-# Favor rg over grep
 alias grep='rg'
 alias fgrep='rg -F'
 alias egrep='rg'
 alias rgrep='rg'
 
-# man
 export MANWIDTH=78
 
-# Andromeda
 export AND="$HOME/andromeda"
 
-# Dotfiles
 export DOT="$HOME/dotfiles"
 
-# fzf
 export FZF_DEFAULT_COMMAND="idfs --hidden --follow --exclude .git --exclude '$XDG_STATE_HOME' --exclude '$XDG_CACHE_HOME' --strip-cwd-prefix"
 export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -227,8 +204,6 @@ alias j=jobs
 # f is find and cd
 alias f=t
 
-
-# Ruby
 export GEM_HOME="$XDG_DATA_HOME/gem"
 export PATH="$GEM_HOME/bin:$PATH"
 
@@ -236,19 +211,14 @@ export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle"
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle"
 export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle"
 
-# Node
 export NODE_REPL_HISTORY="$XDG_STATE_HOME/node/history"
 
-# ICE
 export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
 
-# Sage
 export DOT_SAGE="$XDG_CONFIG_HOME/sage"
 
-# Asymptote
 export ASYMPTOTE_HOME="$XDG_CONFIG_HOME/asy"
 
-# Jupyter
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 
 # Opam
@@ -285,14 +255,17 @@ alias et="vi $XDG_CONFIG_HOME/task/taskrc"
 alias eu="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias ev="vi $XDG_CONFIG_HOME/nvim/init.lua" # .vimrc
 
-# tmux
 alias tmux='tmux -u'
 
-# Mutt
 alias mutt="neomutt"
 
-# consistent with autocd
-alias -- -='cd -'
+# refresh tmux on cd
+cd() {
+    command cd "$@"
+    tmux refresh-client -S
+}
+
+alias -- -='cd ~-'
 alias ..='cd ..'
 
 # safety
@@ -300,10 +273,8 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 
-# better diff
 alias diff='delta'
 
-# weather
 alias weather='curl -sSL https://wttr.in | head -n -2'
 
 # aliases to force XDG compliance

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ "$#" == "0" ]]
+then
+    printf "shortwd: missing argument\n" >&2
+    exit 1
+fi
+
+max_len="$1"
+
+wd="${PWD/"$HOME"/\~}"
+IFS='/' wd_parts=($wd)
+len="${#wd}"
+
+i=0
+while [[ $len -gt $max_len ]] && [[ $i -lt $((${#wd_parts[@]} - 1)) ]]
+do
+    len=$((len - ${#wd_parts[$i]} + 1))
+    wd_parts[$i]=${wd_parts[$i]:0:1}
+    i=$((i+1))
+done
+
+IFS='/' wd="${wd_parts[*]}"
+
+if [[ $len -gt $max_len ]]
+then
+    wd="…${wd: -$((max_len-1))}"
+fi
+
+if [[ "${2:-}" == --pad ]]
+then
+    printf "%-${max_len}s" "$wd"
+else
+    printf '%s' "$wd"
+fi
