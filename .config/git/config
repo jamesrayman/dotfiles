@@ -38,6 +38,7 @@
 [core]
 	untrackedcache = true
 	pager = delta
+	abbrev = 8
 [diff]
 	colorMoved = default
 [interactive]

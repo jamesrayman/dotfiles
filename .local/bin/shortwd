@@ -2,20 +2,12 @@
 
 set -euo pipefail
 
-if [[ "$#" == "0" ]]
-then
-    printf "shortwd: missing argument\n" >&2
-    exit 1
-fi
-
-max_len="$1"
-
 wd="${PWD/"$HOME"/\~}"
 IFS='/' wd_parts=($wd)
 len="${#wd}"
 
 i=0
-while [[ $len -gt $max_len ]] && [[ $i -lt $((${#wd_parts[@]} - 1)) ]]
+while [[ $len -gt $SHORTWD_MAX_LEN ]] && [[ $i -lt $((${#wd_parts[@]} - 1)) ]]
 do
     len=$((len - ${#wd_parts[$i]} + 1))
     wd_parts[$i]=${wd_parts[$i]:0:1}
@@ -24,14 +16,14 @@ done
 
 IFS='/' wd="${wd_parts[*]}"
 
-if [[ $len -gt $max_len ]]
+if [[ $len -gt $SHORTWD_MAX_LEN ]]
 then
-    wd="…${wd: -$((max_len-1))}"
+    wd="…${wd: -$((SHORTWD_MAX_LEN-1))}"
 fi
 
-if [[ "${2:-}" == --pad ]]
+if [[ -n "${SHORTWD_PAD-}" ]]
 then
-    printf "%-${max_len}s" "$wd"
+    printf "%-${SHORTWD_MAX_LEN}s" "${wd-/}"
 else
-    printf '%s' "$wd"
+    printf '%s' "${root-}${wd-/}"
 fi
