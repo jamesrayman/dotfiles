@@ -101,11 +101,11 @@ __git_ps1_show_upstream ()
         case "$count" in
         "") # no upstream
             p="" ;;
-        "0  0") # equal to upstream
+        "0	0") # equal to upstream
             p="=" ;;
-        "0  "*) # ahead of upstream
+        "0	"*) # ahead of upstream
             p=">" ;;
-        *"  0") # behind upstream
+        *"	0") # behind upstream
             p="<" ;;
         *)      # diverged from upstream
             p="<>" ;;
@@ -114,11 +114,11 @@ __git_ps1_show_upstream ()
         case "$count" in
         "") # no upstream
             upstream="" ;;
-        "0  0") # equal to upstream
+        "0	0") # equal to upstream
             upstream="|u=" ;;
-        "0  "*) # ahead of upstream
+        "0	"*) # ahead of upstream
             upstream="|u+${count#0  }" ;;
-        *"  0") # behind upstream
+        *"	0") # behind upstream
             upstream="|u-${count%   0}" ;;
         *)      # diverged from upstream
             upstream="|u+${count#*  }-${count%  *}" ;;
