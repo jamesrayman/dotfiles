@@ -1,7 +1,7 @@
 #!/bin/sh
 
-fd --exact-depth 1 "$@" && \
-fd --exact-depth 2 "$@" && \
-fd --exact-depth 3 "$@" && \
-fd --exact-depth 4 "$@" && \
+fd --exact-depth 1 "$@"
+fd --exact-depth 2 "$@"
+fd --exact-depth 3 "$@"
+fd --exact-depth 4 "$@"
 fd --min-depth 5 "$@"

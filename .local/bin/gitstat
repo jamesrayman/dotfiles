@@ -145,9 +145,9 @@ __git_ps1_show_upstream ()
 # their own color.
 __git_ps1_colorize_gitstring ()
 {
-    local bad_color='#[fg=red]'
-    local ok_color='#[fg=green]'
-    local flags_color='#[fg=blue]'
+    local bad_color='#[fg=brightred]'
+    local ok_color='#[fg=brightblue]'
+    local flags_color='#[fg=yellow]'
     local c_clear='#[fg=default]'
 
     local branch_color=""
@@ -157,15 +157,15 @@ __git_ps1_colorize_gitstring ()
         branch_color="$bad_color"
     fi
     if [ -n "$c" ]; then
-        c="$branch_color$c$c_clear"
+        c="$branch_color${c//#/##}$c_clear"
     fi
-    b="$branch_color$b$c_clear"
+    b="$branch_color${b//#/##}$c_clear"
 
     if [ -n "$w" ]; then
         w="$bad_color$w$c_clear"
     fi
     if [ -n "$i" ]; then
-        i="$ok_color$i$c_clear"
+        i="$ok_color${i//#/##}$c_clear"
     fi
     if [ -n "$s" ]; then
         s="$flags_color$s$c_clear"

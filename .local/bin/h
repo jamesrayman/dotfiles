@@ -1,8 +1,10 @@
 #!/bin/sh
 
-# TODO
-# https://raw.githubusercontent.com/tldr-pages/tldr/main/pages/common/tar.md
+h="$AND/note/h/$1.md"
 
-# If $query matches file exactly, open it
-# else if matches tldr exactly, copy to file and open it
-# else full text search, if
+if [ -f "$h" ]
+then
+    less "$h"
+else
+    curl -sfL "https://raw.githubusercontent.com/tldr-pages/tldr/main/pages/common/$1.md" -o "$h" 2> /dev/null && less "$h" || printf 'Not found\n'
+fi
