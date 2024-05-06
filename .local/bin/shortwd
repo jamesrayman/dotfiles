@@ -23,7 +23,7 @@ fi
 
 if [[ -n "${SHORTWD_PAD-}" ]]
 then
-    printf "%-${SHORTWD_MAX_LEN}s" "${wd-/}"
+    printf "%-${SHORTWD_MAX_LEN}s" "${wd:-/}"
 else
-    printf '%s' "${root-}${wd-/}"
+    printf '%s' "${root-}${wd:-/}"
 fi
