@@ -18,10 +18,10 @@ all: $(c_src:.c=) $(cpp_src:.cpp=) $(java_src:.java=.class) $(tex_src:.tex=.pdf)
 	$(JAVAC) $(JAVAFLAGS) $<
 
 %.pdf : %.tex
-	latexmk -pdf -dvi- -quiet $< >/dev/null
+	latexmk -xelatex -quiet $< >/dev/null
 	if [ -f $*-1.asy ]; then \
 	    for x in $*-*.asy; do asy "$$x"; done; \
-	    latexmk -pdf -dvi- -quiet $< >/dev/null; \
+	    latexmk -xelatex -quiet $< >/dev/null; \
 	fi
 	latexmk -c >/dev/null 2>&1
 	rm -f $*.pre $*.xdv

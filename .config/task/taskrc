@@ -1,6 +1,8 @@
 # Use the command 'task show' to see all defaults and overrides
 
-# My Taskwarrior philosophy:
+# TODO: secret tasks
+
+# Style guide:
 #   Tags should be verbs, with the exception of +next
 #   Projects should group tasks of a single theme or aimed at a common goal
 #   priority:H means top priority which should be done soon
@@ -45,13 +47,14 @@ urgency.tags.coefficient=0.0
 urgency.user.project.Chore.coefficient=1.0
 urgency.user.project.Thesis.coefficient=1.0
 urgency.user.project.Rachel.coefficient=5.0
+urgency.user.project.Hiking.coefficient=6.0
 urgency.user.project.Finance.coefficient=1.0
 urgency.user.project.Arch.coefficient=-1.0
 urgency.user.project.Server.coefficient=-2.0
 urgency.user.project.Dashboard.coefficient=4.0
 urgency.user.project.Security.coefficient=2.0
 
-# used for reminding myself to review a book a week after I finish it
+# used as a reminder to review a book a week after finishing it
 urgency.user.tag.review.coefficient=10.0
 
 alias.,m=due.after:som due.before:eom+1s
@@ -59,6 +62,7 @@ alias.,w=due.before:1w
 alias.,mb=,m ,b
 alias.,wb=,w ,b
 alias.misc=-TAGGED -PROJECT
+alias.mod=status:pending modify
 
 report.recent.description=The most recently added tasks
 report.recent.columns=id,start.age,entry.age,depends,priority,project,tags,genre,recur,scheduled.countdown,due.relative,until.remaining,description,urgency

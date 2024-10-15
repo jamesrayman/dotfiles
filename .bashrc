@@ -1,5 +1,4 @@
-# If not running interactively, don't do anything
-case $- in *i*) ;; *) return;; esac
+case $- in *i*) ;; *) return;; esac # If not running interactively, don't do anything
 
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -8,8 +7,7 @@ then
     exec tmux -u
 fi
 
-# align to bottom
-tput cup 1000 0
+tput cup 1000 0 # align to bottom
 
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -201,7 +199,7 @@ s() {
 
 # TODO use fzf to select a job
 alias j=jobs
-# f is find and cd
+# TODO f is find and cd
 alias f=t
 
 export GEM_HOME="$XDG_DATA_HOME/gem"
@@ -226,7 +224,7 @@ export OPAMROOT="$XDG_DATA_HOME/opam"
 [ -r "$OPAMROOT/opam-init/init.sh" ] && source "$OPAMROOT/opam-init/init.sh" &> /dev/null
 
 # makefile
-export CPPFLAGS="-Wall -std=c++17"
+export CXXFLAGS="-Wall -Wpedantic -Wconversion -std=c++20"
 export JAVAC="javac"
 
 # make with custom defaults
