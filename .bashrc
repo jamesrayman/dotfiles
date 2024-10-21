@@ -273,8 +273,6 @@ alias cp='cp -i'
 
 alias diff='delta'
 
-alias weather='curl -sSL https://wttr.in | head -n -2'
-
 # aliases to force XDG compliance
 alias units='units --history "$XDG_STATE_HOME/units/history"'
 alias wget='wget --hsts-file "$XDG_STATE_HOME/wget/hsts"'
@@ -295,6 +293,22 @@ g() {
         git checkout -
     else
         git "$@"
+    fi
+}
+
+# TODO
+command_not_found_handle () {
+    if [ -x /usr/lib/command-not-found ]; then
+        /usr/lib/command-not-found -- "$1";
+        return $?;
+    else
+        if [ -x /usr/share/command-not-found/command-not-found ]; then
+            /usr/share/command-not-found/command-not-found -- "$1";
+            return $?;
+        else
+            printf "%s: command not found\n" "$1" 1>&2;
+            return 127;
+        fi;
     fi
 }
 
