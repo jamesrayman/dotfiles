@@ -1,14 +1,56 @@
-# Use the command 'task show' to see all defaults and overrides
-
-# TODO: secret tasks
+# Use the command `task show` to see all defaults and overrides
 
 # Style guide:
-#   Tags should be verbs, with the exception of +next
-#   Projects should group tasks of a single theme or aimed at a common goal
-#   priority:H means top priority which should be done soon
-#   priority:M means should be done sooner than tasks without high priority or a close due date
-#   priority:L means less important than other attributes would suggest
-#   See bottom of file for list of genres
+#   Tags should be verbs, with the exception of +next.
+#   +r is for a short read and +w is for a short watch.
+#   Projects should group tasks of a single theme or aimed at a common goal.
+#   priority:H means top priority which should be done soon.
+#   priority:M means should be done sooner than tasks without high priority or a close due date.
+#   priority:L means less important than other attributes would suggest.
+
+# List of Genres
+#   All genres have ids of 5 or fewer letters. Some genres are
+#   general and contain other genres (e.g. nfic).
+#
+# bio    Biography
+# blogy  Biology
+# bness  Business
+# cook   Cooking (distinct from cookbook)
+# cookb  Cookbook
+# coll   Collection of short stories
+# colum  Collection of nonfiction pieces, e.g. a newspaper column
+# cs     Computer science
+# dsign  Design
+# docu   Documentary film
+# drama  Plays
+# econ   Economics
+# edu    Education
+# fic    Fiction
+# gendr  Gender studies/feminism
+# graph  Graphic novel
+# hist   History
+# math   Mathematics
+# mem    Memoir
+# music  Music
+# nfic   Nonfiction
+# novel  Novel
+# pfin   Personal finance
+# phil   Philosophy
+# pict   Picture books
+# pol    Politics
+# popsi  Pop science and pop mathematics
+# prog   Programming book
+# pulp   Pulp fiction
+# queer  LGBTQ
+# relig  Religion (not sacred texts)
+# sacr   Sacred texts
+# selfh  Self-help
+# short  Short story
+# show   TV series
+# swe    Software engineering
+# tech   Technology
+# urb    Urbanism
+# write  Writing, especially style guides
 
 data.location=~/.local/share/task
 
@@ -39,28 +81,27 @@ uda.details.label=Details
 uda.genre.type=string
 uda.genre.label=Genre
 
+uda.hidden.type=string
+uda.hidden.label=#
+
 search.case.sensitive=no
 nag=
 verbose=blank,header,footnote,label,new-id,affected,edit,project,sync
 
 urgency.tags.coefficient=0.0
 urgency.user.project.Chore.coefficient=1.0
-urgency.user.project.Thesis.coefficient=1.0
 urgency.user.project.Rachel.coefficient=5.0
-urgency.user.project.Hiking.coefficient=6.0
 urgency.user.project.Finance.coefficient=1.0
-urgency.user.project.Arch.coefficient=-1.0
-urgency.user.project.Server.coefficient=-2.0
+urgency.user.project.Server.coefficient=2.0
 urgency.user.project.Dashboard.coefficient=4.0
 urgency.user.project.Security.coefficient=2.0
+urgency.user.project.Arch.coefficient=-1.0
 
 # used as a reminder to review a book a week after finishing it
 urgency.user.tag.review.coefficient=10.0
 
-alias.,m=due.after:som due.before:eom+1s
-alias.,w=due.before:1w
-alias.,mb=,m ,b
-alias.,wb=,w ,b
+alias.m=due.after:som due.before:eom+1s
+alias.w=due.before:1w
 alias.misc=-TAGGED -PROJECT
 alias.mod=status:pending modify
 
@@ -79,36 +120,10 @@ report.id.filter=status:pending
 report.next.columns =id,start.age,entry.age,depends,priority,project,tags,genre,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
 report.next.labels=ID,Active,Age,Deps,P,Project,Tag,Genre,Recur,S,Due,Until,Description,Urg
 
+context.regular.read=hidden:
+context.hidden.read=hidden
+context=regular
+
 default.command=next
 
 news.version=2.6.0
-
-# List of Genres
-#   All genres have ids that are 5 or fewer letters. Some genres are
-#   general and contain other genres (e.g. nfic).
-#
-# bio    Biography
-# blogy  Biology
-# bness  Business
-# cook   Cooking (distinct from cookbook)
-# cookb  Cookbook
-# cs     Computer science
-# docu   Documentary film
-# econ   Economics
-# edu    Education
-# fic    Fiction
-# graph  Graphic novel
-# math   Mathematics
-# mem    Memoir
-# music  Music
-# nfic   Non-fiction
-# phil   Philosophy
-# pol    Politics
-# popsi  Pop science and pop mathematics
-# queer  LGBTQ
-# relig  Religion
-# selfh  Self-help
-# show   TV series
-# swe    Software engineering
-# urb    Urbanism
-# write  Writing, especially style guides

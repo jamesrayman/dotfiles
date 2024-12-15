@@ -10,6 +10,7 @@
 -- i% and a%
 -- textobjects
 -- colorscheme
+-- Code blocks in comments
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -231,6 +232,10 @@ vim.cmd.highlight({ 'NonText', 'ctermfg=201' })
 vim.cmd.highlight({ 'Whitespace', 'cterm=bold', 'ctermfg=242' })
 vim.cmd.highlight({ 'LineNr', 'ctermfg=242' })
 vim.cmd.highlight({ 'EndOfBuffer', 'cterm=bold', 'ctermfg=90' })
+vim.cmd.highlight({ 'SpellBad', 'ctermfg=203 ctermbg=52 cterm=none' })
+vim.cmd.highlight({ 'SpellLocal', 'ctermfg=203 ctermbg=52 cterm=none' })
+vim.cmd.highlight({ 'SpellCap', 'ctermfg=203 cterm=none' })
+vim.cmd.highlight({ 'SpellRare', 'ctermfg=215 cterm=none' })
 
 vim.cmd('dig %o 8240')
 vim.cmd('dig %% 8241')
@@ -263,6 +268,7 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd(
   { 'BufReadPre', 'FileReadPre' }, { pattern = '*.astro', command = ' setl sw=2' }
 )
+vim.api.nvim_create_autocmd('FileType', { pattern = 'xml', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'plaintex', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'plaintex', command = 'setl fo+=t' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'tex', command = 'setl sw=2' })
