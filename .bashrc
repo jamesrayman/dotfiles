@@ -252,6 +252,7 @@ alias es="vi $XDG_CONFIG_HOME/bash/secret"
 alias et="vi $XDG_CONFIG_HOME/task/taskrc"
 alias eu="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias ev="vi $XDG_CONFIG_HOME/nvim/init.lua" # .vimrc
+alias esp="vi $XDG_CONFIG_HOME/nvim/en.utf-8.add" # spell
 
 alias tmux='tmux -u'
 

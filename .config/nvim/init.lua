@@ -135,6 +135,7 @@ vim.o.spell = true
 vim.o.spelllang = 'en_us'
 vim.o.spelloptions = 'camel'
 vim.o.spellfile = vim.env.XDG_CONFIG_HOME .. '/nvim/en.utf-8.add'
+vim.o.spellsuggest = 'best,9'
 
 vim.o.grepprg = 'rg --vimgrep --smart-case --hidden --follow'
 vim.o.diffopt = 'internal,filler,algorithm:myers,indent-heuristic,vertical'
@@ -207,6 +208,13 @@ vim.keymap.set('n', 'g#', 'g#zz<Space>n')
 vim.keymap.set('n', 'b', 'i<CR><ESC>')
 vim.keymap.set('n', 'B', 'a<CR><ESC>')
 vim.keymap.set('', 'gz', '1z=')
+
+vim.keymap.set('n', 'gy', 'ggVG"+y')
+
+vim.keymap.set('n', ']s', ']S')
+vim.keymap.set('n', '[s', '[S')
+vim.keymap.set('n', ']S', ']s')
+vim.keymap.set('n', '[S', '[s')
 
 vim.keymap.set('n', '<Leader>w', 'gwap')
 vim.keymap.set('n', '<Leader>e', ':FzfLua files<CR>')
