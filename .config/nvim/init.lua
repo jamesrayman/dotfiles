@@ -246,6 +246,28 @@ vim.cmd.highlight({ 'SpellLocal', 'ctermfg=203 ctermbg=52 cterm=none' })
 vim.cmd.highlight({ 'SpellCap', 'ctermfg=203 cterm=none' })
 vim.cmd.highlight({ 'SpellRare', 'ctermfg=215 cterm=none' })
 
+vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
+  current_file = vim.fn.expand('%')
+  complement_suffixes = {
+    { '.cpp', '.h' },
+    { '.c', '.h' },
+    { '.h', '.c' },
+    { '.h', '.cpp' },
+  }
+  for _, p in ipairs(complement_suffixes) do
+    suffix, complement_suffix = p[1], p[2]
+    if current_file:sub(-string.len(suffix)) == suffix then
+      complement_file = current_file:sub(1, -string.len(suffix)-1) .. complement_suffix
+      if vim.uv.fs_stat(complement_file) then
+        vim.cmd.e { complement_file }
+        break
+      end
+    end
+  end
+end, { desc = 'Switch to the current file\'s "complement,", e.g. a cpp file\'s header' })
+
+vim.keymap.set('n', '-', ': SmartFileSwitch<CR>', { silent = true })
+
 vim.cmd('dig %o 8240')
 vim.cmd('dig %% 8241')
 

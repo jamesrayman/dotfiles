@@ -143,6 +143,12 @@ __fzf_cd__() {
   dir=$(eval "$FZF_ALT_C_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS" $(__fzfcmd) "$@" +m) && printf 'cd %q' "$dir"
 }
 
+__fzf_up__() {
+  local dir="$PWD"
+  while dir="${dir%/*}"; [[ -n "$dir" ]]; do printf '%s\n' "$dir"; done
+  printf '/\n'
+}
+
 __fzf_history__() {
   local output
   output=$(
@@ -197,8 +203,14 @@ s() {
   fi
 }
 
-# TODO use fzf to select a job
-alias j=jobs
+u() {
+  local comm
+  comm="$(FZF_ALT_C_COMMAND="__fzf_up__" __fzf_cd__ --query "$*")"
+  history -s "$comm"
+  eval "$comm"
+}
+
+
 # TODO f is find and cd
 alias f=t
 
