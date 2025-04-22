@@ -1,7 +1,10 @@
 # Use the command `task show` to see all defaults and overrides
 
 # Style guide:
-#   Tags should be verbs, with the exception of +next.
+#   Tags should be verbs, with these exceptions:
+#     +next: Do this next.
+#     +short: Task requires little time.
+#     +easy: Task requires little mental energy (notice the distinction from +short).
 #   +r is for a short read and +w is for a short watch.
 #   Projects should group tasks of a single theme or aimed at a common goal.
 #   priority:H means top priority which should be done soon.
@@ -44,6 +47,7 @@
 # queer  LGBTQ
 # relig  Religion (not sacred texts)
 # sacr   Sacred texts
+# scifi  Science fiction
 # selfh  Self-help
 # short  Short story
 # show   TV series
@@ -75,20 +79,13 @@ urgency.uda.priority.H.coefficient=6.0
 urgency.uda.priority.M.coefficient=2.0
 urgency.uda.priority.L.coefficient=-3.0
 
-uda.details.type=string
-uda.details.label=Details
-
 uda.genre.type=string
 uda.genre.label=Genre
-
-uda.hidden.type=string
-uda.hidden.label=#
 
 search.case.sensitive=no
 nag=
 verbose=blank,header,footnote,label,new-id,affected,edit,project,sync
 
-urgency.tags.coefficient=0.0
 urgency.user.project.Chore.coefficient=1.0
 urgency.user.project.Rachel.coefficient=5.0
 urgency.user.project.Finance.coefficient=1.0
@@ -99,6 +96,11 @@ urgency.user.project.Arch.coefficient=-1.0
 
 # used as a reminder to review a book a week after finishing it
 urgency.user.tag.review.coefficient=10.0
+
+urgency.user.tag.r.coefficient=3.0
+urgency.user.tag.w.coefficient=3.0
+urgency.user.tag.short.coefficient=3.0
+urgency.user.tag.easy.coefficient=4.0
 
 alias.m=due.after:som due.before:eom+1s
 alias.w=due.before:1w
@@ -119,10 +121,6 @@ report.id.filter=status:pending
 
 report.next.columns =id,start.age,entry.age,depends,priority,project,tags,genre,recur,scheduled.countdown,due.relative,until.remaining,description,urgency
 report.next.labels=ID,Active,Age,Deps,P,Project,Tag,Genre,Recur,S,Due,Until,Description,Urg
-
-context.regular.read=hidden:
-context.hidden.read=hidden
-context=regular
 
 default.command=next
 

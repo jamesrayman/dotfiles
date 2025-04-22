@@ -177,7 +177,7 @@ e() {
   file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --type file" __fzf_select__ --query "$*")"
   if [[ -n "$file" ]]
   then
-    comm="$(printf 'vim %s' "$file")"
+    comm="vim $file"
     history -s "$comm"
     eval "$comm"
   fi
@@ -191,7 +191,7 @@ s() {
   file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --no-ignore" __fzf_select__ --query "$*")"
   if [[ -n "$file" ]]
   then
-    comm="$(printf 'start %s' "$file")"
+    comm="start $file"
     history -s "$comm"
     eval "$comm"
   fi

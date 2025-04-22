@@ -27,6 +27,8 @@
 	fd = ls-tree -r HEAD --name-only
 	ls = fd
 	tree = fd
+	web = instaweb
+	unadd = restore --staged
 [rerere]
 	enabled = true
 [column]
@@ -49,3 +51,5 @@
 	gpgSign = true
 [tag]
 	gpgSign = true
+[log]
+	date = iso
