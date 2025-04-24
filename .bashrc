@@ -211,8 +211,16 @@ u() {
 }
 
 
-# TODO f is find and cd
-alias f=t
+f() {
+  local comm file
+  file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --type file" __fzf_select__ --query "$*")"
+  if [[ -n "$file" ]]
+  then
+    comm="cd ${file%/*}"
+    history -s "$comm"
+    eval "$comm"
+  fi
+}
 
 export GEM_HOME="$XDG_DATA_HOME/gem"
 export PATH="$GEM_HOME/bin:$PATH"
