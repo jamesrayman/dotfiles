@@ -87,7 +87,7 @@ done
 alias vim="$VISUAL"
 alias vi="$VISUAL"
 
-export LESS="-F -i -Q -R -z-4 -j.5 -Ps%f\:%lb of %L (%Pb\%) "
+export LESS="-F -i -Q -R -z-4 -j.5 --incsearch -Ps%f\:%lb of %L (%Pb\%) "
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
 export LESS_TERMCAP_me=$'\e[0m'

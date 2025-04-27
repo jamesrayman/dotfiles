@@ -6,6 +6,12 @@ then
     exit 1
 fi
 
+if [ ! -e "$1" ]
+then
+    printf 'preview: file `%s'\'' not found\n' "$1" >&2
+    exit 1
+fi
+
 ft="$(file -bL --mime-type "$1")"
 
 case "$ft" in

@@ -5,6 +5,7 @@ h back-scroll
 ^h  back-line
 f forw-search
 F back-search
++ back-search
 E visual
 ,f status
 ,e examine

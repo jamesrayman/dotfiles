@@ -54,7 +54,21 @@ require('lazy').setup({
   'aymericbeaumet/vim-symlink',
   'anuvyklack/hydra.nvim',
   { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
-  { 'numToStr/Comment.nvim', lazy = false }
+  { 'numToStr/Comment.nvim', lazy = false },
+  { 'echasnovski/mini.icons', version = false },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      keys = {
+        scroll_down = '<C-Space>',
+        scroll_up = '<C-h>'
+      },
+      delay = function(ctx)
+        return ctx.plugin and 0 or 500
+      end,
+    }
+  }
 })
 
 require('nvim-treesitter.configs').setup({
@@ -185,20 +199,20 @@ vim.keymap.set('', 'ZA', ':q<CR>')
 vim.keymap.set('i', '<C-l>', '<C-x><C-l>')
 vim.keymap.set('', 'l', '%')
 vim.keymap.set('', '<BS>', '<Nop>')
-vim.keymap.set('', '<C-d>', '<C-o>')
-vim.keymap.set('', '<C-u>', '<C-i>')
+vim.keymap.set('', '<C-d>', '<C-i>')
+vim.keymap.set('', '<C-u>', '<C-o>')
 vim.keymap.set('', '<C-g>', 'g<C-g>')
 vim.keymap.set('', 'c', 'o')
 vim.keymap.set('', 'C', 'O')
 vim.keymap.set('', '<C-c>', '<C-a>')
 vim.keymap.set('', 'gww', 'gww')
-vim.keymap.set('n', 'gm', ':%y+<CR>')
-vim.keymap.set('x', 'gm', '"+y')
-vim.keymap.set('n', 'gh', 'gk')
-vim.keymap.set('n', 'g<Space>', 'gj')
+vim.keymap.set('n', 'gm', ':%y+<CR>', { desc = 'Yank entire file (system clipboard)' })
+vim.keymap.set('x', 'gm', '"+y', { desc = 'Yank entire file (system clipboard)' })
+vim.keymap.set('n', 'gh', 'gk', { desc = 'Up [count] display lines' })
+vim.keymap.set('n', 'g<Space>', 'gj', { desc = 'Down [count] display lines' })
 vim.keymap.set(
   'n', 'gs', '&l:sw == 4 ? ":setl sw=8\\<CR>" : &l:sw == 8 ? ":setl sw=2\\<CR>" : ":setl sw=4\\<CR>"',
-  { expr = true }
+  { expr = true, desc = 'Cycle between shiftwidths' }
 )
 vim.keymap.set('n', 'n', 'nzz<BS>n')
 vim.keymap.set('n', 'N', 'Nzz<Space>N')
@@ -209,6 +223,7 @@ vim.keymap.set('n', 'g#', 'g#zz<Space>n')
 vim.keymap.set('n', 'b', 'i<CR><ESC>')
 vim.keymap.set('n', 'B', 'a<CR><ESC>')
 vim.keymap.set('', 'gz', '1z=')
+vim.keymap.set('', '+', '?')
 
 vim.keymap.set('n', 'gy', 'ggVG"+y')
 
@@ -217,7 +232,6 @@ vim.keymap.set('n', '[s', '[S')
 vim.keymap.set('n', ']S', ']s')
 vim.keymap.set('n', '[S', '[s')
 
-vim.keymap.set('n', '<Leader>w', 'gwap')
 vim.keymap.set('n', '<Leader>e', ':FzfLua files<CR>')
 vim.keymap.set('n', '<Leader>f', ':FzfLua blines<CR>')
 vim.keymap.set('n', '<Leader>a', ':FzfLua grep<CR>')
@@ -233,7 +247,7 @@ vim.keymap.set('o', 'ie', ':normal vie<CR>', { silent = true })
 vim.keymap.set('x', 'ae', ':<C-u> normal! ggVG<CR>', { silent = true })
 vim.keymap.set('o', 'ae', ':normal vae<CR>', { silent = true })
 
-vim.keymap.set('', '<C-z>', '') -- tmux training wheels
+vim.keymap.set('', '<C-z>', '', { desc = 'tmux training wheels' })
 
 vim.cmd.colorscheme('sonokai')
 vim.cmd.highlight({ 'SpecialKey', 'ctermfg=201' })
