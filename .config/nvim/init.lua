@@ -65,7 +65,7 @@ require('lazy').setup({
         scroll_up = '<C-h>'
       },
       delay = function(ctx)
-        return ctx.plugin and 0 or 500
+        return ctx.plugin and 0 or 1500
       end,
     }
   }
@@ -155,6 +155,7 @@ vim.o.grepprg = 'rg --vimgrep --smart-case --hidden --follow'
 vim.o.diffopt = 'internal,filler,algorithm:myers,indent-heuristic,vertical'
 
 vim.cmd('let mapleader="\\<BS>"')
+vim.cmd('let maplocalleader="\\<BS>"')
 
 vim.keymap.set('i', '<C-y>', '<C-r>"')
 vim.keymap.set('', ',', ':')
