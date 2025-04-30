@@ -13,6 +13,8 @@
 [alias]
 	a = add
 	b = branch
+	fd = feature-diff
+	feature-diff = !git diff $(git merge-base main HEAD)
 	c = commit
 	d = diff
 	f = fetch
@@ -24,9 +26,8 @@
 	sw = switch
 	graph = log --all --graph --decorate --oneline
 	gr = graph
-	fd = ls-tree -r HEAD --name-only
-	ls = fd
-	tree = fd
+	ls = ls-tree -r HEAD --name-only
+	tree = ls
 	web = instaweb
 	unadd = restore --staged
 [rerere]
