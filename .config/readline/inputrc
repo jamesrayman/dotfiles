@@ -9,7 +9,8 @@ set mark-symlinked-directories on
 "\C-@": forward-char
 "\C-h": backward-char
 "\C-e": forward-word
-"\C-t": backward-word
+"\C-b": backward-word
+"\C-t": "\C-b\C-b\C-e"
 "\C-o": end-of-line
 
 "\C-w": backward-kill-word
