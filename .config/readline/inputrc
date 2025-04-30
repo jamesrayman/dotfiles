@@ -18,8 +18,7 @@ set mark-symlinked-directories on
 "\C-d": forward-backward-delete-char
 "\C-q": quoted-insert
 
-"\C-x ": magic-space
-"\C-xo": edit-and-execute-command
+"\C-x": shell-expand-line
 
 "\C-v": "\C-av \C-m"
 "\C-xv": "\C-e\C-uv \"$(cat <<'END_HEREDOC'\C-m\C-y\C-mEND_HEREDOC\C-m)\"\C-m"
