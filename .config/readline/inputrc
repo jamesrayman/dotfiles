@@ -20,15 +20,8 @@ set mark-symlinked-directories on
 
 "\C-x": shell-expand-line
 
-"\C-v": "\C-av \C-m"
-"\C-xv": "\C-e\C-uv \"$(cat <<'END_HEREDOC'\C-m\C-y\C-mEND_HEREDOC\C-m)\"\C-m"
-"\C-x\C-v": "\C-xv"
-
-"\C-xl": clear-screen
-"\C-x\C-l": "\C-xl"
-
-"\C-xj": end-of-history
-"\C-x\C-j": "\C-xj"
+# C-l is clear-screen by default, but might as well remind myself
+"\C-l": clear-screen
 
 "\e[A": ""
 "\e[B": ""
