@@ -18,10 +18,10 @@ set mark-symlinked-directories on
 "\C-d": forward-backward-delete-char
 "\C-q": quoted-insert
 
+$if Bash
+"\ee": alias-expand-line
 "\C-x": shell-expand-line
-
-# C-l is clear-screen by default, but might as well remind myself
-"\C-l": clear-screen
+$endif
 
 "\e[A": ""
 "\e[B": ""
