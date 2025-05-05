@@ -87,7 +87,8 @@ done
 alias vim="$VISUAL"
 alias vi="$VISUAL"
 
-export LESS="-F -i -Q -R -z-4 -j.5 --incsearch -Ps%f\:%lb of %L (%Pb\%) "
+# don't include --incsearch in LESS because it is unresponsive on large files
+export LESS="-F -i -Q -R -z-4 -j.5 -Ps%f\:%lb of %L (%Pb\%) "
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -143,7 +144,7 @@ __fzf_cd__() {
   dir=$(eval "$FZF_ALT_C_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS" $(__fzfcmd) "$@" +m) && printf 'cd %q' "$dir"
 }
 
-__fzf_up__() {
+__ancestor_wds__() {
   local dir="$PWD"
   while dir="${dir%/*}"; [[ -n "$dir" ]]; do printf '%s\n' "$dir"; done
   printf '/\n'
@@ -205,7 +206,7 @@ s() {
 
 u() {
   local comm
-  comm="$(FZF_ALT_C_COMMAND="__fzf_up__" __fzf_cd__ --query "$*")"
+  comm="$(FZF_ALT_C_COMMAND="__ancestor_wds__" __fzf_cd__ --query "$*")"
   history -s "$comm"
   eval "$comm"
 }
@@ -220,6 +221,20 @@ f() {
     history -s "$comm"
     eval "$comm"
   fi
+}
+
+c() {
+  local comm
+  comm="$(FZF_ALT_C_COMMAND="printf '%s\n' */ | sed 's|/||'" __fzf_cd__ --query "$*")"
+  history -s "$comm"
+  eval "$comm"
+}
+
+C() {
+  local comm
+  comm="$(FZF_ALT_C_COMMAND="printf '%s\n' */ .?*/ | sed -n '/^\.\.\/$/d;s|/||p'" __fzf_cd__ --query "$*")"
+  history -s "$comm"
+  eval "$comm"
 }
 
 export GEM_HOME="$XDG_DATA_HOME/gem"

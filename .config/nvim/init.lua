@@ -131,7 +131,7 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.shiftround = true
 
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 vim.o.wrapscan = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -304,6 +304,14 @@ vim.filetype.add({
     sage = 'python'
   }
 })
+
+vim.api.nvim_create_autocmd('CursorMoved', {
+  group = vim.api.nvim_create_augroup('auto-hlsearch', { clear = true }),
+  callback = function ()
+    vim.o.hlsearch = vim.fn.searchcount().exact_match
+  end
+})
+
 
 vim.api.nvim_create_autocmd(
   { 'BufReadPre', 'FileReadPre' }, { pattern = '*.sage', command = 'setl ft=python' }
