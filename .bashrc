@@ -332,6 +332,10 @@ g() {
     fi
 }
 
+__tmux_open__() {
+    vim "$1"
+}
+
 # TODO
 command_not_found_handle () {
     if [ -x /usr/lib/command-not-found ]; then
