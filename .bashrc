@@ -225,14 +225,14 @@ f() {
 
 c() {
   local comm
-  comm="$(FZF_ALT_C_COMMAND="printf '%s\n' */ | sed 's|/||'" __fzf_cd__ --query "$*")"
+  comm="$(FZF_ALT_C_COMMAND="printf '%s\n' */" __fzf_cd__ --query "$*")"
   history -s "$comm"
   eval "$comm"
 }
 
 C() {
   local comm
-  comm="$(FZF_ALT_C_COMMAND="printf '%s\n' */ .?*/ | sed -n '/^\.\.\/$/d;s|/||p'" __fzf_cd__ --query "$*")"
+  comm="$(FZF_ALT_C_COMMAND="printf '%s\n' */ .?*/ | sed '/^\.\.\/$/d'" __fzf_cd__ --query "$*")"
   history -s "$comm"
   eval "$comm"
 }

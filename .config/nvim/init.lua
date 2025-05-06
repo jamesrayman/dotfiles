@@ -2,9 +2,9 @@
 -- TODO:
 -- Snippets
 -- open link
--- lp should paste line <count> times and g<C-a> selection starting at cursor
--- lT and lE should go up or down until line has fewer characters
--- lc should select a column with lT and lE
+-- <Leader>p should paste line <count> times and g<C-a> selection starting at cursor
+-- <Leader>T and <Leader>E should go up or down until line has fewer characters
+-- <Leader>c should select a column with <Leader>T and <Leader>E
 -- targets.nvim
 -- marks.nvim
 -- i% and a%
@@ -296,7 +296,7 @@ vim.o.indentkeys = ''
 
 vim.g.netrw_home = vim.env.XDG_DATA_HOME .. '/nvim'
 
-vim.g.man_hardwrap = '78'
+vim.g.man_hardwrap = 1
 
 vim.filetype.add({
   extension = {
