@@ -37,7 +37,6 @@ vim.opt.packpath:append(vim.env.XDG_DATA_HOME .. '/nvim/after')
 require('lazy').setup({
   'sainnhe/sonokai',
   'tpope/vim-repeat',
-  'tpope/vim-unimpaired',
   'tpope/vim-eunuch',
   {
     'ibhagwan/fzf-lua',
@@ -119,7 +118,6 @@ vim.o.showbreak = ' ↪ '
 
 vim.o.wrap = true
 vim.o.linebreak = true
-vim.o.colorcolumn = 121
 vim.o.textwidth = 72
 vim.o.formatoptions = 'jcrql2'
 
@@ -198,7 +196,6 @@ vim.keymap.set('', 'j', 'J')
 vim.keymap.set('', 'J', 'gJ')
 vim.keymap.set('', 'ZA', ':q<CR>')
 vim.keymap.set('i', '<C-l>', '<C-x><C-l>')
-vim.keymap.set('', 'l', '%')
 vim.keymap.set('', '<BS>', '<Nop>')
 vim.keymap.set('', '<C-d>', '<C-i>')
 vim.keymap.set('', '<C-u>', '<C-o>')
@@ -217,14 +214,18 @@ vim.keymap.set(
 )
 vim.keymap.set('n', 'n', 'nzz<BS>n')
 vim.keymap.set('n', 'N', 'Nzz<Space>N')
-vim.keymap.set('n', '*', '*zz<BS>n')
-vim.keymap.set('n', '#', '#zz<Space>n')
-vim.keymap.set('n', 'g*', 'g*zz<BS>n')
-vim.keymap.set('n', 'g#', 'g#zz<Space>n')
 vim.keymap.set('n', 'b', 'i<CR><ESC>')
 vim.keymap.set('n', 'B', 'a<CR><ESC>')
 vim.keymap.set('', 'gz', '1z=')
 vim.keymap.set('', '+', '?')
+
+vim.keymap.set('n', 'l', '<Plug>(MatchitNormalForward)')
+vim.keymap.set('x', 'l', '<Plug>(MatchitVisualForward)')
+vim.keymap.set('o', 'l', '<Plug>(MatchitOperationForward)')
+vim.keymap.set('n', 'gl', '<Plug>(MatchitNormalBackward)')
+vim.keymap.set('x', 'gl', '<Plug>(MatchitVisualBackward)')
+vim.keymap.set('o', 'gl', '<Plug>(MatchitOperationBackward)')
+vim.keymap.set('x', 'al', '<Plug>(MatchitVisualTextObject)')
 
 vim.keymap.set('n', 'gy', 'ggVG"+y')
 
@@ -308,7 +309,9 @@ vim.filetype.add({
 vim.api.nvim_create_autocmd('CursorMoved', {
   group = vim.api.nvim_create_augroup('auto-hlsearch', { clear = true }),
   callback = function ()
-    vim.o.hlsearch = vim.fn.searchcount().exact_match
+    if vim.o.hlsearch ~= (vim.fn.searchcount().exact_match ~= 0) then
+      vim.o.hlsearch = vim.fn.searchcount().exact_match
+    end
   end
 })
 
@@ -331,7 +334,6 @@ vim.api.nvim_create_autocmd('FileType', { pattern = 'text', command = 'setl fo+=
 vim.api.nvim_create_autocmd('FileType', { pattern = 'html', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'javascript', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'man', command = 'setl nospell' })
-
 
 local git_hydra_hint = [[
  _J_: next hunk   _s_: stage hunk        _d_: show deleted   _b_: blame line

@@ -4,7 +4,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 if command -v tmux &> /dev/null && [[ ! "$TERM" =~ screen ]] && [[ -z "$TMUX" ]]
 then
-    exec tmux -u
+    exec tmux -u new -t main
 fi
 
 tput cup 1000 0 # align to bottom
