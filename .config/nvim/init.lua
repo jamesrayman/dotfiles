@@ -236,8 +236,10 @@ vim.keymap.set('n', '[S', '[s')
 
 vim.keymap.set('n', '<Leader>e', ':FzfLua files<CR>')
 vim.keymap.set('n', '<Leader>f', ':FzfLua blines<CR>')
-vim.keymap.set('n', '<Leader>a', ':FzfLua grep<CR>')
+vim.keymap.set('n', '<Leader>a', ':FzfLua live_grep<CR>')
 vim.keymap.set('n', '<Leader>o', ':FzfLua buffers<CR>')
+vim.keymap.set('n', '<Leader>q', ':FzfLua quickfix<CR>')
+vim.keymap.set('n', '<Leader>r', ':FzfLua resume<CR>')
 
 vim.keymap.set('x', 'im', ':<C-u> normal! `[v`]<CR>', { silent = true })
 vim.keymap.set('o', 'im', ': normal vim<CR>', { silent = true })

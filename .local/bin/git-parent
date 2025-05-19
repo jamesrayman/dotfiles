@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -eu
+
+parent_file="$(git root)/.git-parent"
+
+if [ -f "$parent_file" ]
+then
+    cat "$parent_file"
+else
+    printf '%s\n' main
+fi
