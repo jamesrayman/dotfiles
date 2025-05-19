@@ -8,6 +8,8 @@
 	defaultBranch = main
 [pull]
 	rebase = true
+[fetch]
+	prune = true
 [rebase]
 	updateRefs = true
 [alias]
