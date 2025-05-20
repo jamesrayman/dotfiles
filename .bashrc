@@ -118,6 +118,7 @@ export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
 export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path"
+export FZF_CTRL_T_FILE_OPTS="--type file"
 export FZF_CTRL_R_OPTS="--scheme=history"
 export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path"
 export FZF_TMUX=1
@@ -181,7 +182,7 @@ T() {
 
 e() {
   local comm file
-  file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --type file" __fzf_select__ --query "$*")"
+  file="$(FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND $FZF_CTRL_T_FILE_OPTS" __fzf_select__ --query "$*")"
   if [[ -n "$file" ]]
   then
     comm="vim $file"
@@ -191,6 +192,13 @@ e() {
 }
 E() {
     FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --no-ignore" e "$@"
+}
+
+# modified files
+m() {
+    FZF_CTRL_T_COMMAND="git feature-diff --name-only" \
+    FZF_CTRL_T_FILE_OPTS="" \
+    e "$@"
 }
 
 s() {
@@ -272,17 +280,14 @@ export OPAMROOT="$XDG_DATA_HOME/opam"
 export CXXFLAGS="-Wall -Wpedantic -Wconversion -std=c++20"
 export JAVAC="javac"
 
-# make with custom defaults
-m() {
+# "build": make with custom defaults
+b() {
     if (( $# > 0 ))
     then
         MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make "$@"
     else
         MAKEFILES="$XDG_CONFIG_HOME/make/makefile" make all
     fi
-}
-mc() {
-  m clean "$@"
 }
 
 # Quick edit common files
