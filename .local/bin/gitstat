@@ -430,6 +430,12 @@ if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
     b="\${__git_ps1_branch_name}"
 fi
 
+parent="$(git parent)"
+if [ "$parent" != "$b" ]
+then
+    b="$parent/$b"
+fi
+
 __git_ps1_colorize_gitstring
 
 f="$h$w$i$s$u$p"

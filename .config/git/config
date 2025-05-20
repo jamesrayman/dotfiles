@@ -46,14 +46,9 @@
 	conflictstyle = diff3
 [core]
 	untrackedcache = true
-	pager = delta
 	abbrev = 8
 [diff]
 	colorMoved = default
-[interactive]
-	diffFilter = delta --color-only
-[delta]
-	navigate = true
 [commit]
 	gpgSign = true
 [tag]

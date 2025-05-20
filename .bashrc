@@ -141,7 +141,7 @@ fzf-file-widget() {
 
 __fzf_cd__() {
   local dir
-  dir=$(eval "$FZF_ALT_C_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS" $(__fzfcmd) "$@" +m) && printf 'cd %q' "$dir"
+  dir=$(eval "$FZF_ALT_C_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS" $(__fzfcmd) "$@" +m) && printf 'cd %q%q' "$FZF_ALT_C_BASE_DIR" "$dir"
 }
 
 __ancestor_wds__() {
@@ -222,6 +222,9 @@ f() {
     eval "$comm"
   fi
 }
+F() {
+    FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND --no-ignore" f "$@"
+}
 
 c() {
   local comm
@@ -235,6 +238,13 @@ C() {
   comm="$(FZF_ALT_C_COMMAND="printf '%s\n' */ .?*/ | sed '/^\.\.\/$/d'" __fzf_cd__ --query "$*")"
   history -s "$comm"
   eval "$comm"
+}
+
+w() {
+    FZF_ALT_C_COMMAND="command ls -1 $HOME/Projects" \
+    FZF_ALT_C_OPTS="$FZF_ALT_C_OPTS --preview='preview $HOME/Projects/{}'" \
+    FZF_ALT_C_BASE_DIR="$HOME/Projects/" \
+    t "$@"
 }
 
 export GEM_HOME="$XDG_DATA_HOME/gem"
