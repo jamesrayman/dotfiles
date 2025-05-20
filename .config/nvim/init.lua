@@ -52,7 +52,7 @@ require('lazy').setup({
   'moll/vim-bbye',
   'aymericbeaumet/vim-symlink',
   'anuvyklack/hydra.nvim',
-  { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
   { 'numToStr/Comment.nvim', lazy = false },
   { 'echasnovski/mini.icons', version = false },
   {

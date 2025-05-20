@@ -434,6 +434,12 @@ parent="$(git parent)"
 if [ "$parent" != "$b" ]
 then
     b="$parent/$b"
+    if git merge-base --is-ancestor "$parent" HEAD
+    then
+        :
+    else
+        s="Y$s"
+    fi
 fi
 
 __git_ps1_colorize_gitstring
