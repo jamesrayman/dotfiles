@@ -282,7 +282,7 @@ vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
       end
     end
   end
-end, { desc = 'Switch to the current file\'s "complement,", e.g. a cpp file\'s header' })
+end, { desc = 'Switch to the current file\'s "complement," e.g. a cpp file\'s header' })
 
 vim.keymap.set('n', '-', ': SmartFileSwitch<CR>', { silent = true })
 
@@ -316,6 +316,27 @@ vim.api.nvim_create_autocmd('CursorMoved', {
     end
   end
 })
+
+function infopane ()
+  vim.g.infopane = vim.fn.system({
+    'tmux', 'split-window', '-h', '-l', '80', '-P', '-F', '#{pane_id}',
+    string.format('VIMSERVER=\'%s\' bash', vim.v.servername)
+  }):gsub('%s+', '')
+end
+
+function oxpecker_break ()
+  vim.fn.system({
+    'tmux', 'send-keys', '-t', vim.g.infopane, 'ls\n'
+  })
+end
+
+vim.api.nvim_create_user_command('Oxpecker', function ()
+  infopane()
+end, { desc = 'Oxpecker is the OxCaml de-bugger' })
+
+vim.api.nvim_create_user_command('OxpeckerBreak', function ()
+  oxpecker_break()
+end, { desc = '' })
 
 
 vim.api.nvim_create_autocmd(
@@ -401,3 +422,5 @@ hydra({
       { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
    }
 })
+
+vim.fn.serverstart()
