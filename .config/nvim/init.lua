@@ -98,6 +98,18 @@ gitsigns.setup()
 
 local hydra = require("hydra")
 
+function next_hunk()
+  if vim.wo.diff then return ']c' end
+  vim.schedule(function() gitsigns.next_hunk() end)
+  return '<Ignore>'
+end
+
+function prev_hunk()
+  if vim.wo.diff then return '[c' end
+  vim.schedule(function() gitsigns.prev_hunk() end)
+  return '<Ignore>'
+end
+
 vim.o.showcmd = true
 vim.o.wildmenu = true
 vim.o.wildmode = 'list:full'
@@ -186,8 +198,8 @@ vim.keymap.set('', 'O', 'E')
 vim.keymap.set('x', '<C-o>', 'o')
 vim.keymap.set('', 'go', 'ge')
 vim.keymap.set('', 'gO', 'gE')
-vim.keymap.set('', '<C-n>', ':bnext<CR>')
-vim.keymap.set('', '<C-p>', ':bprev<CR>')
+vim.keymap.set('', '<C-n>', next_hunk)
+vim.keymap.set('', '<C-p>', prev_hunk)
 vim.keymap.set('', '\\', '<C-^>')
 vim.keymap.set('', 'm', 'y')
 vim.keymap.set('n', 'mm', 'yy')
@@ -236,7 +248,8 @@ vim.keymap.set('n', '[S', '[s')
 
 vim.keymap.set('n', '<Leader>e', ':FzfLua files<CR>')
 vim.keymap.set('n', '<Leader>f', ':FzfLua blines<CR>')
-vim.keymap.set('n', '<Leader>a', ':FzfLua live_grep<CR>')
+vim.keymap.set('n', '<Leader>F', ':FzfLua live_grep<CR>')
+vim.keymap.set('n', '<Leader>*', ':FzfLua grep_cword<CR>')
 vim.keymap.set('n', '<Leader>o', ':FzfLua buffers<CR>')
 vim.keymap.set('n', '<Leader>q', ':FzfLua quickfix<CR>')
 vim.keymap.set('n', '<Leader>r', ':FzfLua resume<CR>')
@@ -396,20 +409,8 @@ hydra({
    mode = {'n','x'},
    body = '<Leader>hh',
    heads = {
-      { 'J',
-         function()
-            if vim.wo.diff then return ']c' end
-            vim.schedule(function() gitsigns.next_hunk() end)
-            return '<Ignore>'
-         end,
-         { expr = true, desc = 'next hunk' } },
-      { 'K',
-         function()
-            if vim.wo.diff then return '[c' end
-            vim.schedule(function() gitsigns.prev_hunk() end)
-            return '<Ignore>'
-         end,
-         { expr = true, desc = 'prev hunk' } },
+      { 'J', next_hunk { expr = true, desc = 'next hunk' } },
+      { 'K', prev_hunk, { expr = true, desc = 'prev hunk' } },
       { 's', ':Gitsigns stage_hunk<CR>', { silent = true, desc = 'stage hunk' } },
       { 'u', gitsigns.undo_stage_hunk, { desc = 'undo last stage' } },
       { 'S', gitsigns.stage_buffer, { desc = 'stage buffer' } },
