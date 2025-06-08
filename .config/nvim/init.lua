@@ -36,9 +36,18 @@ vim.opt.packpath:append(vim.env.XDG_CONFIG_HOME .. '/nvim/after')
 vim.opt.packpath:append(vim.env.XDG_DATA_HOME .. '/nvim/after')
 
 require('lazy').setup({
-  'sainnhe/sonokai',
-  'tpope/vim-repeat',
-  'tpope/vim-eunuch',
+  {
+    'projekt0n/github-nvim-theme',
+    name = 'github-theme',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('github-theme').setup({
+      })
+
+      vim.cmd('colorscheme github_dark_high_contrast')
+    end,
+  },
   {
     'ibhagwan/fzf-lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -52,7 +61,6 @@ require('lazy').setup({
   'lewis6991/gitsigns.nvim',
   'moll/vim-bbye',
   'aymericbeaumet/vim-symlink',
-  { 'numToStr/Comment.nvim', lazy = false },
   { 'echasnovski/mini.icons', version = false },
   {
     "folke/which-key.nvim",
@@ -68,8 +76,6 @@ require('lazy').setup({
     }
   }
 })
-
-require('Comment').setup()
 
 local gitsigns = require('gitsigns')
 gitsigns.setup()
@@ -178,12 +184,10 @@ vim.keymap.set('', 'gO', 'gE')
 vim.keymap.set('', '<C-n>', next_hunk)
 vim.keymap.set('', '<C-p>', prev_hunk)
 vim.keymap.set('', '\\', '<C-^>')
-vim.keymap.set('', 'm', 'y')
-vim.keymap.set('n', 'mm', 'yy')
-vim.keymap.set('n', 'M', 'yg_')
 vim.keymap.set('', 'j', 'J')
 vim.keymap.set('', 'J', 'gJ')
 vim.keymap.set('', 'ZA', ':q<CR>')
+vim.keymap.set('', 'ZT', ':tabclose<CR>')
 vim.keymap.set('i', '<C-l>', '<C-x><C-l>')
 vim.keymap.set('', '<BS>', '<Nop>')
 vim.keymap.set('', '<C-d>', '<C-i>')
@@ -207,6 +211,8 @@ vim.keymap.set('n', 'b', 'i<CR><ESC>')
 vim.keymap.set('n', 'B', 'a<CR><ESC>')
 vim.keymap.set('', 'gz', '1z=')
 vim.keymap.set('', '+', '?')
+vim.keymap.set('', '<C-q>', '<C-y>')
+vim.keymap.set('', '<C-y>', '<C-e>')
 
 vim.keymap.set('n', 'l', '<Plug>(MatchitNormalForward)')
 vim.keymap.set('x', 'l', '<Plug>(MatchitVisualForward)')
@@ -243,16 +249,15 @@ vim.keymap.set('o', 'ae', ':normal vae<CR>', { silent = true })
 
 vim.keymap.set('', '<C-z>', '', { desc = 'tmux training wheels' })
 
-vim.cmd.colorscheme('sonokai')
-vim.cmd.highlight({ 'SpecialKey', 'ctermfg=201' })
-vim.cmd.highlight({ 'NonText', 'ctermfg=201' })
-vim.cmd.highlight({ 'Whitespace', 'cterm=bold', 'ctermfg=242' })
-vim.cmd.highlight({ 'LineNr', 'ctermfg=242' })
-vim.cmd.highlight({ 'EndOfBuffer', 'cterm=bold', 'ctermfg=90' })
-vim.cmd.highlight({ 'SpellBad', 'ctermfg=203 ctermbg=52 cterm=none' })
-vim.cmd.highlight({ 'SpellLocal', 'ctermfg=203 ctermbg=52 cterm=none' })
-vim.cmd.highlight({ 'SpellCap', 'ctermfg=203 cterm=none' })
-vim.cmd.highlight({ 'SpellRare', 'ctermfg=215 cterm=none' })
+-- vim.cmd.highlight({ 'SpecialKey', 'ctermfg=201' })
+-- vim.cmd.highlight({ 'NonText', 'ctermfg=201' })
+-- vim.cmd.highlight({ 'Whitespace', 'cterm=bold', 'ctermfg=242' })
+-- vim.cmd.highlight({ 'LineNr', 'ctermfg=242' })
+-- vim.cmd.highlight({ 'EndOfBuffer', 'cterm=bold', 'ctermfg=90' })
+-- vim.cmd.highlight({ 'SpellBad', 'ctermfg=203 ctermbg=52 cterm=none' })
+-- vim.cmd.highlight({ 'SpellLocal', 'ctermfg=203 ctermbg=52 cterm=none' })
+-- vim.cmd.highlight({ 'SpellCap', 'ctermfg=203 cterm=none' })
+-- vim.cmd.highlight({ 'SpellRare', 'ctermfg=215 cterm=none' })
 
 vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
   current_file = vim.fn.expand('%')

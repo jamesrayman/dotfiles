@@ -32,7 +32,6 @@
 	unadd = restore --staged
 	graph = log --all --graph --decorate --oneline
 	root = rev-parse --show-toplevel
-	parent = !git-parent
 	feature-diff = !git diff $(git feature-base)
 	feature-base = !git merge-base $(git parent) HEAD
 	rebase-parent = !git rebase $(git parent)
