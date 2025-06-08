@@ -272,8 +272,6 @@ export ASYMPTOTE_HOME="$XDG_CONFIG_HOME/asy"
 
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-
 export OPAMROOT="$XDG_DATA_HOME/opam"
 [ -r "$OPAMROOT/opam-init/init.sh" ] && source "$OPAMROOT/opam-init/init.sh" &> /dev/null
 
