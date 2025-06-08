@@ -79,7 +79,7 @@ alias l='command ls -v --group-directories-first --color=auto'
 alias ls='ls -lGhv --group-directories-first --color=auto'
 
 # local PATH
-for bin_dir in "$HOME"/Projects/*/bin/ "$HOME"/Projects/misc/*/bin/
+for bin_dir in "$HOME"/projects/*/bin/ "$HOME"/projects/misc/*/bin/
 do
     PATH="$PATH:$bin_dir"
 done
@@ -249,9 +249,9 @@ C() {
 }
 
 w() {
-    FZF_ALT_C_COMMAND="command ls -1 $HOME/Projects" \
-    FZF_ALT_C_OPTS="$FZF_ALT_C_OPTS --preview='preview $HOME/Projects/{}'" \
-    FZF_ALT_C_BASE_DIR="$HOME/Projects/" \
+    FZF_ALT_C_COMMAND="command ls -1 $HOME/projects" \
+    FZF_ALT_C_OPTS="$FZF_ALT_C_OPTS --preview='preview $HOME/projects/{}'" \
+    FZF_ALT_C_BASE_DIR="$HOME/projects/" \
     t "$@"
 }
 

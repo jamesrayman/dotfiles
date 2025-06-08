@@ -1,4 +1,5 @@
 -- vim: sw=2
+
 -- TODO:
 -- Snippets
 -- open link
@@ -51,8 +52,6 @@ require('lazy').setup({
   'lewis6991/gitsigns.nvim',
   'moll/vim-bbye',
   'aymericbeaumet/vim-symlink',
-  'anuvyklack/hydra.nvim',
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
   { 'numToStr/Comment.nvim', lazy = false },
   { 'echasnovski/mini.icons', version = false },
   {
@@ -70,33 +69,11 @@ require('lazy').setup({
   }
 })
 
-require('nvim-treesitter.configs').setup({
-  ensure_installed = 'all',
-  sync_install = false,
-  auto_install = true,
-  highlight = {
-    enable = true
-  },
-  indent = {
-    enable = true
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<CR>',
-      node_incremental = 'ge',
-      scope_incremental = 'gs',
-      node_decremental = 'gt'
-    }
-  }
-})
-
 require('Comment').setup()
 
 local gitsigns = require('gitsigns')
 gitsigns.setup()
 
-local hydra = require("hydra")
 
 function next_hunk()
   if vim.wo.diff then return ']c' end
@@ -325,7 +302,7 @@ vim.api.nvim_create_autocmd('CursorMoved', {
   group = vim.api.nvim_create_augroup('auto-hlsearch', { clear = true }),
   callback = function ()
     if vim.o.hlsearch ~= (vim.fn.searchcount().exact_match ~= 0) then
-      vim.o.hlsearch = vim.fn.searchcount().exact_match
+      vim.o.hlsearch = vim.fn.searchcount().exact_match ~= 0
     end
   end
 })
@@ -370,58 +347,3 @@ vim.api.nvim_create_autocmd('FileType', { pattern = 'text', command = 'setl fo+=
 vim.api.nvim_create_autocmd('FileType', { pattern = 'html', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'javascript', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'man', command = 'setl nospell' })
-
-local git_hydra_hint = [[
- _J_: next hunk   _s_: stage hunk        _d_: show deleted   _b_: blame line
- _K_: prev hunk   _u_: undo last stage   _p_: preview hunk   _B_: blame show full
- ^ ^              _S_: stage buffer      ^ ^                 _/_: show base file
- ^
- ^ ^              _<Enter>_: Neogit              _q_: exit
-]]
-
-hydra({
-   name = 'Git',
-   hint = git_hydra_hint,
-   config = {
-      buffer = bufnr,
-      color = 'pink',
-      invoke_on_body = true,
-      hint = {
-         border = 'rounded'
-      },
-      on_enter = function()
-         vim.cmd 'mkview'
-         vim.cmd 'silent! %foldopen!'
-         vim.bo.modifiable = false
-         gitsigns.toggle_signs(true)
-         gitsigns.toggle_linehl(true)
-      end,
-      on_exit = function()
-         local cursor_pos = vim.api.nvim_win_get_cursor(0)
-         vim.cmd 'loadview'
-         vim.api.nvim_win_set_cursor(0, cursor_pos)
-         vim.cmd 'normal zv'
-         gitsigns.toggle_signs(false)
-         gitsigns.toggle_linehl(false)
-         gitsigns.toggle_deleted(false)
-      end,
-   },
-   mode = {'n','x'},
-   body = '<Leader>hh',
-   heads = {
-      { 'J', next_hunk { expr = true, desc = 'next hunk' } },
-      { 'K', prev_hunk, { expr = true, desc = 'prev hunk' } },
-      { 's', ':Gitsigns stage_hunk<CR>', { silent = true, desc = 'stage hunk' } },
-      { 'u', gitsigns.undo_stage_hunk, { desc = 'undo last stage' } },
-      { 'S', gitsigns.stage_buffer, { desc = 'stage buffer' } },
-      { 'p', gitsigns.preview_hunk, { desc = 'preview hunk' } },
-      { 'd', gitsigns.toggle_deleted, { nowait = true, desc = 'toggle deleted' } },
-      { 'b', gitsigns.blame_line, { desc = 'blame' } },
-      { 'B', function() gitsigns.blame_line{ full = true } end, { desc = 'blame show full' } },
-      { '/', gitsigns.show, { exit = true, desc = 'show base file' } },
-      { '<Enter>', '<Cmd>Neogit<CR>', { exit = true, desc = 'Neogit' } },
-      { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
-   }
-})
-
-vim.fn.serverstart()
