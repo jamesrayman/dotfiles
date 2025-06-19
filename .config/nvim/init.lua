@@ -1,17 +1,10 @@
--- vim: sw=2
-
 -- TODO:
--- Snippets
 -- open link
--- <Leader>p should paste line <count> times and g<C-a> selection starting at cursor
--- <Leader>T and <Leader>E should go up or down until line has fewer characters
--- <Leader>c should select a column with <Leader>T and <Leader>E
--- targets.nvim
--- marks.nvim
--- i% and a%
 -- textobjects
 -- colorscheme
 -- Code blocks in comments
+-- treesitter
+-- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -37,18 +30,6 @@ vim.opt.packpath:append(vim.env.XDG_DATA_HOME .. '/nvim/after')
 
 require('lazy').setup({
   {
-    'projekt0n/github-nvim-theme',
-    name = 'github-theme',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require('github-theme').setup({
-      })
-
-      vim.cmd('colorscheme github_dark_high_contrast')
-    end,
-  },
-  {
     'ibhagwan/fzf-lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function() require('fzf-lua').setup({}) end
@@ -59,27 +40,21 @@ require('lazy').setup({
     config = true
   },
   'lewis6991/gitsigns.nvim',
-  'moll/vim-bbye',
   'aymericbeaumet/vim-symlink',
   { 'echasnovski/mini.icons', version = false },
   {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
+    'chentoast/marks.nvim',
+    event = 'VeryLazy',
     opts = {
-      keys = {
-        scroll_down = '<C-Space>',
-        scroll_up = '<C-h>'
-      },
-      delay = function(ctx)
-        return ctx.plugin and 0 or 1500
-      end,
+      mappings = {
+        toggle = 'M'
+      }
     }
   }
 })
 
 local gitsigns = require('gitsigns')
-gitsigns.setup()
-
+gitsigns.setup{}
 
 function next_hunk()
   if vim.wo.diff then return ']c' end
@@ -196,23 +171,21 @@ vim.keymap.set('', '<C-g>', 'g<C-g>')
 vim.keymap.set('', 'c', 'o')
 vim.keymap.set('', 'C', 'O')
 vim.keymap.set('', '<C-c>', '<C-a>')
-vim.keymap.set('', 'gww', 'gww')
-vim.keymap.set('n', 'gm', ':%y+<CR>', { desc = 'Yank entire file (system clipboard)' })
-vim.keymap.set('x', 'gm', '"+y', { desc = 'Yank entire file (system clipboard)' })
 vim.keymap.set('n', 'gh', 'gk', { desc = 'Up [count] display lines' })
 vim.keymap.set('n', 'g<Space>', 'gj', { desc = 'Down [count] display lines' })
 vim.keymap.set(
   'n', 'gs', '&l:sw == 4 ? ":setl sw=8\\<CR>" : &l:sw == 8 ? ":setl sw=2\\<CR>" : ":setl sw=4\\<CR>"',
   { expr = true, desc = 'Cycle between shiftwidths' }
 )
-vim.keymap.set('n', 'n', 'nzz<BS>n')
-vim.keymap.set('n', 'N', 'Nzz<Space>N')
-vim.keymap.set('n', 'b', 'i<CR><ESC>')
-vim.keymap.set('n', 'B', 'a<CR><ESC>')
 vim.keymap.set('', 'gz', '1z=')
 vim.keymap.set('', '+', '?')
 vim.keymap.set('', '<C-q>', '<C-y>')
 vim.keymap.set('', '<C-y>', '<C-e>')
+vim.keymap.set('', 'b', 't')
+vim.keymap.set('', 'B', 'T')
+vim.keymap.set('', 'gH', 'H')
+vim.keymap.set('', 'gM', 'M')
+vim.keymap.set('', 'gL', 'L')
 
 vim.keymap.set('n', 'l', '<Plug>(MatchitNormalForward)')
 vim.keymap.set('x', 'l', '<Plug>(MatchitVisualForward)')
@@ -222,20 +195,28 @@ vim.keymap.set('x', 'L', '<Plug>(MatchitVisualBackward)')
 vim.keymap.set('o', 'L', '<Plug>(MatchitOperationBackward)')
 vim.keymap.set('x', 'al', '<Plug>(MatchitVisualTextObject)')
 
-vim.keymap.set('n', 'gy', 'ggVG"+y')
-
 vim.keymap.set('n', ']s', ']S')
 vim.keymap.set('n', '[s', '[S')
 vim.keymap.set('n', ']S', ']s')
 vim.keymap.set('n', '[S', '[s')
 
-vim.keymap.set('n', '<Leader>e', ':FzfLua files<CR>')
-vim.keymap.set('n', '<Leader>f', ':FzfLua blines<CR>')
-vim.keymap.set('n', '<Leader>F', ':FzfLua live_grep<CR>')
-vim.keymap.set('n', '<Leader>*', ':FzfLua grep_cword<CR>')
-vim.keymap.set('n', '<Leader>o', ':FzfLua buffers<CR>')
-vim.keymap.set('n', '<Leader>q', ':FzfLua quickfix<CR>')
-vim.keymap.set('n', '<Leader>r', ':FzfLua resume<CR>')
+vim.keymap.set('n', '<Leader>e', FzfLua.files)
+vim.keymap.set('n', '<Leader>f', FzfLua.blines)
+vim.keymap.set('n', '<Leader>F', FzfLua.live_grep)
+vim.keymap.set('n', '<Leader>*', FzfLua.grep_cword)
+vim.keymap.set('n', '<Leader>o', FzfLua.buffers)
+vim.keymap.set('n', '<Leader>q', FzfLua.quickfix)
+vim.keymap.set('n', '<Leader>M', FzfLua.marks)
+vim.keymap.set('n', '<Leader>j', FzfLua.jumps)
+vim.keymap.set('n', '<Leader>r', FzfLua.resume)
+
+vim.keymap.set('n', '<Leader>hp', gitsigns.preview_hunk_inline)
+vim.keymap.set('n', '<Leader>hs', gitsigns.stage_hunk)
+vim.keymap.set('n', '<Leader>hr', gitsigns.reset_hunk)
+vim.keymap.set('n', '<Leader>hd', function() vim.cmd.tabnew('%'); gitsigns.diffthis() end)
+vim.keymap.set('n', '<Leader>hb', function() gitsigns.blame_line({ full = true }) end)
+vim.keymap.set('n', '<Leader>hB', gitsigns.blame)
+vim.keymap.set('n', '<Leader>hq', function() gitsigns.setqflist('all', { open = false }) end)
 
 vim.keymap.set('x', 'im', ':<C-u> normal! `[v`]<CR>', { silent = true })
 vim.keymap.set('o', 'im', ': normal vim<CR>', { silent = true })
@@ -249,7 +230,7 @@ vim.keymap.set('o', 'ae', ':normal vae<CR>', { silent = true })
 
 vim.keymap.set('', '<C-z>', '', { desc = 'tmux training wheels' })
 
--- vim.cmd.highlight({ 'SpecialKey', 'ctermfg=201' })
+-- vim.cmd.highlight({ 'SpecialKey', 'ctermfg=201' }h
 -- vim.cmd.highlight({ 'NonText', 'ctermfg=201' })
 -- vim.cmd.highlight({ 'Whitespace', 'cterm=bold', 'ctermfg=242' })
 -- vim.cmd.highlight({ 'EndOfBuffer', 'cterm=bold', 'ctermfg=90' })
@@ -257,6 +238,8 @@ vim.keymap.set('', '<C-z>', '', { desc = 'tmux training wheels' })
 -- vim.cmd.highlight({ 'SpellLocal', 'ctermfg=203 ctermbg=52 cterm=none' })
 -- vim.cmd.highlight({ 'SpellCap', 'ctermfg=203 cterm=none' })
 -- vim.cmd.highlight({ 'SpellRare', 'ctermfg=215 cterm=none' })
+
+vim.opt.guicursor:remove { 't:block-blinkon500-blinkoff500-TermCursor' }
 
 vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
   current_file = vim.fn.expand('%')
@@ -279,9 +262,6 @@ vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
 end, { desc = 'Switch to the current file\'s "complement," e.g. a cpp file\'s header' })
 
 vim.keymap.set('n', '-', ': SmartFileSwitch<CR>', { silent = true })
-
-vim.cmd('dig %o 8240')
-vim.cmd('dig %% 8241')
 
 -- Diff should inherit wrap
 vim.api.nvim_create_autocmd(
@@ -332,7 +312,6 @@ vim.api.nvim_create_user_command('OxpeckerBreak', function ()
   oxpecker_break()
 end, { desc = '' })
 
-
 vim.api.nvim_create_autocmd(
   { 'BufReadPre', 'FileReadPre' }, { pattern = '*.sage', command = 'setl ft=python' }
 )
@@ -340,14 +319,13 @@ vim.api.nvim_create_autocmd(
   { 'BufReadPre', 'FileReadPre' }, { pattern = '*.astro', command = 'setl fo+=t' }
 )
 vim.api.nvim_create_autocmd(
-  { 'BufReadPre', 'FileReadPre' }, { pattern = '*.astro', command = ' setl sw=2' }
+  { 'BufReadPre', 'FileReadPre' }, { pattern = '*.astro', command = 'setl sw=2' }
 )
 vim.api.nvim_create_autocmd('FileType', { pattern = 'xml', command = 'setl sw=2' })
-vim.api.nvim_create_autocmd('FileType', { pattern = 'plaintex', command = 'setl sw=2' })
-vim.api.nvim_create_autocmd('FileType', { pattern = 'plaintex', command = 'setl fo+=t' })
-vim.api.nvim_create_autocmd('FileType', { pattern = 'tex', command = 'setl sw=2' })
-vim.api.nvim_create_autocmd('FileType', { pattern = 'tex', command = 'setl fo+=t' })
+vim.api.nvim_create_autocmd('FileType', { pattern = 'plaintex', command = 'setl sw=2 fo+=t' })
+vim.api.nvim_create_autocmd('FileType', { pattern = 'tex', command = 'setl sw=2 fo+= t' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'text', command = 'setl fo+=t' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'html', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'javascript', command = 'setl sw=2' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'man', command = 'setl nospell' })
+vim.api.nvim_create_autocmd('FileType', { pattern = 'lua', command = 'setl sw=2' })

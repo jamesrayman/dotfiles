@@ -62,7 +62,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 export GPG_TTY="$(tty)"
 export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
-gpgconf --launch gpg-agent
 
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 alias python="python3"
