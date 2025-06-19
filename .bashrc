@@ -321,7 +321,7 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 
-alias diff='delta'
+alias vpn='nmcli con up id su'
 
 # aliases to force XDG compliance
 alias units='units --history "$XDG_STATE_HOME/units/history"'
