@@ -32,12 +32,18 @@ require('lazy').setup({
   {
     'ibhagwan/fzf-lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function() require('fzf-lua').setup({}) end
-  },
-  {
-    'NeogitOrg/neogit',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = true
+    config = function() require('fzf-lua').setup({
+      winopts = {
+        preview = {
+          winopts = {
+            number = false
+          }
+        }
+      },
+      grep = {
+        hidden = true
+      }
+    }) end
   },
   'lewis6991/gitsigns.nvim',
   'aymericbeaumet/vim-symlink',
@@ -77,7 +83,6 @@ vim.o.title = true
 vim.o.confirm = true
 vim.o.updatetime = 300
 vim.o.ttimeoutlen = 10
-vim.o.cursorline = true
 vim.o.shortmess = 'filnxtToOFIc'
 vim.o.mouse = ''
 
@@ -186,6 +191,7 @@ vim.keymap.set('', 'B', 'T')
 vim.keymap.set('', 'gH', 'H')
 vim.keymap.set('', 'gM', 'M')
 vim.keymap.set('', 'gL', 'L')
+vim.keymap.set('', '-', '<Cmd>Explore<CR>')
 
 vim.keymap.set('n', 'l', '<Plug>(MatchitNormalForward)')
 vim.keymap.set('x', 'l', '<Plug>(MatchitVisualForward)')
@@ -201,22 +207,32 @@ vim.keymap.set('n', ']S', ']s')
 vim.keymap.set('n', '[S', '[s')
 
 vim.keymap.set('n', '<Leader>e', FzfLua.files)
-vim.keymap.set('n', '<Leader>f', FzfLua.blines)
-vim.keymap.set('n', '<Leader>F', FzfLua.live_grep)
+vim.keymap.set('n', '<Leader>F', FzfLua.blines)
+vim.keymap.set('n', '<Leader>f', FzfLua.lines)
+vim.keymap.set('n', '<Leader>a', FzfLua.live_grep)
+vim.keymap.set('n', '<Leader>A', function()
+  FzfLua.live_grep{ cwd = vim.fn.expand('%:p:h') }
+end)
 vim.keymap.set('n', '<Leader>*', FzfLua.grep_cword)
 vim.keymap.set('n', '<Leader>o', FzfLua.buffers)
 vim.keymap.set('n', '<Leader>q', FzfLua.quickfix)
-vim.keymap.set('n', '<Leader>M', FzfLua.marks)
+vim.keymap.set('n', "<Leader>'", FzfLua.marks)
 vim.keymap.set('n', '<Leader>j', FzfLua.jumps)
 vim.keymap.set('n', '<Leader>r', FzfLua.resume)
+vim.keymap.set('n', '<Leader>R', FzfLua.oldfiles)
+vim.keymap.set('n', '<Leader>m', FzfLua.git_diff)
+vim.keymap.set('n', '<Leader>H', FzfLua.git_hunks)
 
 vim.keymap.set('n', '<Leader>hp', gitsigns.preview_hunk_inline)
 vim.keymap.set('n', '<Leader>hs', gitsigns.stage_hunk)
-vim.keymap.set('n', '<Leader>hr', gitsigns.reset_hunk)
+vim.keymap.set('n', '<Leader>hu', gitsigns.reset_hunk)
 vim.keymap.set('n', '<Leader>hd', function() vim.cmd.tabnew('%'); gitsigns.diffthis() end)
 vim.keymap.set('n', '<Leader>hb', function() gitsigns.blame_line({ full = true }) end)
 vim.keymap.set('n', '<Leader>hB', gitsigns.blame)
 vim.keymap.set('n', '<Leader>hq', function() gitsigns.setqflist('all', { open = false }) end)
+
+vim.keymap.set('n', '<Leader>n', '<Cmd>cnext<CR>')
+vim.keymap.set('n', '<Leader>p', '<Cmd>cprevious<CR>')
 
 vim.keymap.set('x', 'im', ':<C-u> normal! `[v`]<CR>', { silent = true })
 vim.keymap.set('o', 'im', ': normal vim<CR>', { silent = true })
@@ -230,7 +246,8 @@ vim.keymap.set('o', 'ae', ':normal vae<CR>', { silent = true })
 
 vim.keymap.set('', '<C-z>', '', { desc = 'tmux training wheels' })
 
--- vim.cmd.highlight({ 'SpecialKey', 'ctermfg=201' }h
+vim.cmd.highlight({ 'Normal', 'guibg=None' })
+-- vim.cmd.highlight({ 'SpecialKey', 'ctermfg=201' })
 -- vim.cmd.highlight({ 'NonText', 'ctermfg=201' })
 -- vim.cmd.highlight({ 'Whitespace', 'cterm=bold', 'ctermfg=242' })
 -- vim.cmd.highlight({ 'EndOfBuffer', 'cterm=bold', 'ctermfg=90' })
@@ -239,7 +256,7 @@ vim.keymap.set('', '<C-z>', '', { desc = 'tmux training wheels' })
 -- vim.cmd.highlight({ 'SpellCap', 'ctermfg=203 cterm=none' })
 -- vim.cmd.highlight({ 'SpellRare', 'ctermfg=215 cterm=none' })
 
-vim.opt.guicursor:remove { 't:block-blinkon500-blinkoff500-TermCursor' }
+vim.opt.guicursor:remove{ 't:block-blinkon500-blinkoff500-TermCursor' }
 
 vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
   current_file = vim.fn.expand('%')
@@ -261,7 +278,7 @@ vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
   end
 end, { desc = 'Switch to the current file\'s "complement," e.g. a cpp file\'s header' })
 
-vim.keymap.set('n', '-', ': SmartFileSwitch<CR>', { silent = true })
+vim.keymap.set('n', '_', '<Cmd>SmartFileSwitch<CR>', { silent = true })
 
 -- Diff should inherit wrap
 vim.api.nvim_create_autocmd(
@@ -272,6 +289,7 @@ vim.opt.matchpairs:append('<:>')
 vim.o.indentkeys = ''
 
 vim.g.netrw_home = vim.env.XDG_DATA_HOME .. '/nvim'
+vim.g.netrw_banner = 0
 
 vim.g.man_hardwrap = 1
 

@@ -32,9 +32,9 @@ shopt -s checkwinsize
 shopt -s direxpand
 
 shopt -s histappend
-HISTCONTROL=ignoreboth
-HISTSIZE=20000
-HISTFILESIZE=20000
+HISTCONTROL=ignoreboth:erasedups
+HISTSIZE=100000
+HISTFILESIZE=100000
 HISTFILE="$XDG_STATE_HOME/bash/history"
 HISTTIMEFORMAT="%F %T     "
 
