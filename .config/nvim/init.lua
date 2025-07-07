@@ -56,7 +56,7 @@ require('lazy').setup({
         toggle = 'M'
       }
     }
-  }
+  },
 })
 
 local gitsigns = require('gitsigns')
@@ -85,6 +85,7 @@ vim.o.updatetime = 300
 vim.o.ttimeoutlen = 10
 vim.o.shortmess = 'filnxtToOFIc'
 vim.o.mouse = ''
+vim.o.cursorline = true
 
 vim.o.list = true
 vim.o.listchars = 'trail:•,tab:┃ ,nbsp:␣,extends:›,precedes:‹'
@@ -192,6 +193,7 @@ vim.keymap.set('', 'gH', 'H')
 vim.keymap.set('', 'gM', 'M')
 vim.keymap.set('', 'gL', 'L')
 vim.keymap.set('', '-', '<Cmd>Explore<CR>')
+vim.keymap.set('n', '_', '<Cmd>SmartFileSwitch<CR>', { silent = true })
 
 vim.keymap.set('n', 'l', '<Plug>(MatchitNormalForward)')
 vim.keymap.set('x', 'l', '<Plug>(MatchitVisualForward)')
@@ -210,9 +212,7 @@ vim.keymap.set('n', '<Leader>e', FzfLua.files)
 vim.keymap.set('n', '<Leader>F', FzfLua.blines)
 vim.keymap.set('n', '<Leader>f', FzfLua.lines)
 vim.keymap.set('n', '<Leader>a', FzfLua.live_grep)
-vim.keymap.set('n', '<Leader>A', function()
-  FzfLua.live_grep{ cwd = vim.fn.expand('%:p:h') }
-end)
+vim.keymap.set('n', '<Leader>A', function() FzfLua.live_grep{ cwd = vim.fn.expand('%:p:h') } end)
 vim.keymap.set('n', '<Leader>*', FzfLua.grep_cword)
 vim.keymap.set('n', '<Leader>o', FzfLua.buffers)
 vim.keymap.set('n', '<Leader>q', FzfLua.quickfix)
@@ -233,6 +233,8 @@ vim.keymap.set('n', '<Leader>hq', function() gitsigns.setqflist('all', { open = 
 
 vim.keymap.set('n', '<Leader>n', '<Cmd>cnext<CR>')
 vim.keymap.set('n', '<Leader>p', '<Cmd>cprevious<CR>')
+vim.keymap.set('n', '<Leader>c', '<Cmd>DiffCorrected<CR>')
+vim.keymap.set('n', '<Leader>C', '<Cmd>AcceptCorrected<CR>')
 
 vim.keymap.set('x', 'im', ':<C-u> normal! `[v`]<CR>', { silent = true })
 vim.keymap.set('o', 'im', ': normal vim<CR>', { silent = true })
@@ -258,7 +260,7 @@ vim.cmd.highlight({ 'Normal', 'guibg=None' })
 
 vim.opt.guicursor:remove{ 't:block-blinkon500-blinkoff500-TermCursor' }
 
-vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
+vim.api.nvim_create_user_command('SmartFileSwitch', function()
   current_file = vim.fn.expand('%')
   complement_suffixes = {
     { '.cpp', '.h' },
@@ -267,9 +269,9 @@ vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
     { '.h', '.cpp' },
   }
   for _, p in ipairs(complement_suffixes) do
-    suffix, complement_suffix = p[1], p[2]
+    local suffix, complement_suffix = p[1], p[2]
     if current_file:sub(-string.len(suffix)) == suffix then
-      complement_file = current_file:sub(1, -string.len(suffix)-1) .. complement_suffix
+      local complement_file = current_file:sub(1, -string.len(suffix)-1) .. complement_suffix
       if vim.uv.fs_stat(complement_file) then
         vim.cmd.e { complement_file }
         break
@@ -278,7 +280,30 @@ vim.api.nvim_create_user_command('SmartFileSwitch', function(opts)
   end
 end, { desc = 'Switch to the current file\'s "complement," e.g. a cpp file\'s header' })
 
-vim.keymap.set('n', '_', '<Cmd>SmartFileSwitch<CR>', { silent = true })
+vim.api.nvim_create_user_command('DiffCorrected', function()
+  local current_file = vim.fn.expand('%')
+  local corrected_file = current_file .. '.corrected'
+  if not vim.uv.fs_stat(corrected_file) then
+    vim.api.nvim_echo({ { 'No .corrected file found' } }, true, { err = true })
+    return
+  end
+  vim.cmd.tabnew(corrected_file)
+  vim.cmd.diffthis()
+  vim.cmd.vsplit(current_file)
+  vim.cmd.diffthis()
+end, { desc = 'Diff the current file with it\'s .corrected file' })
+
+vim.api.nvim_create_user_command('AcceptCorrected', function()
+  local current_file = vim.fn.expand('%')
+  local corrected_file = current_file .. '.corrected'
+  if not vim.uv.fs_stat(corrected_file) then
+    vim.api.nvim_echo({ { 'No .corrected file found' } }, true, { err = true })
+    return
+  end
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.fn.readfile(corrected_file))
+  vim.fn.delete(corrected_file)
+  vim.cmd.write()
+end, { desc = 'Replace the current file with it\'s .corrected file' })
 
 -- Diff should inherit wrap
 vim.api.nvim_create_autocmd(
@@ -290,6 +315,7 @@ vim.o.indentkeys = ''
 
 vim.g.netrw_home = vim.env.XDG_DATA_HOME .. '/nvim'
 vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
 
 vim.g.man_hardwrap = 1
 
@@ -330,6 +356,11 @@ vim.api.nvim_create_user_command('OxpeckerBreak', function ()
   oxpecker_break()
 end, { desc = '' })
 
+vim.api.nvim_create_autocmd(
+  { 'BufReadPost' }, { callback = function()
+    pcall(vim.api.nvim_win_set_cursor, 0, vim.api.nvim_buf_get_mark(0, '"'))
+  end }
+)
 vim.api.nvim_create_autocmd(
   { 'BufReadPre', 'FileReadPre' }, { pattern = '*.sage', command = 'setl ft=python' }
 )
