@@ -74,8 +74,7 @@ export PATH="$PATH:$CARGO_HOME/bin"
 
 export LS_COLORS="ow=1;35:tw=1;35:mi=1;91"
 alias la='command ls -laGhv --group-directories-first --color=auto'
-alias l='command ls -v --group-directories-first --color=auto'
-alias ls='ls -lGhv --group-directories-first --color=auto'
+alias ls='command ls -lGhv --group-directories-first --color=auto'
 
 # local PATH
 for bin_dir in "$HOME"/projects/*/bin/ "$HOME"/projects/misc/*/bin/
@@ -113,14 +112,15 @@ export AND="$HOME/andromeda"
 export DOT="$HOME/dotfiles"
 
 export FZF_DEFAULT_COMMAND="idfs --hidden --follow --exclude .git --exclude '$XDG_STATE_HOME' --exclude '$XDG_CACHE_HOME' --strip-cwd-prefix"
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse"
+export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --no-mouse --no-separator --preview-window=border-none"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
-export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path"
+export FZF_CTRL_T_OPTS="--preview='preview {}' --scheme path --border=none"
 export FZF_CTRL_T_FILE_OPTS="--type file"
-export FZF_CTRL_R_OPTS="--scheme=history"
-export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path"
+export FZF_CTRL_R_OPTS="--scheme=history --border=none"
+export FZF_ALT_C_OPTS="--preview='preview {}' --scheme path --border=none"
 export FZF_TMUX=1
+export FZF_TMUX_OPTS="-d40%"
 
 __fzf_select__() {
   eval "$FZF_CTRL_T_COMMAND" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) "$@" -m | while read -r item; do
@@ -217,6 +217,17 @@ u() {
   history -s "$comm"
   eval "$comm"
 }
+U() {
+  local root="$(git root 2> /dev/null)"
+  if [[ -n "$root" ]]
+  then
+    comm="cd ${root@Q}"
+    history -s "$comm"
+    eval "$comm"
+  else
+    printf 'Not in a git repo.\n'
+  fi
+}
 
 
 f() {
@@ -295,16 +306,21 @@ alias eg="vi $XDG_CONFIG_HOME/git/config"
 alias ei="vi $XDG_CONFIG_HOME/readline/inputrc"
 alias em="vi $XDG_CONFIG_HOME/make/makefile"
 alias en="vi $AND/note/card.txt" # notecard
+alias ej="vi $AND/note/journal.txt"
 alias eq="vi $AND/note/questions.txt"
 alias es="vi $XDG_CONFIG_HOME/bash/secret"
 alias et="vi $XDG_CONFIG_HOME/task/taskrc"
 alias eu="vi $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias ev="vi $XDG_CONFIG_HOME/nvim/init.lua" # .vimrc
+alias ew="vi $XDG_CONFIG_HOME/sway/config" # .vimrc
 alias esp="vi $XDG_CONFIG_HOME/nvim/en.utf-8.add" # spell
 
 alias tmux='tmux -u'
 
 alias mutt="neomutt"
+
+alias -- -Syu='sudo pacman -Syu'
+alias -- -S='sudo pacman -S'
 
 # refresh tmux on cd
 cd() {
@@ -337,13 +353,14 @@ g() {
     if (( $# == 0 ))
     then
         git s
-    elif [[ "$*" == "-" ]]
-    then
-        git checkout -
     else
         git "$@"
     fi
 }
+
+[[ -f /usr/share/bash-completion/completions/git ]] && source /usr/share/bash-completion/completions/git
+__git_complete g __git_main
+
 
 __tmux_open__() {
     vim "$1"
@@ -365,6 +382,5 @@ command_not_found_handle () {
     fi
 }
 
-# any extra machine-dependent configuration
 [ -r "$XDG_CONFIG_HOME/bash/extra" ] && source "$XDG_CONFIG_HOME/bash/extra"
 [ -r "$XDG_CONFIG_HOME/bash/secret" ] && source "$XDG_CONFIG_HOME/bash/secret"
