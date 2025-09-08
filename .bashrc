@@ -353,6 +353,9 @@ g() {
     if (( $# == 0 ))
     then
         git s
+    elif [[ "$*" == "-" ]]
+    then
+        git checkout -
     else
         git "$@"
     fi

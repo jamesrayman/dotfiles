@@ -38,7 +38,6 @@ require'lazy'.setup {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function() require'fzf-lua'.setup {
       'hide',
-      fzf_bin = 'sk',
       fzf_opts = {
         ['--cycle'] = true,
       },
@@ -70,16 +69,6 @@ require'lazy'.setup {
   },
   'lewis6991/gitsigns.nvim',
   'aymericbeaumet/vim-symlink',
-  {
-    'chentoast/marks.nvim',
-    event = 'VeryLazy',
-    opts = {
-      mappings = {
-        toggle = 'M'
-      }
-    }
-  },
-  'nvim-treesitter/nvim-treesitter-context',
   -- 'neovim/nvim-lspconfig',
 }
 
@@ -143,10 +132,6 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-require'treesitter-context'.setup {
-  enable = false
-}
-
 local gitsigns = require'gitsigns'
 gitsigns.setup {
   on_attach = function(bufnr)
@@ -192,7 +177,7 @@ vim.keymap.set('n', '<Leader>hq', function()
   gitsigns.setqflist('all', { open = false }, function() vim.cmd'cfirst' end)
 end)
 
-vim.o.statusline = '%<%f %h%w%m%r%=%-20.{get(b:,"gitsigns_status","")}%-14.(%l,%c%V%) %P'
+vim.o.statusline = '%<%f %-12.(%h%w%m%r%) %{get(b:,"gitsigns_status","")}%=%-14.(%l,%c%V%) %P'
 
 function is_git()
   return vim.fs.find('.git', { upward = true })[1] ~= nil
@@ -351,8 +336,7 @@ vim.keymap.set('o', 'L', '<Plug>(MatchitOperationBackward)')
 vim.keymap.set('x', 'al', '<Plug>(MatchitVisualTextObject)')
 
 vim.keymap.set('n', '<Leader>e', FzfLua.files)
-vim.keymap.set('n', '<Leader>F', FzfLua.blines)
-vim.keymap.set('n', '<Leader>f', FzfLua.lines)
+vim.keymap.set('n', '<Leader>f', FzfLua.blines)
 vim.keymap.set('n', '<Leader>a', FzfLua.live_grep)
 vim.keymap.set('n', '<Leader>A', function() FzfLua.live_grep { cwd = vim.fn.expand('%:p:h') } end)
 vim.keymap.set('n', '<Leader>t', function() FzfLua.grep { search = 'TODO' } end)
