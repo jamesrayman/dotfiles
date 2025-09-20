@@ -76,6 +76,9 @@ export LS_COLORS="ow=1;35:tw=1;35:mi=1;91"
 alias la='command ls -laGhv --group-directories-first --color=auto'
 alias ls='command ls -lGhv --group-directories-first --color=auto'
 
+export GEM_HOME="$(gem env user_gemhome)"
+export PATH="$PATH:$GEM_HOME/bin"
+
 # local PATH
 for bin_dir in "$HOME"/projects/*/bin/ "$HOME"/projects/misc/*/bin/
 do
@@ -258,8 +261,25 @@ C() {
   eval "$comm"
 }
 
+__w_find_git() {
+  local dir="$1"
+  local git_dir
+  local git_dirs=($dir/*/.git)
+  if [[ ${#git_dirs[@]} == 0 ]]
+  then
+    printf '%s\n' "${dir#$HOME/projects/}"
+  else
+    for git_dir in "${git_dirs[@]}"
+    do
+      git_dir="${git_dir%/.git}"
+      git_dir="${git_dir#$HOME/projects/}"
+      printf '%s\n' "${git_dir}"
+    done
+  fi
+}
+
 w() {
-    FZF_ALT_C_COMMAND="command ls -1 $HOME/projects" \
+    FZF_ALT_C_COMMAND='for dir in $(command ls -1 $HOME/projects); do __w_find_git "$HOME/projects/$dir"; done' \
     FZF_ALT_C_OPTS="$FZF_ALT_C_OPTS --preview='preview $HOME/projects/{}'" \
     FZF_ALT_C_BASE_DIR="$HOME/projects/" \
     t "$@"

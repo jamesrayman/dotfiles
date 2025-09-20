@@ -236,7 +236,10 @@ vim.o.shell = 'bash'
 vim.o.undofile = true
 
 vim.o.foldmethod = 'indent'
-vim.o.foldenable = false
+vim.o.foldenable = true
+vim.o.foldlevelstart = 99
+vim.o.foldminlines = 10
+vim.o.foldcolumn = '1'
 
 vim.o.spell = true
 vim.o.spelllang = 'en_us'
@@ -323,9 +326,8 @@ vim.keymap.set('', '<C-w><C-l>', '<C-w>s')
 vim.keymap.set('', '<C-w>l', '<C-w>s')
 vim.keymap.set('n', '-', "<Cmd>normal! m'<CR><Cmd>Explore<CR>")
 vim.keymap.set('n', '_', '<Cmd>SmartFileSwitch<CR>', { silent = true })
-vim.keymap.set('n', '[[', function()
-  require'treesitter-context'.go_to_context(vim.v.count1)
-end, { silent = true })
+vim.keymap.set('', '[[', '[z', { silent = true })
+vim.keymap.set('', ']]', ']z', { silent = true })
 
 vim.keymap.set('n', 'l', '<Plug>(MatchitNormalForward)')
 vim.keymap.set('x', 'l', '<Plug>(MatchitVisualForward)')
