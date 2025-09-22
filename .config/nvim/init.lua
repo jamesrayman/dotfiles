@@ -94,6 +94,7 @@ require'ayu'.setup {
     Search = { fg = '#ffc95a', bg = 'none' },
     WinSeparator = { bg = 'none' },
     StatusLine = { fg = '#bfbdb6', bg = '#2e2e2e' },
+    FoldColumn = { bg = 'none' },
   },
 }
 vim.cmd.colorscheme'ayu'
