@@ -438,13 +438,13 @@ then
     then
         :
     else
-        s="Y$s"
+        s="${s}Y"
     fi
 fi
 
 __git_ps1_colorize_gitstring
 
-f="$h$w$i$s$u$p"
+f="$h$w$i$u$s$p"
 gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}${conflict}"
 
 printf -- "$printf_format" "$gitstring"

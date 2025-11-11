@@ -1,7 +1,6 @@
 -- TODO:
 -- textobjects
 -- Code blocks in comments
--- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -31,7 +30,6 @@ vim.cmd('let mapleader="\\<BS>"')
 vim.cmd('let maplocalleader="\\<BS>"')
 
 require'lazy'.setup {
-  { 'nvim-treesitter/nvim-treesitter', branch = 'master', lazy = false, build = ':TSUpdate' },
   'Shatur/neovim-ayu',
   {
     'ibhagwan/fzf-lua',
@@ -94,44 +92,9 @@ require'ayu'.setup {
     Search = { fg = '#ffc95a', bg = 'none' },
     WinSeparator = { bg = 'none' },
     StatusLine = { fg = '#bfbdb6', bg = '#2e2e2e' },
-    FoldColumn = { bg = 'none' },
   },
 }
 vim.cmd.colorscheme'ayu'
-
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {
-    -- vim
-    'c', 'lua', 'vim', 'vimdoc', 'query',
-    -- other popular general purpose languages
-    'rust', 'python', 'java',
-    -- markup
-    'markdown', 'markdown_inline',
-    'bibtex', 'latex',
-    -- web dev
-    'html', 'css', 'javascript', 'typescript',
-    'astro', 'svelte', 'sql', 'php',
-    'dockerfile',
-    -- ocaml
-    'ocaml', 'ocaml_interface', 'menhir',
-    -- serialization
-    'json', 'xml', 'yaml',
-    -- other DSLs
-    'bash', 'make', 'diff', 'readline',
-    'sway', 'tmux', 'ini', 'toml',
-    -- injections
-    'regex', 'printf', 'comment',
-  },
-  sync_install = false,
-  auto_install = true,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  indent = {
-    enable = true
-  }
-}
 
 local gitsigns = require'gitsigns'
 gitsigns.setup {
@@ -180,15 +143,20 @@ end)
 
 vim.o.statusline = '%<%f %-12.(%h%w%m%r%) %{get(b:,"gitsigns_status","")}%=%-14.(%l,%c%V%) %P'
 
-function is_git()
-  return vim.fs.find('.git', { upward = true })[1] ~= nil
+function git_root()
+  local git_dir = vim.fs.find('.git', { path = vim.fn.expand'%:p:h', upward = true })[1]
+  if git_dir == nil then
+    return nil
+  else
+    return git_dir:sub(1, -6)
+  end
 end
 
-function git_anchor()
-  if not is_git() then return nil end
-  anchor = vim.system { 'git', 'feature-base' }:wait().stdout:gsub('%s+', '')
-  gitsigns.change_base(anchor)
-  return anchor
+function git_feature_base(root)
+  if root == nil then return nil end
+  local base = vim.system({ 'git', 'feature-base' }, { cwd = root }):wait().stdout:gsub('%s+', '')
+  gitsigns.change_base(base)
+  return base
 end
 
 vim.o.showcmd = true
@@ -204,18 +172,22 @@ vim.o.shortmess = 'filnxtToOFIc'
 vim.o.mouse = ''
 vim.o.cursorline = true
 vim.o.signcolumn = 'yes'
+vim.o.showmode = false
+vim.opt.cpoptions:append'J'
 
 vim.o.list = true
 vim.o.listchars = 'trail:•,tab:┃ ,nbsp:␣,extends:›,precedes:‹'
-vim.o.fillchars = 'vert: '
+vim.o.fillchars = 'vert: ,fold: '
 vim.o.breakindent = true
 vim.o.showbreak = ' ↪ '
 vim.o.termguicolors = true
 
 vim.o.wrap = true
 vim.o.linebreak = true
-vim.o.textwidth = 72
-vim.o.formatoptions = 'jcrql2or/'
+vim.o.textwidth = 80
+vim.o.formatoptions = vim.o.formatoptions .. 'n/'
+vim.opt.formatoptions:append'jcroqln/'
+vim.o.formatlistpat = '^\\s*\\d*[\\]:.)}\\t\\* -]\\s*'
 
 vim.o.winminheight = 0
 vim.o.winminwidth = 0
@@ -239,8 +211,7 @@ vim.o.undofile = true
 vim.o.foldmethod = 'indent'
 vim.o.foldenable = true
 vim.o.foldlevelstart = 99
-vim.o.foldminlines = 10
-vim.o.foldcolumn = '1'
+vim.o.foldminlines = 3
 
 vim.o.spell = true
 vim.o.spelllang = 'en_us'
@@ -329,7 +300,16 @@ vim.keymap.set('n', '-', "<Cmd>normal! m'<CR><Cmd>Explore<CR>")
 vim.keymap.set('n', '_', '<Cmd>SmartFileSwitch<CR>', { silent = true })
 vim.keymap.set('', '[[', '[z', { silent = true, desc = 'Go to beginning of fold' })
 vim.keymap.set('', ']]', ']z', { silent = true, desc = 'Go to end of fold' })
-vim.keymap.set('n', '<CR>', 'za', { silent = true, desc = 'Toggle fold' })
+vim.keymap.set('i', '<CR>', function()
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, false, true), 'n', false)
+  vim.schedule(function()
+    local lno = vim.api.nvim_win_get_cursor(0)[1]
+    if lno >1 then
+      local trimmed = vim.api.nvim_buf_get_lines(0, lno-2, lno-1, false)[1]:gsub('%s+$', '')
+      vim.api.nvim_buf_set_lines(0, lno-2, lno-1, false, { trimmed })
+    end
+  end)
+end)
 
 vim.keymap.set('n', 'l', '<Plug>(MatchitNormalForward)')
 vim.keymap.set('x', 'l', '<Plug>(MatchitVisualForward)')
@@ -342,17 +322,26 @@ vim.keymap.set('x', 'al', '<Plug>(MatchitVisualTextObject)')
 vim.keymap.set('n', '<Leader>e', FzfLua.files)
 vim.keymap.set('n', '<Leader>f', FzfLua.blines)
 vim.keymap.set('n', '<Leader>a', FzfLua.live_grep)
-vim.keymap.set('n', '<Leader>A', function() FzfLua.live_grep { cwd = vim.fn.expand('%:p:h') } end)
+vim.keymap.set('n', '<Leader>A', function() FzfLua.live_grep { cwd = vim.fn.expand'%:p:h' } end)
 vim.keymap.set('n', '<Leader>t', function() FzfLua.grep { search = 'TODO' } end)
 vim.keymap.set('n', '<Leader>*', FzfLua.grep_cword)
 vim.keymap.set('n', '<Leader>o', FzfLua.buffers)
 vim.keymap.set('n', '<Leader>q', FzfLua.quickfix)
 vim.keymap.set('n', "<Leader>'", FzfLua.marks)
+vim.keymap.set('n', '<Leader>"', FzfLua.registers)
 vim.keymap.set('n', '<Leader>j', FzfLua.jumps)
 vim.keymap.set('n', '<Leader>r', FzfLua.resume)
 vim.keymap.set('n', '<Leader>R', FzfLua.oldfiles)
-vim.keymap.set('n', '<Leader>m', function() FzfLua.git_diff { ref = git_anchor() } end)
-vim.keymap.set('n', '<Leader>H', function() FzfLua.git_hunks { ref = git_anchor() } end)
+vim.keymap.set('n', '<Leader>m', function()
+  local root = git_root()
+  if root == nil then return end
+  FzfLua.git_diff { ref = git_feature_base(root), cwd = root }
+end, { desc = 'Modified files' })
+vim.keymap.set('n', '<Leader>H', function()
+  local root = git_root()
+  if root == nil then return end
+  FzfLua.git_hunks { ref = git_feature_base(root), cwd = root }
+end, { desc = 'Modified hunks' })
 vim.keymap.set('n', '<Leader>k', FzfLua.keymaps)
 vim.keymap.set('n', '<Leader>,', FzfLua.commands)
 
@@ -367,14 +356,14 @@ vim.keymap.set('x', 'am', ':<C-u> normal! `[v`]<CR>', { silent = true })
 vim.keymap.set('o', 'am', ': normal vam<CR>', { silent = true })
 
 vim.keymap.set('x', 'ie', ':<C-u> normal! ggVG<CR>', { silent = true })
-vim.keymap.set('o', 'ie', ':normal vie<CR>', { silent = true })
+vim.keymap.set('o', 'ie', ': normal vie<CR>', { silent = true })
 vim.keymap.set('x', 'ae', ':<C-u> normal! ggVG<CR>', { silent = true })
-vim.keymap.set('o', 'ae', ':normal vae<CR>', { silent = true })
+vim.keymap.set('o', 'ae', ': normal vae<CR>', { silent = true })
 
-vim.keymap.set('', '<C-z>', '', { desc = 'tmux training wheels' })
+vim.keymap.set('', '<C-z>', '')
 
 vim.api.nvim_create_user_command('SmartFileSwitch', function()
-  current_file = vim.fn.expand('%')
+  current_file = vim.fn.expand'%'
   complement_suffixes = {
     { '.cpp', '.h' },
     { '.c', '.h' },
@@ -396,7 +385,7 @@ vim.api.nvim_create_user_command('SmartFileSwitch', function()
 end, { desc = 'Switch to the current file\'s "complement," e.g. a cpp file\'s header' })
 
 vim.api.nvim_create_user_command('DiffCorrected', function()
-  local current_file = vim.fn.expand('%')
+  local current_file = vim.fn.expand'%'
   local corrected_file = current_file .. '.corrected'
   if not vim.uv.fs_stat(corrected_file) then
     vim.api.nvim_echo({ { 'No .corrected file found' } }, true, { err = true })
@@ -409,7 +398,7 @@ vim.api.nvim_create_user_command('DiffCorrected', function()
 end, { desc = 'Diff the current file with it\'s .corrected file' })
 
 vim.api.nvim_create_user_command('AcceptCorrected', function()
-  local current_file = vim.fn.expand('%')
+  local current_file = vim.fn.expand'%'
   local corrected_file = current_file .. '.corrected'
   if not vim.uv.fs_stat(corrected_file) then
     vim.api.nvim_echo({ { 'No .corrected file found' } }, true, { err = true })
@@ -449,15 +438,8 @@ vim.api.nvim_create_autocmd('CursorMoved', {
   end
 })
 
-function infopane ()
-  vim.g.infopane = vim.fn.system({
-    'tmux', 'split-window', '-h', '-l', '80', '-P', '-F', '#{pane_id}',
-    string.format('VIMSERVER=\'%s\' bash', vim.v.servername)
-  }):gsub('%s+', '')
-end
-
 vim.api.nvim_create_autocmd(
-  { 'BufReadPost' }, { callback = function()
+  'BufReadPost', { callback = function()
     pcall(vim.api.nvim_win_set_cursor, 0, vim.api.nvim_buf_get_mark(0, '"'))
   end }
 )
@@ -467,6 +449,14 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd(
   { 'BufReadPre', 'FileReadPre' }, { pattern = '*.astro', command = 'setl fo+=t' }
 )
+vim.api.nvim_create_autocmd(
+  'BufWritePost', { pattern = '*.php', callback = function()
+    if vim.uv.fs_stat('.php-cs-fixer.php') then
+      vim.cmd'silent! !php-cs-fixer fix %'
+    end
+  end }
+)
+
 vim.api.nvim_create_autocmd('FileType', { pattern = 'plaintex', command = 'setl fo+=t' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'tex', command = 'setl fo+=t' })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'text', command = 'setl fo+=t' })

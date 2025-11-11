@@ -17,6 +17,8 @@
 	b = branch
 	fd = feature-diff
 	c = commit
+	ca = commit --amend --no-edit
+	ce = commit --allow-empty
 	d = diff
 	f = fetch
 	l = log --oneline -10
@@ -27,14 +29,15 @@
 	sw = switch
 	gr = graph
 	ls = ls-tree -r HEAD --name-only
+	rp = rebase-parent
 	tree = ls
 	web = instaweb
 	unadd = restore --staged
 	graph = log --all --graph --decorate --oneline
 	root = rev-parse --show-toplevel
-	feature-diff = !git diff $(git feature-base)
-	feature-base = !git merge-base $(git parent) HEAD
-	rebase-parent = !git rebase $(git parent)
+	feature-diff = !git diff "$(git feature-base)"
+	feature-base = !git merge-base "$(git parent)" HEAD
+	rebase-parent = !git rebase "$(git parent)"
 [rerere]
 	enabled = true
 [column]

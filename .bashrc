@@ -89,7 +89,8 @@ alias vim="$VISUAL"
 alias vi="$VISUAL"
 
 # don't include --incsearch in LESS because it is unresponsive on large files
-export LESS="-F -i -Q -R -z-4 -j.5 -Ps%f\:%lb of %L (%Pb\%) "
+export LESS="-F -i -Q -R -z-4 -j.5 --wordwrap -Ps%f\:%lb of %L (%Pb\%) "
+export SYSTEMD_LESS="$LESS"
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;36m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -198,9 +199,14 @@ E() {
 
 # modified files
 m() {
-    FZF_CTRL_T_COMMAND="git feature-diff --name-only" \
-    FZF_CTRL_T_FILE_OPTS="" \
-    e "$@"
+  if ! git rev-parse 2>/dev/null
+  then
+    printf 'Not in a git repository\n'
+    return 1
+  fi
+  FZF_CTRL_T_COMMAND="git feature-diff --name-only --relative" \
+  FZF_CTRL_T_FILE_OPTS="" \
+  e "$@"
 }
 
 s() {
@@ -368,14 +374,15 @@ v() {
     printf "%s\n" "$*"
 }
 
-# git alias
+# git wrapper
 g() {
     if (( $# == 0 ))
     then
-        git s
+        git status --short
+        git log --oneline -1
     elif [[ "$*" == "-" ]]
     then
-        git checkout -
+        git switch -
     else
         git "$@"
     fi
@@ -389,20 +396,9 @@ __tmux_open__() {
     vim "$1"
 }
 
-# TODO
 command_not_found_handle () {
-    if [ -x /usr/lib/command-not-found ]; then
-        /usr/lib/command-not-found -- "$1";
-        return $?;
-    else
-        if [ -x /usr/share/command-not-found/command-not-found ]; then
-            /usr/share/command-not-found/command-not-found -- "$1";
-            return $?;
-        else
-            printf "%s: command not found\n" "$1" 1>&2;
-            return 127;
-        fi;
-    fi
+  printf "%s: command not found\n" "$1" 1>&2;
+  return 127;
 }
 
 [ -r "$XDG_CONFIG_HOME/bash/extra" ] && source "$XDG_CONFIG_HOME/bash/extra"
